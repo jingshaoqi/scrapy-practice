@@ -1,4 +1,5 @@
 import scrapy
+import  json
 from urllib.parse import urljoin
 
 class RuxueQianghaoSpider(scrapy.Spider):
@@ -24,7 +25,7 @@ class RuxueQianghaoSpider(scrapy.Spider):
         print('has {} lines'.format(len(items_tr)))
         for j in items_tr:
             itd = j.xpath('./td')
-            if len(itd) != 7:
+            if len(itd) < 7:
                 continue
             print('has seven td')
             school = itd[2].xpath('./text()')
@@ -49,6 +50,16 @@ class RuxueQianghaoSpider(scrapy.Spider):
         sfzh_url = sfzh.xpath('./@href')
         sfzh_url_t = sfzh_url.extract()[0]
         print(sfzh_url_t)
+        # add data
+        fm_data = {'ScriptManager1': 'UpdatePanelAA|LinkButtonSFZH', 'TextBox_SFZH': '500237202005319756',
+                  'TextBox_XM': '', 'TextBox_FJDZ': '', 'TextBox_JZDZ': '', 'TextBox_JFRXM': '', 'TextBox_JFRSFZH': '',
+                  'TextBox_TelePhone': ''}
+        yield scrapy.Request(url=response.url, method="POST", body=json.dumps(fm_data),callback=self.SFZH_check)
+
+    def SFZH_check(self, response):
+        with open('sfzh_check.html', 'w') as f:
+            f.write(response.text)
+        print(response.text)
 
 
 
