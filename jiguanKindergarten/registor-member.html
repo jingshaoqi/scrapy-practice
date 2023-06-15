@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>
+在线预报名登陆</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp"/>
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-control" content="no-cache">
+<meta http-equiv="Cache" content="no-cache">
+<meta name="description" content="重庆市巫山县机关幼儿园网上报名系统" />
+<meta name="keywords" content="重庆市巫山县机关幼儿园网上报名系统" />
+
+<!-- Include All Css -->
+<link rel="stylesheet" href="https://img.404700.com/jg/2019/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://img.404700.com/jg/2019/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://img.404700.com/jg/2019/css/animate.css">
+<link rel="stylesheet" href="https://img.404700.com/jg/2019/css/fonts.css">
+<link rel="stylesheet" href="https://img.404700.com/jg/2019/css/preset.css">
+<link rel="stylesheet" href="https://img.404700.com/jg/2019/css/style.css">
+<link rel="stylesheet" href="https://img.404700.com/jg/2019/css/responsive.css">
+
+<!--[if lt IE 9]>
+	<script src="https://img.404700.com/jg/2019/js/html5shive.js"></script>
+<![endif]-->
+
+
+<script src="/e/data/js/ajax.js"></script>
+</head>
+<body>
+<!-- Header Area -->
+<header class="header-area inner-page">
+	
+	<nav class="navigation">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-xs-12">
+					<div class="logo pull-left">
+						<a href="/index.html"><img alt="重庆市巫山县机关幼儿园网上报名系统" src="https://img.404700.com/jg/2019/images/home1/logo.png"></a> </div>
+                                  <ul class="main-menu pull-right">
+						<li ><a href="/index.html">首页</a></li>
+						<li><a href="/about.html">本园简介</a></li>
+						<li><a href="/bmlc.html">报名流程</a></li>						
+						<li class="menu-has-child">
+							<a href="javascript:;">点我报名</a>
+							<ul>
+								          <li><a href="/e/DoInfo/ListInfo.php?mid=8">管理报名信息</a></li>
+          <li><a href="/e/DoInfo/AddInfo.php?mid=8&enews=MAddInfo&classid=3&Submit=添加信息">填报报名信息</a></li>
+          							</ul>
+						</li>			
+                        <li><a href="/info">通知公告</a></li>
+						<li></li>
+					</ul> 
+                    
+                    
+                    
+                            
+					<div class="mobile-menu hidden-lg hidden-md hidden-sm">
+						<span></span>
+						<span></span>
+                        <span></span>
+                        <span></span>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	<div class="search-area">
+			<form action="#" method="post">
+				<input type="search" name="search" placeholder="Enter your Search Text Here....">
+			</form>
+			<a href="javascript:;" class="search-close"><i class="fa fa-times"></i></a>
+		</div>
+	</nav>
+</header>
+<!-- /.header-area -->
+
+<!-- Breadcrumb  -->
+<section class="breadcrumb-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12 col-xs-12 text-center">
+				<div class="breadcrumb-content">
+					<h2>在线预报名登陆</h2>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- /.breadcrumb-section  -->
+<br>
+  <table class="table table-bordered table-hover table-striped">
+  <form name="form1" method="post" action="../doaction.php">
+    <input type=hidden name=ecmsfrom value="">
+    <input type=hidden name=enews value=login>
+	<input name="tobind" type="hidden" id="tobind" value="0">
+    <tr class="header"> 
+      <td colspan="2"><div align="center">在线预报名登录
+      (如果没有账号，请点击下方的注册链接进行注册）</div></td>
+    </tr>
+    <tr> 
+      <td>幼儿身份证号码：</td>
+      <td><input name="username" type="text" id="username" class="form-control" style="width:35%">
+	  			</td>
+    </tr>
+    <tr> 
+      <td>密码：</td>
+      <td><input name="password" type="password" id="password" class="form-control" style="width:35%">
+        &nbsp;&nbsp;<a href="../GetPassword/" target="_blank">忘记密码？</a></td>
+    </tr>
+	 <tr>
+      <td>保存时间：</td>
+      <td>
+	  <input name=lifetime type=radio value=0 checked>
+        不保存
+	    <input type=radio name=lifetime value=3600>
+        一小时 
+        <input type=radio name=lifetime value=86400>
+        一天 
+        <input type=radio name=lifetime value=2592000>
+        一个月
+<input type=radio name=lifetime value=315360000>
+        永久 </td>
+    </tr>
+        <tr> 
+      <td>&nbsp;</td>
+      <td><input type="submit" name="Submit" value=" 登 录 报 名 ">&nbsp;&nbsp;&nbsp; <input type="button" name="button" value="马上注册" onclick="parent.location.href='../register/?groupid=1';"></td>
+    </tr>
+	</form>
+  </table>
+<br>
+<!-- Footer Section -->
+<footer class="footer-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3 col-sm-4 col-xs-12 text-left">
+				<div class="footer-widget">
+					<h3>
+						关于巫山机关幼儿园
+					</h3>
+					<p>
+						巫山县机关幼儿园前称为巫山县机关托儿所，创办于1956年4月6日，于2011年更名为巫山县机关幼儿园，办园已有60年历史....
+					</p>
+					
+					
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-6 col-xs-12 text-left">
+				<div class="footer-widget">
+					<h3>联系我们</h3>
+					<ul>
+						<li><a href="javascript:;">咨询电话：023-57689556</a></li>
+                        <li><a href="javascript:;">联系电话：023-57689556</a></li>
+						<li><a href="javascript:;">监督电话：023-57692799</a></li>
+						
+						<li><a href="javascript:;">巫山县广东中路268号</a></li>
+					</ul>
+				</div>
+			</div>
+<div class="col-md-2 col-sm-6 col-xs-12 text-left">
+				<div class="footer-widget">
+					<h3>Qucik Link</h3>
+					<ul>
+						 <li><a href="https://wx.404700.com/" target="_blank">巫峡幼儿园网上报名</a></li>
+                       <li><a href="https://jg.404700.com/" target="_blank">机关幼儿园网上报名</a></li>
+                       <li><a href="https://ph.404700.com/" target="_blank">平湖幼儿园网上报名</a></li>
+                       <li><a href="https://xp.404700.com/" target="_blank">西坪幼儿园网上报名</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-6 col-xs-12 text-left">
+				<div class="footer-widget">
+					<h3>关注我们</h3>
+					<ul>
+						<img src="https://img.404700.com/jg/wx.png" />
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-12 col-sm-6 col-xs-12">
+				<div class="footer-widget">
+										<p>Copyright &copy; 2016-2020.版权所有：重庆市巫山县机关幼儿园  All rights reserved.
+                    <a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">渝ICP备12007184号</a> &nbsp;&nbsp;<a  href="javascript:;" rel="nofollow"><img src="https://img.404700.com/jg/ghs.png" />渝公网安备 50023702000109号</a></p>
+					<!--<form action="#" method="post" class="subscribe-form">
+						<input type="email" name="email" placeholder="Your email Id">
+						<button class="primary-btn pull-right"><span>Submit</span></button>
+						<div class="clearfix"></div>
+					</form>-->
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<!-- /.footer-section -->
+
+<!-- Include All JavaScript -->
+<script src="https://img.404700.com/jg/2019/js/jquery.min.js"></script>
+<script src="https://img.404700.com/jg/2019/js/bootstrap.min.js"></script>
+<script src="https://img.404700.com/jg/2019/js/mixIt.js"></script>
+<script src="https://img.404700.com/jg/2019/js/main.js"></script>
+<style>
+    /*html{filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);-webkit-filter: grayscale(1);}*/
+    #backtotop {
+        position: fixed;
+        bottom: 50px;
+        right: 20px;
+        display: none;
+        cursor: pointer;
+        font-size: 50px;
+        z-index: 9999;
+    }
+
+    #backtotop:hover {
+        color: #333
+    }
+
+    #main-menu-user li.user {
+        display: none
+    }
+</style>
+<div id="backtotop">
+    <i class="fa fa-arrow-circle-up"></i>
+</div>
+
+
+<script>
+	$(function(){
+		(function($){
+			$.fn.totop=function(opt){
+				var scrolling=false;
+				return this.each(function(){
+					var $this=$(this);
+					$(window).scroll(function(){
+						if(!scrolling){
+							var sd=$(window).scrollTop();
+							if(sd>100){
+								$this.fadeIn();
+							}else{
+								$this.fadeOut();
+							}
+						}
+					});
+					
+					$this.click(function(){
+						scrolling=true;
+						$('html, body').animate({
+							scrollTop : 0
+						}, 500,function(){
+							scrolling=false;
+							$this.fadeOut();
+						});
+					});
+				});
+			};
+		})(jQuery); 
+		
+		$("#backtotop").totop();
+		
+		
+	});
+	</script>
+    <div style="display:none"><script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fca5faff96c9d02a74f0b12d2bd41b86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</div></body>
+</html>

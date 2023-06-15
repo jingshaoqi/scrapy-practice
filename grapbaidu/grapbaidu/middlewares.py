@@ -3,6 +3,7 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+import sys
 from scrapy import signals
 
 # useful for handling different item types with a single interface
@@ -16,12 +17,14 @@ class GrapbaiduSpiderMiddleware:
 
     @classmethod
     def from_crawler(cls, crawler):
+        print('func:{}'.format(sys._getframe().f_code.co_name))
         # This method is used by Scrapy to create your spiders.
         s = cls()
         crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
         return s
 
     def process_spider_input(self, response, spider):
+        print('func:{}'.format(sys._getframe().f_code.co_name))
         # Called for each response that goes through the spider
         # middleware and into the spider.
 
@@ -29,6 +32,7 @@ class GrapbaiduSpiderMiddleware:
         return None
 
     def process_spider_output(self, response, result, spider):
+        print('func:{}'.format(sys._getframe().f_code.co_name))
         # Called with the results returned from the Spider, after
         # it has processed the response.
 
@@ -37,6 +41,7 @@ class GrapbaiduSpiderMiddleware:
             yield i
 
     def process_spider_exception(self, response, exception, spider):
+        print('func:{}'.format(sys._getframe().f_code.co_name))
         # Called when a spider or process_spider_input() method
         # (from other spider middleware) raises an exception.
 
@@ -44,6 +49,7 @@ class GrapbaiduSpiderMiddleware:
         pass
 
     def process_start_requests(self, start_requests, spider):
+        print('func:{}'.format(sys._getframe().f_code.co_name))
         # Called with the start requests of the spider, and works
         # similarly to the process_spider_output() method, except
         # that it doesn’t have a response associated.
@@ -53,6 +59,7 @@ class GrapbaiduSpiderMiddleware:
             yield r
 
     def spider_opened(self, spider):
+        print('func:{}'.format(sys._getframe().f_code.co_name))
         spider.logger.info('Spider opened: %s' % spider.name)
 
 
@@ -63,12 +70,14 @@ class GrapbaiduDownloaderMiddleware:
 
     @classmethod
     def from_crawler(cls, crawler):
+        print('func:{}'.format(sys._getframe().f_code.co_name))
         # This method is used by Scrapy to create your spiders.
         s = cls()
         crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
         return s
 
     def process_request(self, request, spider):
+        print('func:{}'.format(sys._getframe().f_code.co_name))
         # Called for each request that goes through the downloader
         # middleware.
 
@@ -81,6 +90,7 @@ class GrapbaiduDownloaderMiddleware:
         return None
 
     def process_response(self, request, response, spider):
+        print('func:{}'.format(sys._getframe().f_code.co_name))
         # Called with the response returned from the downloader.
 
         # Must either;
@@ -90,6 +100,7 @@ class GrapbaiduDownloaderMiddleware:
         return response
 
     def process_exception(self, request, exception, spider):
+        print('func:{}'.format(sys._getframe().f_code.co_name))
         # Called when a download handler or a process_request()
         # (from other downloader middleware) raises an exception.
 
@@ -100,4 +111,5 @@ class GrapbaiduDownloaderMiddleware:
         pass
 
     def spider_opened(self, spider):
+        print('func:{}'.format(sys._getframe().f_code.co_name))
         spider.logger.info('Spider opened: %s' % spider.name)
