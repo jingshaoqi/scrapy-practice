@@ -18,9 +18,7 @@ class JuniorQhSpider(scrapy.Spider):
                  '__EVENTARGUMENT': '',
                  '__VIEWSTATE': '',
                  '__VIEWSTATEGENERATOR': '',
-                 '__EVENTVALIDATION': '',
-                 '': '',
-                 '': '',
+                 '__EVENTVALIDATION': ''
                  }
 
     def parse(self, response):
@@ -64,15 +62,15 @@ class JuniorQhSpider(scrapy.Spider):
         self.headers['referer'] = response.url
         # 提取formdata信息
         event_target = response.xpath('//div/input[@id="__EVENTTARGET"]/@value')
-        event_target_str = event_target.extract()[0]
+        event_target_str = event_target.extract()[0] if len(event_target) > 0 else ''
         event_argument = response.xpath('//div/input[@id="__EVENTARGUMENT"]/@value')
-        event_argument_str = event_argument.extract()[0]
+        event_argument_str = event_argument.extract()[0] if len(event_argument) > 0 else ''
         view_state = response.xpath('//div/input[@id="__VIEWSTATE"]/@value')
-        view_state_str = view_state.extract()[0]
+        view_state_str = view_state.extract()[0] if len(view_state) > 0 else ''
         event_validation = response.xpath('//div/input[@id="__EVENTVALIDATION"]/@value')
-        event_validation_str = event_validation.extract()[0]
+        event_validation_str = event_validation.extract()[0] if len(event_validation) > 0 else ''
         view_state_generator = response.xpath('//div/input[@id="__VIEWSTATEGENERATOR"]/@value')
-        view_state_generator_str = view_state_generator.extract()[0]
+        view_state_generator_str = view_state_generator.extract()[0] if len(view_state_generator) > 0 else ''
         self.form_data['__EVENTTARGET'] = event_target_str
         self.form_data['__EVENTARGUMENT'] = event_argument_str
         self.form_data['__VIEWSTATE'] = view_state_str
