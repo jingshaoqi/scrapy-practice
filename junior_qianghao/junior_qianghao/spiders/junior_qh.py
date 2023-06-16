@@ -1,5 +1,5 @@
 import json
-
+from urllib.parse import urlencode
 import scrapy
 from urllib.parse import urljoin
 import ddddocr
@@ -9,11 +9,20 @@ class JuniorQhSpider(scrapy.Spider):
     allowed_domains = ["www.baidu.com"]
     start_urls = ["https://wsemal.com/CZBM/JW/JW_iframe.aspx?FS=CC"]
     user_dll_url = ''
-    headers = {'authority': 'wsemal.com',
-               'referer': 'https://wsemal.com/CZBM/',
-               'host':'wsemal.com',
-               'cookie': '',
-               'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.43'}
+    headers = {'Referer': 'https://wsemal.com/CZBM/',
+               'Host':'wsemal.com',
+               'Cookie': '',
+                "User-Agent": "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+                "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
+                "Upgrade-Insecure-Requests": "1",
+                "Sec-Fetch-Dest": "document",
+                "Sec-Fetch-Mode": "navigate",
+                "Sec-Fetch-Site": "none",
+                "Sec-Fetch-User": "?1",
+                }
     form_data = {'__EVENTTARGET': '',
                  '__EVENTARGUMENT': '',
                  '__VIEWSTATE': '',
@@ -22,7 +31,7 @@ class JuniorQhSpider(scrapy.Spider):
                  }
 
     def parse(self, response):
-        with open('junior.html', 'w') as f:
+        with open('JW_iframe.aspx.html', 'w') as f:
             f.write(response.text)
         #print(response.text)
         # find mainframe
@@ -39,16 +48,23 @@ class JuniorQhSpider(scrapy.Spider):
         fdf = str(ckie).split(';')
         # 只需要第一个
         #str_cookie = fdf[0] + ';ZLPJUserName=; ZLPJPassWord=; FDZSUserName=; FDZSPassWord=; XQZSUserName=; XQPassWord=; PPUserName=; PPPassWord=; XSQHUserName=; XSQHPassWord='
-        str_cookie = fdf[0]
-        self.headers['cookie'] = str_cookie
-        self.headers['referer'] = response.url # https://wsemal.com/CZBM/JW/JW_iframe.aspx?FS=CC
-
+        for i in fdf:
+            if i.find('SessionId') >= 0:
+                self.headers['Cookie'] = i #ASP.NET_SessionId=3rg5mw45ldudcbmsvfnyayj0
+                break
+        self.headers['Referer'] = response.url # https://wsemal.com/CZBM/JW/JW_iframe.aspx?FS=CC
+        self.headers['Sec-Fetch-Dest'] = 'iframe'
+        self.headers['Sec-Fetch-Mode'] = 'navigate'
+        self.headers['Sec-Fetch-Site'] = 'same-origin'
+        self.headers['TE'] = 'trailers'
+        if self.headers.get('Sec-Fetch-User') is not None:
+            self.headers.pop('Sec-Fetch-User')
         #yield scrapy.Request(url=main_frm_url_full, callback=self.main_parse, headers=headers, dont_filter=True)
-        self.user_dll_url = main_frm_url_full
+        self.user_dll_url = main_frm_url_full #https://wsemal.com/CZBM/JW/JW_UserDL.aspx
         yield scrapy.Request(url=main_frm_url_full, callback=self.main_parse, headers=self.headers, dont_filter=True)
 
     def main_parse(self, response):
-        with open('junior_main.html', 'w') as f:
+        with open('JW_UserDL.aspx.html', 'w') as f:
             f.write(response.text)
         #print(response.text)
         # 现在来获取验证码的图片
@@ -59,7 +75,14 @@ class JuniorQhSpider(scrapy.Spider):
         yzm_url_t = yzm_url.extract()[0]
         yzm_url_full = urljoin(response.url, yzm_url_t)
         # https://wsemal.com/CZBM/JW/JW_UserDL.aspx
-        self.headers['referer'] = response.url
+        self.headers['Referer'] = response.url
+        self.headers['Accept'] = 'image/avif,image/webp,*/*'
+        self.headers['Sec-Fetch-Dest'] = 'image'
+        self.headers['Sec-Fetch-Mode'] = 'no-cors'
+        self.headers['Sec-Fetch-Site'] = 'same-origin'
+        self.headers['TE'] = 'trailers'
+        if self.headers.get('Sec-Fetch-User') is not None:
+            self.headers.pop('Sec-Fetch-User')
         # 提取formdata信息
         event_target = response.xpath('//div/input[@id="__EVENTTARGET"]/@value')
         event_target_str = event_target.extract()[0] if len(event_target) > 0 else ''
@@ -87,14 +110,26 @@ class JuniorQhSpider(scrapy.Spider):
         res = ocr.classification(response.body)
         print(res)
 
+        self.headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8'
+        self.headers['Origin'] = 'https://wsemal.com'
+        self.headers['Upgrade-Insecure-Requests'] = '1'
+        self.headers['Sec-Fetch-Dest'] = 'iframe'
+        self.headers['Sec-Fetch-Mode'] = 'navigate'
+        self.headers['Sec-Fetch-Site'] = 'same-origin'
+        self.headers['TE'] = 'trailers'
+        self.headers['Sec-Fetch-User'] = '?1'
+
         #现在使用用户名，密码，验证码登录
-        self.form_data['L_username'] = '500237201105319767'
-        self.form_data['L_password'] = 'asdf1236'
+        self.form_data['L_username'] = '500237201011301419'
+        self.form_data['L_password'] = 'a201025Q'
         self.form_data['L_YZM'] = res
         self.form_data['Button1'] = '登录'
-        yield scrapy.Request(url=self.user_dll_url, method='POST', body=json.dumps(self.form_data),
+        bodystr = urlencode(self.form_data)
+        self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        self.headers['Content-Length'] = '{}'.format(len(bodystr))
+        yield scrapy.Request(url=self.user_dll_url, method='POST', body=bodystr,
                              callback=self.login_parse,headers=self.headers, dont_filter=True)
-
+    #登录结果分析，登录结果中添加了 coookie XSQHUserName
     def login_parse(self, response):
         with open('login_res.html', 'w') as f:
             f.write(response.text)
