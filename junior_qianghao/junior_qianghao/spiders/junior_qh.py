@@ -1,4 +1,6 @@
+import time
 import json
+import re
 from urllib.parse import urlencode
 import scrapy
 from urllib.parse import urljoin
@@ -22,6 +24,7 @@ class JuniorQhSpider(scrapy.Spider):
                 "Sec-Fetch-Mode": "navigate",
                 "Sec-Fetch-Site": "none",
                 "Sec-Fetch-User": "?1",
+               "TE": "trailers",
                 }
     form_data = {'__EVENTTARGET': '',
                  '__EVENTARGUMENT': '',
@@ -29,6 +32,25 @@ class JuniorQhSpider(scrapy.Spider):
                  '__VIEWSTATEGENERATOR': '',
                  '__EVENTVALIDATION': ''
                  }
+    def start_requests(self):
+        # wait
+        desttime = '2023-6-16 9:00:00'
+        a2time = time.strptime(desttime, '%Y-%m-%d %H:%M:%S')
+        while 1:
+            localtm = time.localtime()
+            if localtm >= a2time:
+                break
+            else:
+                time.sleep(0.01)
+        if self.headers.get('Cookie') is not None:
+            self.headers.pop('Cookie')
+        if self.headers.get('Referer') is not None:
+            self.headers.pop('Referer')
+        if self.headers.get('TE') is not None:
+            self.headers.pop('TE')
+
+        for url in self.start_urls:
+            yield scrapy.Request(url=url, headers=self.headers, callback=self.parse, dont_filter=True)
 
     def parse(self, response):
         with open('JW_iframe.aspx.html', 'w') as f:
@@ -101,6 +123,7 @@ class JuniorQhSpider(scrapy.Spider):
         self.form_data['__VIEWSTATEGENERATOR'] = view_state_generator_str
         yield scrapy.Request(url=yzm_url_full, callback=self.yzm_parse, headers=self.headers, dont_filter=True)
 
+    # 解析验证码后按登录按钮
     def yzm_parse(self, response):
         # 保存验证码图片
         with open('yan_zheng_ma.jpg', 'wb') as f:
@@ -129,10 +152,77 @@ class JuniorQhSpider(scrapy.Spider):
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
         yield scrapy.Request(url=self.user_dll_url, method='POST', body=bodystr,
                              callback=self.login_parse,headers=self.headers, dont_filter=True)
-    #登录结果分析，登录结果中添加了 coookie XSQHUserName
+    #登录结果分析，登录结果中添加了 cookie XSQHUserName
     def login_parse(self, response):
         with open('login_res.html', 'w') as f:
             f.write(response.text)
-        print(response.text)
+        #print(response.text)
+        # 获取cookie XSQHUserName的值
+        if response.headers.get('Set-Cookie') is None:
+            print('login fail')
+            #再次请求一个验证码
+            print('try to get another yanzhengma')
+            self.main_parse(response)
+            return
+        print('login success')
+        ckie = response.headers['Set-Cookie']
+        if str(ckie).find('XSQHUserName') < 0:
+            print('login fail too.')
+            return
+        fdf = str(ckie).split(';')
+        # 只需要有用的值
+        for i in fdf:
+            if i.find('XSQHUserName') >= 0:
+                self.headers['Cookie'] += ';' + i  # ASP.NET_SessionId=3rg5mw45ldudcbmsvfnyayj0
+                break
+        # https://wsemal.com/CZBM/JW/JW_ZSBM.aspx
+        zsbm_url = urljoin(response.url, '../JW/JW_ZSBM.aspx')
+        print('请求下一个网页：{}'.format(zsbm_url))
+        if self.headers.get('Origin') is not None:
+            self.headers.pop('Origin')
+        # 请求头中删除不需要的
+        if self.headers.get('Content-Type') is not None:
+            self.headers.pop('Content-Type')
+        if self.headers.get('Content-Length') is not None:
+            self.headers.pop('Content-Length')
+        if self.headers.get('Sec-Fetch-User') is not None:
+            self.headers.pop('Sec-Fetch-User')
+        yield scrapy.Request(url=zsbm_url, method='GET', callback=self.ZSBM_parse, headers=self.headers,
+                             dont_filter=True)
+
+    def ZSBM_parse(self, response):
+        with open('JW_ZSBM.aspx.html', 'w') as f:
+            f.write(response.text)
+        # https://wsemal.com/CZBM/JW/JW_UserDL.aspx
+        self.headers['Referer'] = response.url
+        #再进入 https://wsemal.com/CZBM/JW/JW_XSBMXZ1.aspx
+        # 它的参数需要解析出来才行
+        spt = response.xpath('//script/text()')
+        if spt is None:
+            return
+        spt_t = spt.extract()[0]
+        str_all = re.findall(r"href=\'(.+?)\';", spt_t)
+        if str_all is None:
+            return
+        xsbmxz1_url = urljoin(response.url, str_all[0])
+        print('请求下一个网页：{}'.format(xsbmxz1_url))
+        yield scrapy.Request(url=xsbmxz1_url, method='GET', callback=self.XSBMXZ1_parse, headers=self.headers,
+                             dont_filter=True)
 
 
+    def XSBMXZ1_parse(self, response):
+        with open('JW_XSBMXZ1.aspx.html', 'w') as f:
+            f.write(response.text)
+        # https://wsemal.com/CZBM/JW/JW_XSBMXZ1.aspx
+        self.headers['Referer'] = response.url
+        # https://wsemal.com/CZBM/JW/JW_ZSBM.aspx?FS=YES
+        next_url = urljoin(response.url, '../JW/JW_ZSBM.aspx?FS=YES')
+        self.headers['Sec-Fetch-User'] = '?1'
+        return #当前已经结束
+        yield scrapy.Request(url=next_url, method='GET', callback=self.ZSBM_FS_YES_parse, headers=self.headers,
+                             dont_filter=True)
+    def ZSBM_FS_YES_parse(self, response):
+        with open('JW_ZSBM_FS_YES.aspx.html', 'w') as f:
+            f.write(response.text)
+        with open('JW_ZSBM_FS_YES.body.html', 'w') as f:
+            f.write(response.body)

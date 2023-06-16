@@ -1,0 +1,16 @@
+
+https://wsemal.com/CZBM/public/checkcode.aspx
+
+GET /CZBM/public/checkcode.aspx HTTP/2
+Host: wsemal.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0
+Accept: image/avif,image/webp,*/*
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate, br
+Referer: https://wsemal.com/CZBM/JW/JW_UserDL.aspx
+Connection: keep-alive
+Cookie: ASP.NET_SessionId=3rg5mw45ldudcbmsvfnyayj0
+Sec-Fetch-Dest: image
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Site: same-origin
+TE: trailers
