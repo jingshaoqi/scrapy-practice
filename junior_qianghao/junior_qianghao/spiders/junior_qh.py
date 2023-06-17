@@ -33,6 +33,7 @@ class JuniorQhSpider(scrapy.Spider):
                  '__VIEWSTATEGENERATOR': '',
                  '__EVENTVALIDATION': ''
                  }
+    yzm_url_full='' #保存验证码的url
     def start_requests(self):
         # wait
         desttime = '2023-6-17 8:00:00'
@@ -93,9 +94,9 @@ class JuniorQhSpider(scrapy.Spider):
             return
         # https://wsemal.com/CZBM/public/checkcode.aspx
         yzm_url_t = yzm_url.extract()[0]
-        yzm_url_full = urljoin(response.url, yzm_url_t)
+        self.yzm_url_full = urljoin(response.url, yzm_url_t)
         # https://wsemal.com/CZBM/JW/JW_UserDL.aspx
-        self.headers['Referer'] = response.url
+        self.headers['Referer'] = self.user_dll_url
         self.headers['Accept'] = 'image/avif,image/webp,*/*'
         self.headers['Sec-Fetch-Dest'] = 'image'
         self.headers['Sec-Fetch-Mode'] = 'no-cors'
@@ -119,7 +120,7 @@ class JuniorQhSpider(scrapy.Spider):
         self.form_data['__VIEWSTATE'] = view_state_str
         self.form_data['__EVENTVALIDATION'] = event_validation_str
         self.form_data['__VIEWSTATEGENERATOR'] = view_state_generator_str
-        yield scrapy.Request(url=yzm_url_full, callback=self.yzm_parse, headers=self.headers, dont_filter=True)
+        yield scrapy.Request(url=self.yzm_url_full, callback=self.yzm_parse, headers=self.headers, dont_filter=True)
 
     # 解析验证码后按登录按钮
     def yzm_parse(self, response):
@@ -159,7 +160,20 @@ class JuniorQhSpider(scrapy.Spider):
             print('login fail')
             #再次请求一个验证码
             print('try to get another yanzhengma')
-            self.main_parse(response)
+            self.headers['Referer'] = self.user_dll_url
+            self.headers['Accept'] = 'image/avif,image/webp,*/*'
+            self.headers['Sec-Fetch-Dest'] = 'image'
+            self.headers['Sec-Fetch-Mode'] = 'no-cors'
+            self.headers['Sec-Fetch-Site'] = 'same-origin'
+            self.headers['TE'] = 'trailers'
+            # 请求头中删除不需要的
+            if self.headers.get('Content-Type') is not None:
+                self.headers.pop('Content-Type')
+            if self.headers.get('Content-Length') is not None:
+                self.headers.pop('Content-Length')
+            if self.headers.get('Sec-Fetch-User') is not None:
+                self.headers.pop('Sec-Fetch-User')
+            yield scrapy.Request(url=self.yzm_url_full, callback=self.yzm_parse, headers=self.headers, dont_filter=True)
             return
         print('login success')
         ckie = response.headers['Set-Cookie']
