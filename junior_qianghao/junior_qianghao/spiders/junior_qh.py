@@ -11,6 +11,7 @@ class JuniorQhSpider(scrapy.Spider):
     allowed_domains = ["www.baidu.com"]
     start_urls = ["https://wsemal.com/CZBM/JW/JW_iframe.aspx?FS=CC"]
     user_dll_url = ''
+    school_code = ''
     headers = {'Referer': 'https://wsemal.com/CZBM/',
                'Host':'wsemal.com',
                'Cookie': '',
@@ -34,7 +35,7 @@ class JuniorQhSpider(scrapy.Spider):
                  }
     def start_requests(self):
         # wait
-        desttime = '2023-6-16 9:00:00'
+        desttime = '2023-6-17 8:00:00'
         a2time = time.strptime(desttime, '%Y-%m-%d %H:%M:%S')
         while 1:
             localtm = time.localtime()
@@ -69,7 +70,6 @@ class JuniorQhSpider(scrapy.Spider):
         ckie = response.headers['Set-Cookie']
         fdf = str(ckie).split(';')
         # 只需要第一个
-        #str_cookie = fdf[0] + ';ZLPJUserName=; ZLPJPassWord=; FDZSUserName=; FDZSPassWord=; XQZSUserName=; XQPassWord=; PPUserName=; PPPassWord=; XSQHUserName=; XSQHPassWord='
         for i in fdf:
             if i.find('SessionId') >= 0:
                 self.headers['Cookie'] = i #ASP.NET_SessionId=3rg5mw45ldudcbmsvfnyayj0
@@ -81,14 +81,12 @@ class JuniorQhSpider(scrapy.Spider):
         self.headers['TE'] = 'trailers'
         if self.headers.get('Sec-Fetch-User') is not None:
             self.headers.pop('Sec-Fetch-User')
-        #yield scrapy.Request(url=main_frm_url_full, callback=self.main_parse, headers=headers, dont_filter=True)
         self.user_dll_url = main_frm_url_full #https://wsemal.com/CZBM/JW/JW_UserDL.aspx
         yield scrapy.Request(url=main_frm_url_full, callback=self.main_parse, headers=self.headers, dont_filter=True)
 
     def main_parse(self, response):
         with open('JW_UserDL.aspx.html', 'w') as f:
             f.write(response.text)
-        #print(response.text)
         # 现在来获取验证码的图片
         yzm_url = response.xpath('//table/tr/td/input[@id="ImageButtonYZM"]/@src')
         if yzm_url is None:
@@ -131,8 +129,7 @@ class JuniorQhSpider(scrapy.Spider):
         # 利用 ddddocr识别验证码
         ocr = ddddocr.DdddOcr()
         res = ocr.classification(response.body)
-        print(res)
-
+        print('验证码为:{}'.format(res))
         self.headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8'
         self.headers['Origin'] = 'https://wsemal.com'
         self.headers['Upgrade-Insecure-Requests'] = '1'
@@ -150,13 +147,13 @@ class JuniorQhSpider(scrapy.Spider):
         bodystr = urlencode(self.form_data)
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
+        #准备好了数据 按 登录 按钮
         yield scrapy.Request(url=self.user_dll_url, method='POST', body=bodystr,
-                             callback=self.login_parse,headers=self.headers, dont_filter=True)
+                             callback=self.login_parse, headers=self.headers, dont_filter=True)
     #登录结果分析，登录结果中添加了 cookie XSQHUserName
     def login_parse(self, response):
         with open('login_res.html', 'w') as f:
             f.write(response.text)
-        #print(response.text)
         # 获取cookie XSQHUserName的值
         if response.headers.get('Set-Cookie') is None:
             print('login fail')
@@ -187,8 +184,7 @@ class JuniorQhSpider(scrapy.Spider):
             self.headers.pop('Content-Length')
         if self.headers.get('Sec-Fetch-User') is not None:
             self.headers.pop('Sec-Fetch-User')
-        yield scrapy.Request(url=zsbm_url, method='GET', callback=self.ZSBM_parse, headers=self.headers,
-                             dont_filter=True)
+        yield scrapy.Request(url=zsbm_url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
 
     def ZSBM_parse(self, response):
         with open('JW_ZSBM.aspx.html', 'w') as f:
@@ -204,11 +200,112 @@ class JuniorQhSpider(scrapy.Spider):
         str_all = re.findall(r"href=\'(.+?)\';", spt_t)
         if str_all is None:
             return
-        xsbmxz1_url = urljoin(response.url, str_all[0])
-        print('请求下一个网页：{}'.format(xsbmxz1_url))
-        yield scrapy.Request(url=xsbmxz1_url, method='GET', callback=self.XSBMXZ1_parse, headers=self.headers,
+        #这个是模拟抢号之前的代码
+        #xsbmxz1_url = urljoin(response.url, str_all[0])
+        #print('请求下一个网页：{}'.format(xsbmxz1_url))
+        #yield scrapy.Request(url=xsbmxz1_url, callback=self.XSBMXZ1_parse, headers=self.headers, dont_filter=True)
+
+        zsbm1_url = urljoin(response.url, str_all[0])
+        print('请求下一个网页：{}'.format(zsbm1_url))
+        yield scrapy.Request(url=zsbm1_url, callback=self.ZSBM1_parse, headers=self.headers, dont_filter=True)
+
+    def ZSBM1_parse(self, response):
+        with open('JW_ZSBM1.aspx.html', 'w') as f:
+            f.write(response.text)
+        #解析响应中有用的数据
+        #先要获取学校名称和代号
+        schools = response.xpath('//tr/td/select/option')
+        if schools is None:
+            print('not have schools')
+            return
+        select_school_name = '巫山二中'
+        select_school_code = 'A23317'
+        for i in schools:
+            school_name = i.xpath('./text()').extract()[0]
+            self.school_code = i.xpath('./@value').extract()[0]
+            if school_name.find(select_school_name) >= 0:
+                break
+
+        #再要获取下一个请求的url
+        action_url = response.xpath('//body/form[@id="form1" and @method="post"]/@action')
+        if action_url is None:
+            return
+        action_url_t = action_url.extract()[0]
+        # https://wsemal.com/CZBM/JW/JW_ZSBM1.aspx?TT=2023%2f6%2f17+8%3a30%3a00&PC=%u7b2c%u4e00%u6279%u6b21(A%u8f6e)
+        action_url_full = urljoin(response.url, action_url_t)
+
+        # https://wsemal.com/CZBM/JW/JW_ZSBM.aspx
+        self.headers['Referer'] = response.url
+        if self.headers.get('Sec-Fetch-User') is not None:
+            self.headers.pop('Sec-Fetch-User')
+        if self.headers.get('Upgrade-Insecure-Requests') is not None:
+            self.headers.pop('Upgrade-Insecure-Requests')
+        self.headers['Origin'] = 'https://wsemal.com'
+        self.headers['Cache-Control'] = 'no-cache'
+        self.headers['X-MicrosoftAjax'] = 'Delta=true'
+        self.headers['Sec-Fetch-Dest'] = 'empty'
+        self.headers['Sec-Fetch-Mode'] = 'cors'
+        self.headers['Sec-Fetch-Site'] = 'same-origin'
+        # 修改请求的数据 在实际的浏览器中测试分两次进行，一次是展开下拉列表，第二次是按提交按钮，
+        # 这里直接提交
+        #self.form_data['ScriptManager1'] = 'UpdatePanel3|DropDownListQHXX'
+        #self.form_data['__EVENTTARGET'] = 'DropDownListQHXX'
+        self.form_data['ScriptManager1'] = 'UpdatePanel3|ButtonOK'
+        self.form_data['__EVENTTARGET'] = ''
+        self.form_data['__LASTFOCUS'] = ''
+        self.form_data['__ASYNCPOST'] = 'true'
+        self.form_data['DropDownListQHXX'] = self.school_code
+        event_argument = response.xpath('//div/input[@id="__EVENTARGUMENT"]/@value')
+        event_argument_str = event_argument.extract()[0] if len(event_argument) > 0 else ''
+        view_state = response.xpath('//div/input[@id="__VIEWSTATE"]/@value')
+        view_state_str = view_state.extract()[0] if len(view_state) > 0 else ''
+        event_validation = response.xpath('//div/input[@id="__EVENTVALIDATION"]/@value')
+        event_validation_str = event_validation.extract()[0] if len(event_validation) > 0 else ''
+        view_state_generator = response.xpath('//div/input[@id="__VIEWSTATEGENERATOR"]/@value')
+        view_state_generator_str = view_state_generator.extract()[0] if len(view_state_generator) > 0 else ''
+
+        self.form_data['__EVENTARGUMENT'] = event_argument_str
+        self.form_data['__VIEWSTATE'] = view_state_str
+        self.form_data['__EVENTVALIDATION'] = event_validation_str
+        self.form_data['__VIEWSTATEGENERATOR'] = view_state_generator_str
+        bodystr = urlencode(self.form_data)
+        self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        self.headers['Content-Length'] = '{}'.format(len(bodystr))
+        # yield scrapy.Request(url=action_url_full, method='POST', body=bodystr, callback=self.post_zsbm1_parse,
+        # headers=self.headers, dont_filter=True)
+        yield scrapy.Request(url=action_url_full, method='POST', body=bodystr, callback=self.button_ok_parse,
+                             headers=self.headers, dont_filter=True)
+
+    def post_zsbm1_parse(self, response):
+        with open('post_zsbm1_parse.aspx.html', 'w') as f:
+            f.write(response.text)
+        #再提交一次
+        self.form_data['ScriptManager1'] = 'UpdatePanel3|ButtonOK'
+        self.form_data['__EVENTTARGET'] = ''
+        self.form_data['__LASTFOCUS'] = ''
+        self.form_data['__ASYNCPOST'] = 'true'
+        self.form_data['ButtonOK'] = '提交申请'
+        self.form_data['DropDownListQHXX'] = self.school_code
+        view_state = re.findall(r'__VIEWSTATE\|(.+?)\|', response.text)
+        view_generator = re.findall(r'__VIEWSTATEGENERATOR\|(.+?)\|', response.text)
+        event_validation = re.findall(r'__EVENTVALIDATION\|(.+?)\|', response.text)
+        self.form_data['__VIEWSTATE'] = view_state[0] if len(view_state)>0 else ''
+        self.form_data['__EVENTVALIDATION'] = event_validation[0] if len(event_validation) > 0 else ''
+        self.form_data['__VIEWSTATEGENERATOR'] = view_generator[0] if len(view_generator) > 0 else ''
+
+        bodystr = urlencode(self.form_data)
+        self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        self.headers['Content-Length'] = '{}'.format(len(bodystr))
+        yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.post2_zsbm1_parse, headers=self.headers,
                              dont_filter=True)
 
+    def post2_zsbm1_parse(self, response):
+        with open('post2_zsbm1.aspx.html', 'w') as f:
+            f.write(response.text)
+
+    def button_ok_parse(self, response):
+        with open('button_ok.aspx.html', 'w') as f:
+            f.write(response.text)
 
     def XSBMXZ1_parse(self, response):
         with open('JW_XSBMXZ1.aspx.html', 'w') as f:
@@ -219,8 +316,7 @@ class JuniorQhSpider(scrapy.Spider):
         next_url = urljoin(response.url, '../JW/JW_ZSBM.aspx?FS=YES')
         self.headers['Sec-Fetch-User'] = '?1'
         return #当前已经结束
-        yield scrapy.Request(url=next_url, method='GET', callback=self.ZSBM_FS_YES_parse, headers=self.headers,
-                             dont_filter=True)
+        yield scrapy.Request(url=next_url, callback=self.ZSBM_FS_YES_parse, headers=self.headers, dont_filter=True)
     def ZSBM_FS_YES_parse(self, response):
         with open('JW_ZSBM_FS_YES.aspx.html', 'w') as f:
             f.write(response.text)

@@ -1,4 +1,46 @@
+https://wsemal.com/CZBM/JW/JW_iframe.aspx?FS=CC
+500223201101127081
+Zmh666666
+郑梦涵
+18996688875
+{
+	"请求 Cookie": {
+		"ASP.NET_SessionId": "mlrf3v455vfi2g55ulz4k1qb",
+		"XSQHUserName": "LKk4kUK/Kftip9Ih7A/8S2O3VlrviGcN"
+	}
+}
+{
+	"响应 Cookie": {
+		"XSQHUserName": {
+			"expires": "2023-06-24T00:25:27.000Z",
+			"path": "/",
+			"value": "LKk4kUK/Kftip9Ih7A/8S2O3VlrviGcN"
+		}
+	}
+}
+
 500237201011301419
 a201025Q
+彭鑫
+17783631632
+{
+	"请求 Cookie": {
+		"ASP.NET_SessionId": "mlrf3v455vfi2g55ulz4k1qb",
+		"XSQHUserName": "B/6ZDasDh2frxUFLxf0IgKQxru831H0K"
+	}
+}
+{
+	"响应 Cookie": {
+		"XSQHUserName": {
+			"expires": "2023-06-24T00:23:45.000Z",
+			"path": "/",
+			"value": "B/6ZDasDh2frxUFLxf0IgKQxru831H0K"
+		}
+	}
+}
 
-500223201101127081
+
+
+学校名称
+高唐初中
+巫山二中
