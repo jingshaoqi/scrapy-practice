@@ -254,6 +254,7 @@ class JuniorQhSpider(scrapy.Spider):
         self.form_data['__EVENTTARGET'] = ''
         self.form_data['__LASTFOCUS'] = ''
         self.form_data['__ASYNCPOST'] = 'true'
+        self.form_data['ButtonOK'] = '提交申请'
         self.form_data['DropDownListQHXX'] = self.school_code
         event_argument = response.xpath('//div/input[@id="__EVENTARGUMENT"]/@value')
         event_argument_str = event_argument.extract()[0] if len(event_argument) > 0 else ''
