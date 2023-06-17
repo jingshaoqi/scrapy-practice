@@ -74,16 +74,17 @@ class ModifyPasswdSpider(scrapy.Spider):
         ssp_url_full = urljoin(response.url, ssp_url)
         yield scrapy.Request(url=ssp_url_full, callback=self.SSP_parse, headers=self.headers, dont_filter=True)
 
+        # 在浏览器中实际上还有更新 身份证，姓名和电话号码的步骤，我们这里直接按确认按钮
     def SSP_parse(self, response):
         with open('ssp_parse.aspx.html', 'w') as f:
             f.write(response.text)
 
-        self.form_data['ScriptManager1'] = 'UpdatePanel1|LinkButton1'
+        self.form_data['ScriptManager1'] = 'UpdatePanel1|Button1'
         self.form_data['Hselcet'] = ''
 
         # 提取formdata信息
         event_target = response.xpath('//div/input[@id="__EVENTTARGET"]/@value')
-        self.form_data['__EVENTTARGET'] = 'LinkButton1'
+        self.form_data['__EVENTTARGET'] = ''
 
         event_argument = response.xpath('//div/input[@id="__EVENTARGUMENT"]/@value')
         self.form_data['__EVENTARGUMENT'] = event_argument.extract()[0] if len(event_argument) > 0 else ''
@@ -97,117 +98,6 @@ class ModifyPasswdSpider(scrapy.Spider):
         self.form_data['__LASTFOCUS'] = last_focus.extract()[0] if len(last_focus) > 0 else ''
 
         #填充数据
-        self.form_data['TextBox_SFZH'] = '500237201011301419'
-        self.form_data['TextBox_XM'] = ''
-        self.form_data['TextBox_T1'] = ''
-        self.form_data['__ASYNCPOST'] = 'true'
-        #self.form_data['Button1'] = '确认'
-
-
-        self.headers['Sec-Fetch-Dest'] = 'empty'
-        self.headers['Sec-Fetch-Mode'] = 'cors'
-        self.headers['Sec-Fetch-Site'] = 'same-origin'
-        self.headers['TE'] = 'trailers'
-        self.headers['X-MicrosoftAjax'] = 'Delta=true'
-        self.headers['Origin'] = 'https://wsemal.com'
-        self.headers['Referer'] = response.url
-        bodystr = urlencode(self.form_data)
-        self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-        self.headers['Content-Length'] = '{}'.format(len(bodystr))
-        yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.link_button_parse, headers=self.headers, dont_filter=True)
-
-    def link_button_parse(self, response):
-        with open('link_button.aspx.html', 'w') as f:
-            f.write(response.text)
-
-        self.form_data['ScriptManager1'] = 'UpdatePanel1|TextBox_XM'
-        self.form_data['Hselcet'] = ''
-
-        # 提取formdata信息
-        event_target = response.xpath('//div/input[@id="__EVENTTARGET"]/@value')
-        self.form_data['__EVENTTARGET'] = 'TextBox_XM'
-        viewstate = re.findall(r'__VIEWSTATE\|(.+?)\|', response.text)
-        viewgenerator = re.findall(r'__VIEWSTATEGENERATOR\|(.+?)\|', response.text)
-        eventvalidation = re.findall(r'__EVENTVALIDATION\|(.+?)\|', response.text)
-        self.form_data['__VIEWSTATE'] = viewstate[0] if len(viewstate) > 0 else ''
-        self.form_data['__EVENTVALIDATION'] = eventvalidation[0] if len(eventvalidation) > 0 else ''
-        self.form_data['__VIEWSTATEGENERATOR'] = viewgenerator[0] if len(viewgenerator) > 0 else ''
-
-        # 填充数据
-        self.form_data['TextBox_SFZH'] = '500237201011301419'
-        self.form_data['TextBox_XM'] = '彭鑫'
-        self.form_data['TextBox_T1'] = ''
-        self.form_data['__ASYNCPOST'] = 'true'
-        #self.form_data['Button1'] = '确认'
-
-        self.headers['Sec-Fetch-Dest'] = 'empty'
-        self.headers['Sec-Fetch-Mode'] = 'cors'
-        self.headers['Sec-Fetch-Site'] = 'same-origin'
-        self.headers['TE'] = 'trailers'
-        self.headers['X-MicrosoftAjax'] = 'Delta=true'
-        self.headers['Origin'] = 'https://wsemal.com'
-        self.headers['Referer'] = response.url
-        bodystr = urlencode(self.form_data)
-        self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-        self.headers['Content-Length'] = '{}'.format(len(bodystr))
-        yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.text_XM_parse, headers=self.headers,
-                             dont_filter=True)
-
-    def text_XM_parse(self, response):
-        with open('text_XM.aspx.html', 'w') as f:
-            f.write(response.text)
-
-        self.form_data['ScriptManager1'] = 'UpdatePanel1|TextBox_T1'
-        self.form_data['Hselcet'] = ''
-
-        # 提取formdata信息
-        event_target = response.xpath('//div/input[@id="__EVENTTARGET"]/@value')
-        self.form_data['__EVENTTARGET'] = 'TextBox_T1'
-        viewstate = re.findall(r'__VIEWSTATE\|(.+?)\|', response.text)
-        viewgenerator = re.findall(r'__VIEWSTATEGENERATOR\|(.+?)\|', response.text)
-        eventvalidation = re.findall(r'__EVENTVALIDATION\|(.+?)\|', response.text)
-        self.form_data['__VIEWSTATE'] = viewstate[0] if len(viewstate) > 0 else ''
-        self.form_data['__EVENTVALIDATION'] = eventvalidation[0] if len(eventvalidation) > 0 else ''
-        self.form_data['__VIEWSTATEGENERATOR'] = viewgenerator[0] if len(viewgenerator) > 0 else ''
-
-        # 填充数据
-        self.form_data['TextBox_SFZH'] = '500237201011301419'
-        self.form_data['TextBox_XM'] = '彭鑫'
-        self.form_data['TextBox_T1'] = '17783631632'
-        self.form_data['__ASYNCPOST'] = 'true'
-        # self.form_data['Button1'] = '确认'
-
-        self.headers['Sec-Fetch-Dest'] = 'empty'
-        self.headers['Sec-Fetch-Mode'] = 'cors'
-        self.headers['Sec-Fetch-Site'] = 'same-origin'
-        self.headers['TE'] = 'trailers'
-        self.headers['X-MicrosoftAjax'] = 'Delta=true'
-        self.headers['Origin'] = 'https://wsemal.com'
-        self.headers['Referer'] = response.url
-        bodystr = urlencode(self.form_data)
-        self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-        self.headers['Content-Length'] = '{}'.format(len(bodystr))
-        yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.text_tl_parse, headers=self.headers,
-                             dont_filter=True)
-
-    def text_tl_parse(self, response):
-        with open('text_tl.aspx.html', 'w') as f:
-            f.write(response.text)
-
-        self.form_data['ScriptManager1'] = 'UpdatePanel1|Button1'
-        self.form_data['Hselcet'] = ''
-
-        # 提取formdata信息
-        event_target = response.xpath('//div/input[@id="__EVENTTARGET"]/@value')
-        self.form_data['__EVENTTARGET'] = ''
-        viewstate = re.findall(r'__VIEWSTATE\|(.+?)\|', response.text)
-        viewgenerator = re.findall(r'__VIEWSTATEGENERATOR\|(.+?)\|', response.text)
-        eventvalidation = re.findall(r'__EVENTVALIDATION\|(.+?)\|', response.text)
-        self.form_data['__VIEWSTATE'] = viewstate[0] if len(viewstate) > 0 else ''
-        self.form_data['__EVENTVALIDATION'] = eventvalidation[0] if len(eventvalidation) > 0 else ''
-        self.form_data['__VIEWSTATEGENERATOR'] = viewgenerator[0] if len(viewgenerator) > 0 else ''
-
-        # 填充数据
         self.form_data['TextBox_SFZH'] = '500237201011301419'
         self.form_data['TextBox_XM'] = '彭鑫'
         self.form_data['TextBox_T1'] = '17783631632'
@@ -224,8 +114,7 @@ class ModifyPasswdSpider(scrapy.Spider):
         bodystr = urlencode(self.form_data)
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
-        yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.confirm_parse, headers=self.headers,
-                             dont_filter=True)
+        yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.confirm_parse, headers=self.headers, dont_filter=True)
 
     def confirm_parse(self, response):
         with open('confirm_parse.aspx.html', 'w') as f:
