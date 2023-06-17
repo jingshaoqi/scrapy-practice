@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<head><link href="../App_Themes/%E4%B8%BB%E9%A2%9801/StyleSheet.css" type="text/css" rel="stylesheet" /><title>
+	学生报名抢号
+</title>
+
+
+        <script type="text/javascript" language="javascript">
+          
+            var str = getQueryString("TT"); //取得本项目开始时间 
+            str = str.substring(0, 19);
+            str = str.replace(/-/g, '/');
+            var endDate = new Date(str);
+            var end = endDate.getTime();      
+            window.onload = function countTime()
+            {
+              
+                //获取当前时间  
+                var date = new Date();
+                var now = date.getTime();
+               
+                //时间差  
+                var leftTime = end - now;
+                if (leftTime > 0  )
+                {
+                    //定义变量 d,h,m,s保存倒计时的时间  
+                    var d, h, m, s;
+                    if (leftTime >= 0) {
+                        d = Math.floor(leftTime / 1000 / 60 / 60 / 24).toString();
+                        if (d.length <= 1) d = "0" + d;
+                        h = Math.floor(leftTime / 1000 / 60 / 60 % 24).toString();
+                        if (h.length <= 1) h = "0" + h;
+                        m = Math.floor(leftTime / 1000 / 60 % 60).toString();
+                        if (m.length <= 1) m = "0" + m;
+                        s = Math.floor(leftTime / 1000 % 60).toString();
+                        if (s.length <= 1) s = "0" + s;
+                    }
+
+                    //递归每秒调用countTime方法，显示动态时间效果  
+                    document.getElementById("time").innerText = "";
+                    if (d == "00") //24小时之内的才显示
+                        document.getElementById("time").innerText = h + ":" + m + ":" + s;
+                   
+                    //else
+                        //document.getElementById("time").innerText = d + ":" + h + ":" + m + ":" + s;
+
+                    if (d == "00" && h == "00" && m == "00" && s == "00")  //结束
+                    {
+                       
+                        document.getElementById("time").innerText = "";
+                        document.getElementById("btn1").click();
+                        //window.location.href("JW_UserDL.aspx");
+                     
+                    }
+                    else setTimeout(countTime, 1000);
+                }
+            }
+            
+
+            function getQueryString(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) {
+                    return decodeURIComponent(r[2]);
+                }
+                return '';
+            }
+  
+      </script>
+
+</head>
+    
+<body style="line-height :220%; overflow-x :hidden ; overflow-y :auto ; ">
+    <form method="post" action="./JW_ZSBM1.aspx?XX=XQ001&amp;ID=13&amp;TT=2023%2f6%2f18+9%3a00%3a00" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTk3MTcyMDMwMQ9kFgICAw9kFgYCCQ9kFgJmD2QWFgIBDw8WAh4EVGV4dAU65ber5bOh5bm85YS/5ZutMjAyM+W5tOeni+Wto+Wwj+ePreaKouWPt++8iOesrOS4gOaJueasoe+8iWRkAgMPDxYCHwAFBVhRMDAxZGQCBQ8PFgIfAAUP5ber5bOh5bm85YS/5ZutZGQCBw8PFgIfAAUKMjAxOS0wOS0wMWRkAgkPDxYCHwAFCjIwMjAtMDgtMzFkZAILDw8WAh8ABQMxMjVkZAINDw8WAh8ABQEwZGQCDw8PFgIfAAURMjAyMy82LzE4IDk6MDA6MDBkZAIRDw8WAh8ABRIyMDIzLzYvMTggMTA6MDA6MDBkZAITDw8WAh8ABQIxM2RkAhUPDxYCHwAFCeacquW8gOWni2RkAgsPZBYCZg9kFgICAQ8PFgIeB1Zpc2libGVoZBYOAgcPDxYMHglCYWNrQ29sb3IJ////AB4LQm9yZGVyU3R5bGULKiVTeXN0ZW0uV2ViLlVJLldlYkNvbnRyb2xzLkJvcmRlclN0eWxlAR4JRm9yZUNvbG9yCiUeCFJlYWRPbmx5Zx4HRW5hYmxlZGgeBF8hU0ICTGRkAg0PDxYMHwIJ////AB8DCysEAR8ECiUfBWcfBmgfBwJMZGQCDw8PFgIfAAUh5oi357GN5Zyo6auY5ZSQ6KGX6YGT5bm85YS/5Y+v5oqlZGQCEQ8PFgwfAgn///8AHwMLKwQBHwQKJR8FZx8GaB8HAkxkZAITDw8WDB8CCf///wAfAwsrBAEfBAolHwVnHwZoHwcCTGRkAhUPDxYMHwIJ////AB8DCysEAR8ECiUfBWcfBmgfBwJMZGQCFw8PFgwfAgn///8AHwMLKwQBHwQKJR8FZx8GaB8HAkxkZAIND2QWAmYPZBYCAgEPFgIfAAXOETx0YWJsZSBib3JkZXI9IjAiIHdpZHRoPSIxMDAlIiAgIGNlbGxwYWRkaW5nID0iMCIgY2VsbHNwYWNpbmc9IjAiICBjbGFzcz0iaG92ZXJ0YWJsZTUiID48VFIgYWxpZ24gPSJsZWZ0IiB2YWxpZ24gPSJtaWRkbGUiID48dGQgPjxwPiZuYnNwO+S4gOOAgeaLm+eUn+adoeS7tjwvcD4NCjxkaXY+77yI5LiA77yJ5bm06b6E5p2h5Lu244CCMjAxOeW5tDnmnIgx5pel6IezMjAyMOW5tDjmnIgzMeaXpeWHuueUn+eahOW5vOWEv+OAgjwvZGl2Pg0KPGRpdj7vvIjkuozvvInouqvkvZPmnaHku7bjgILouqvkvZPlgaXlurfvvIzog73mraPluLjlj4LliqDlubzlhL/lm63kuIDml6XmtLvliqjvvIzml6DkvKDmn5PmgKfnlr7nl4XjgII8L2Rpdj4NCjxkaXY+77yI5LiJ77yJ5oi357GN5p2h5Lu244CC5oi357GN5Zyo6auY5ZSQ6KGX6YGT44CCPC9kaXY+DQo8ZGl2PiZuYnNwOzwvZGl2Pg0KPGRpdj7kuozjgIHnvZHkuIrmiqLlj7fnlLPmiqXnqIvluo88L2Rpdj4NCjxkaXY+77yI5LiA77yJ56ys5LiA5om55qyh77yI5pyJ6auY5ZSQ44CB6b6Z6Zeo6KGX6YGT5oi357GN5LiU5a6e6ZmF5bGF5L2P5Zyo5Z+O5Yy655qE5bm85YS/77yJPC9kaXY+DQo8ZGl2PjEu572R5LiK5oqi5Y+3PC9kaXY+DQo8ZGl2PjIwMjPlubQ25pyIMTjml6U5OjAwJm1kYXNoOzEwOjAw77yMIOWutumVv+eZu+mZhiZsZHF1bzvlt6vlsbHljr/lrabliY3mlZnogrLmi5vnlJ/lhaXlrabnrqHnkIbmnI3liqHlubPlj7AmcmRxdW8777yMIOi+k+WFpeW5vOWEv+i6q+S7veivgeWPt+WQjuetieW+heezu+e7n+agoemqjO+8jOagoemqjOaIkOWKn+WQjuW9leWFpeW5vOWEv+WFpeWtpuWfuuacrOS/oeaBr++8iOWnk+WQjeOAgeaIt+exjeWcsOWdgOOAgeWunumZheWxheS9j+WcsOWdgOOAgeeItuS6suaIluavjeS6sueahOWnk+WQjeOAgeeItuS6suaIluavjeS6sueahOi6q+S7veivgeWPt+OAgeiBlOezu+eUteivne+8ieWQjuaPkOS6pOeUs+ivt+OAgjwvZGl2Pg0KPGRpdj7nibnliKvor7TmmI7vvJo8L2Rpdj4NCjxkaXY+4piF5bm06b6E5LiN5Zyo6KeE5a6a5pe26Ze05q616IyD5Zu055qE77yM57O757uf5Lya6Ieq5Yqo5oum5oiq77yM5peg5rOV55Sz5oql5L+h5oGv44CC572R5LiK5oql5ZCN5pe25o+Q5L6b55qE5omA5pyJ5L+h5oGv5Yqh5b+F55yf5a6e44CB5YeG56Gu77yM57O757uf5oyJ5L+h5oGv5o+Q5Lqk5pe26Ze06Ieq5Yqo5o6S5bqP77yM5ruh6aKd5Li65q2i44CCPC9kaXY+DQo8ZGl2PuKYhee9keS4iuWhq+aKpeS/oeaBr+W/hemhu+ecn+Wunu+8jOaIt+exjeWcsOWdgOWSjOaIt+WPo+ewv+S4iuS/oeaBr+S/neaMgeS4gOiHtO+8jOWHoeaciee9keS4iueUs+aKpeS/oeaBr+W8hOiZmuS9nOWBh+etieS4jeivmuS/oeihjOS4uueahO+8jOWwhuWPlua2iOesrOS6jOaJueasoeeUs+aKpei1hOagvOOAgjwvZGl2Pg0KPGRpdj4yLueOsOWcuuWuoeaguDwvZGl2Pg0KPGRpdj7vvIgx77yJ546w5Zy65a6h5qC45pe26Ze0PC9kaXY+DQo8ZGl2PjbmnIgxOOaXpTExOjAwJm1kYXNoOzE0OjAw77yM572R5LiK5oqi5Y+35oiQ5Yqf55qE5bm85YS/5rOV5a6a55uR5oqk5Lq65oyB55u45YWz5p2Q5paZ5Yiw55Sz5oql5bm85YS/5Zut6L+b6KGM546w5Zy65a6h5qC477yM5LiN5Zyo6KeE5a6a5pe26Ze05YaF6L+b6KGM546w5Zy65a6h5qC455qE77yM6KeG5Li66Ieq5Yqo5pS+5byD5oql5ZCN6LWE5qC877yM6LSj5Lu76Ieq6LSf44CCPC9kaXY+DQo8ZGl2Pu+8iDLvvInmiYDpnIDmnZDmlpk8L2Rpdj4NCjxkaXY+4pGg5oi35Y+j57C/77yI6aqM5Y6f5Lu277yM5Lqk5aSN5Y2w5Lu277ya5oi357GN5Li76aG144CB5bm85YS/6aG144CB54i277yI5q+N77yJ5Lqy6aG144CB5aKe5YeP6aG15aSN5Y2w5Yiw5LiA5bygQTTnurjkuIrvvInvvJs8L2Rpdj4NCjxkaXY+4pGh5bm85YS/6aKE6Ziy5o6l56eN6K+B77yI6aqM5Y6f5Lu277yM5Lqk5aSN5Y2w5Lu277yJ44CCPC9kaXY+DQo8ZGl2PueJueWIq+ivtOaYju+8mue7j+e7vOWQiOWuoeaguO+8jOespuWQiOadoeS7tueahOW5vOWEv+aWueWPr+WKnueQhuWFpeWbreazqOWGjOaJi+e7reOAguiLpeWuoeaguOS4reWPkeeOsOW5vOWEv+aKpeWQjeadkOaWmeW8hOiZmuS9nOWBh+aIlui6q+S9k+adoeS7tuaaguS4jemAguWunOWFpeWbreeahO+8jOWwhuWPlua2iOivpeW5vOWEv+WFpeWbrei1hOagvO+8jOepuuWHuuWtpuS9jeWwhue6s+WFpeesrOS6jOaJueasoeaKpeWQjeOAgjwvZGl2Pg0KPGRpdj4mbmJzcDs8L2Rpdj48L3RkPjwvdHI+PC90YWJsZT5kZFwCwJjbW3HPKy918FLpWQSBm8KvUPLAmZrMrroTYPAI" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/XQZS/WebResource.axd?d=QfDRD-qLec1fknq3pedJkdPO99SzHFp64JduNH1F9mOF5yM0s5-uDRo5-2Ai4WiHKWUv0RN-Pard4qKe55NBNdl8KEoWF22-71pj39CB9pY1&amp;t=637823653837077270" type="text/javascript"></script>
+
+
+<script src="/XQZS/ScriptResource.axd?d=PPoCtWRZ2xOzBsYrIYp8x5MYdQh8HrL2HZE8fcMDteQ40y5RKrrVO56eXbit9FxHZCfIisr0O_sYZ2ELFvzFyFQAHaeOsopa3yTLHEKS4q_kq0r9wdBq9WQbmcO3UOED8nPpOvc-vXGn3XGh7ehINEgYm3Vmhjx3983s8tzC45SepeK5V4juog6UqG28TvZD0&amp;t=ffffffffaa493ab8" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax 客户端框架未能加载。');
+//]]>
+</script>
+
+<script src="/XQZS/ScriptResource.axd?d=N0S7thaaWQDhtZp8ZtsnFOMGMOomtVq9ZmG4fGAJwZoP4xC6eBVGMo0LhpFvoVOuEzjPe82De5YEvJabB4gHGJqrBV95WTxX8f9N9f1F-hdXklS00Fg8Vm1eHcWl1JW-7Rf8TA9giCOWxVUMWG76ycp55kugvsRiOVuRK6egKU3yxVau6koEAzsosGQZ-gvj0&amp;t=ffffffffaa493ab8" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="5211EF33" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAALE5NqtXt8shAj7sqbDnlkbRrPpGzrD+ZG0Wk4Yrn35FhojpMOOgK4q25wW01HGnRmoxh3JKLA1NPoxkm03STPM" />
+</div>
+
+    <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ScriptManager1', 'form1', ['tUpdatePanel1','UpdatePanel1','tUpdatePanelAA','UpdatePanelAA','tUpdatePanel2','UpdatePanel2','tUpdatePanel3','UpdatePanel3'], ['btn1','btn1'], [], 90, '');
+//]]>
+</script>
+    
+    <div id="UpdateProgress1" style="display:none;">
+	
+       <div id="Layer1"><img src="../Images/loading1.gif"  /><img src="../Images/loading.gif"  /></div>
+        
+</div>    
+    <center >
+    
+    <div style =" position:relative; top  :-2300px; height :1px;">
+    <input type="submit" name="btn1" value="" id="btn1" />
+    </div>
+
+    <table border ="0" cellpadding ="0" cellspacing ="0" width ="760">
+        <tr align ="right" valign ="middle" >
+            <td>
+                <a href="javascript:history.back(-1)">返回</a>&nbsp;&nbsp;
+            </td>
+        </tr>
+        <tr align ="center" valign="middle" >
+            <td height="80">
+
+                <span id="Label1" style="color:Red;font-family:黑体;font-size:50pt;">公平  公正  公开</span>
+
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr align ="center" valign="middle" >
+            <td>
+                <div id="UpdatePanel1">
+	
+                <table border ="0" cellpadding ="0" cellspacing ="0" width ="100%" class ="hovertable">
+                    <tr align ="center" valign ="middle" >
+                        <td colspan="8" height="60">
+                            <span id="Label_FAMC" style="color:Blue;font-family:黑体;font-size:25pt;font-weight:bold;">巫峡幼儿园2023年秋季小班抢号（第一批次）</span>
+                        </td>
+                    </tr>
+                    <tr align="center" valign="middle">
+                        <td>学校名称</td>
+                        <td align ="left" >
+                            
+                            <span id="Label_XXMC" style="color:Blue;">巫峡幼儿园</span>
+                        </td>
+                        <td>年龄范围</td>
+                        <td align ="left" >
+                            <span id="Label_CSRQ1" style="color:Blue;">2019-09-01</span>至
+                            <span id="Label_CSRQ2" style="color:Blue;">2020-08-31</span>
+                        </td>
+                        <td>学位数</td>
+                        <td width="60">
+                            <span id="Label_ZSRS" style="color:Blue;">125</span>
+                        </td>
+                        <td width="60">已报</td>
+                        <td width="80">
+                            <span id="Label_YBRS" style="color:Red;font-weight:bold;">0</span>
+                        </td>
+                    </tr>
+                    <tr align="center" valign="middle">
+                        <td>开始时间</td>
+                        <td align ="left" >
+                            <span id="Label_StartTime" style="color:Blue;">2023/6/18 9:00:00</span>
+                        </td>
+                        <td>结束时间</td>
+                        <td align ="left" >
+                            <span id="Label_EndTime" style="color:Blue;">2023/6/18 10:00:00</span>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td align ="left" >
+                            
+                        </td>
+                        <td>状态</td>
+                        <td>
+                            <span id="Label_ZT" style="color:Red;font-weight:bold;">未开始</span>
+                        </td>
+                    </tr>
+                </table>
+                    
+                
+</div> 
+            </td>
+        </tr>
+        <tr align ="center" valign ="middle" >
+            <td>
+               <span id="time" style="font-weight:bold;color: #ff6a00; font-family :Arial Black ;font-size:120pt; "></span>
+            
+            </td>
+        </tr>
+    
+        <tr align ="center" valign="middle" >
+            <td>
+                <div id="UpdatePanelAA">
+	
+                
+                
+</div> 
+
+            </td>
+        </tr>
+
+        <tr align ="center" valign="middle" >
+            <td>
+                <div id="UpdatePanel2">
+	
+                <table border="0" width="100%"   cellpadding ="0" cellspacing="0"  class="hovertable5" ><TR align ="left" valign ="middle" ><td ><p>&nbsp;一、招生条件</p>
+<div>（一）年龄条件。2019年9月1日至2020年8月31日出生的幼儿。</div>
+<div>（二）身体条件。身体健康，能正常参加幼儿园一日活动，无传染性疾病。</div>
+<div>（三）户籍条件。户籍在高唐街道。</div>
+<div>&nbsp;</div>
+<div>二、网上抢号申报程序</div>
+<div>（一）第一批次（有高唐、龙门街道户籍且实际居住在城区的幼儿）</div>
+<div>1.网上抢号</div>
+<div>2023年6月18日9:00&mdash;10:00， 家长登陆&ldquo;巫山县学前教育招生入学管理服务平台&rdquo;， 输入幼儿身份证号后等待系统校验，校验成功后录入幼儿入学基本信息（姓名、户籍地址、实际居住地址、父亲或母亲的姓名、父亲或母亲的身份证号、联系电话）后提交申请。</div>
+<div>特别说明：</div>
+<div>★年龄不在规定时间段范围的，系统会自动拦截，无法申报信息。网上报名时提供的所有信息务必真实、准确，系统按信息提交时间自动排序，满额为止。</div>
+<div>★网上填报信息必须真实，户籍地址和户口簿上信息保持一致，凡有网上申报信息弄虚作假等不诚信行为的，将取消第二批次申报资格。</div>
+<div>2.现场审核</div>
+<div>（1）现场审核时间</div>
+<div>6月18日11:00&mdash;14:00，网上抢号成功的幼儿法定监护人持相关材料到申报幼儿园进行现场审核，不在规定时间内进行现场审核的，视为自动放弃报名资格，责任自负。</div>
+<div>（2）所需材料</div>
+<div>①户口簿（验原件，交复印件：户籍主页、幼儿页、父（母）亲页、增减页复印到一张A4纸上）；</div>
+<div>②幼儿预防接种证（验原件，交复印件）。</div>
+<div>特别说明：经综合审核，符合条件的幼儿方可办理入园注册手续。若审核中发现幼儿报名材料弄虚作假或身体条件暂不适宜入园的，将取消该幼儿入园资格，空出学位将纳入第二批次报名。</div>
+<div>&nbsp;</div></td></tr></table>
+                
+</div> 
+            </td>
+        </tr>
+        <tr align ="center" valign ="middle" >
+            <td>
+                <div id="UpdatePanel3">
+	
+                <span id="LabelFFTS" style="color:Red;font-size:14pt;font-weight:bold;">如果倒计时为0时，未出现输入框，请退出(返回)重新进入</span>
+                
+</div> 
+            </td>
+        </tr>
+
+        <tr align ="right" valign="middle" >
+            <td >
+              <a href="javascript:history.back(-1)">返回</a>&nbsp;&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td  align ="left" valign ="middle" >
+
+            </td>
+        </tr>
+    </table>
+    </center>
+        <p>
+            &nbsp;</p>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+Sys.Application.add_init(function() {
+    $create(Sys.UI._UpdateProgress, {"associatedUpdatePanelId":null,"displayAfter":50,"dynamicLayout":true}, null, null, $get("UpdateProgress1"));
+});
+//]]>
+</script>
+</form>
+</body>
+</html>

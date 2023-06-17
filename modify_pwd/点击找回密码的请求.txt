@@ -1,0 +1,31 @@
+https://wsemal.com/CZBM/JW/JW_UserSSP.aspx
+
+GET /CZBM/JW/JW_UserSSP.aspx HTTP/2
+Host: wsemal.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate, br
+Referer: https://wsemal.com/CZBM/JW/JW_top.aspx
+Connection: keep-alive
+Cookie: ASP.NET_SessionId=1yte1l45wochj1umek2eyajh
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: iframe
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+TE: trailers
+
+HTTP/2 200 OK
+cache-control: private
+content-type: text/html; charset=utf-8
+content-encoding: gzip
+vary: Accept-Encoding
+server: Microsoft-IIS/10.0
+x-aspnet-version: 2.0.50727
+x-powered-by: ASP.NET
+date: Sat, 17 Jun 2023 04:07:54 GMT
+content-length: 3287
+X-Firefox-Spdy: h2
+
+
