@@ -1,0 +1,54 @@
+https://wsemal.com/CZBM/JW/JW_UserPWD.aspx
+
+POST /CZBM/JW/JW_UserPWD.aspx HTTP/2
+Host: wsemal.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0
+Accept: */*
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate, br
+Referer: https://wsemal.com/CZBM/JW/JW_UserPWD.aspx
+X-MicrosoftAjax: Delta=true
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded; charset=utf-8
+Content-Length: 487
+Origin: https://wsemal.com
+Connection: keep-alive
+Cookie: ASP.NET_SessionId=4321gji55wzj1b45prxeparn; XSQHUserName=B%2f6ZDasDh2frxUFLxf0IgKQxru831H0K
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+TE: trailers
+
+HTTP/2 200 OK
+cache-control: private
+content-type: text/plain; charset=utf-8
+content-encoding: gzip
+vary: Accept-Encoding
+server: Microsoft-IIS/10.0
+x-aspnet-version: 2.0.50727
+x-powered-by: ASP.NET
+date: Sat, 17 Jun 2023 09:53:31 GMT
+content-length: 957
+X-Firefox-Spdy: h2
+
+ScriptManager1=ScriptManager1%7CButton1&__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE=%2FwEPDwULLTE4ODY5ODYwOTcPZBYCAgMPZBYEAgcPDxYCHgRUZXh0BRI1MDAyMzcyMDEwMTEzMDE0MTlkZAIVD2QWAmYPZBYCAgEPDxYCHwBlZGRkzfZBWAdF3Ufn3hvZ6WBc8r80CdQ%3D&__VIEWSTATEGENERATOR=A55DB807&__EVENTVALIDATION=%2FwEWBAKytNTgAgLi3%2FrWDgKD9KaXCAKM54rGBtHjXC7VTTCru45DNjxy%2BjVN3i4N&Hselcet=&L_password1=a201025Q&L_password2=a201025Q&L_password3=a201025Q&TextBox_PWD=17783631632&__ASYNCPOST=true&Button1=%E7%A1%AE%E8%AE%A4
+
+ScriptManager1=ScriptManager1|Button1
+__EVENTTARGET
+__EVENTARGUMENT
+__VIEWSTATE=/wEPDwULLTE4ODY5ODYwOTcPZBYCAgMPZBYEAgcPDxYCHgRUZXh0BRI1MDAyMzcyMDEwMTEzMDE0MTlkZAIVD2QWAmYPZBYCAgEPDxYCHwBlZGRkzfZBWAdF3Ufn3hvZ6WBc8r80CdQ=
+__VIEWSTATEGENERATOR=A55DB807
+__EVENTVALIDATION=/wEWBAKytNTgAgLi3/rWDgKD9KaXCAKM54rGBtHjXC7VTTCru45DNjxy+jVN3i4N
+Hselcet
+L_password1=a201025Q
+L_password2=a201025Q
+L_password3=a201025Q
+TextBox_PWD=17783631632
+__ASYNCPOST=true
+Button1=确认
+
+响应
+
+94|updatePanel|UpdatePanel5|
+              <span id="LabelTS" style="color:Red;font-weight:bold;"></span>
+              |140|hiddenField|__VIEWSTATE|/wEPDwULLTE4ODY5ODYwOTcPZBYCAgMPZBYEAgcPDxYCHgRUZXh0BRI1MDAyMzcyMDEwMTEzMDE0MTlkZAIVD2QWAmYPZBYCAgEPDxYCHwBlZGRkzfZBWAdF3Ufn3hvZ6WBc8r80CdQ=|8|hiddenField|__VIEWSTATEGENERATOR|A55DB807|64|hiddenField|__EVENTVALIDATION|/wEWBAKytNTgAgLi3/rWDgKD9KaXCAKM54rGBtHjXC7VTTCru45DNjxy+jVN3i4N|7|asyncPostBackControlIDs||Button1|0|postBackControlIDs|||69|updatePanelIDs||tUpdatePanel1,tUpdatePanel2,tUpdatePanel3,tUpdatePanel4,tUpdatePanel5|0|childUpdatePanelIDs|||12|panelsToRefreshIDs||UpdatePanel5|2|asyncPostBackTimeout||90|15|formAction||JW_UserPWD.aspx|8|pageTitle||学生修改用户密码|182|scriptStartupBlock|ScriptContentNoTags|alert('口令(密码)修改成功！\n ----------------------------\n 新密码为【a201025Q】\n 找回密码答案【17783631632】\n ----------------------------\n 确定以后系统自动将重新登录');window.parent.location.href='../index.html';|
