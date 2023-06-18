@@ -283,8 +283,8 @@ class JuniorQhSpider(scrapy.Spider):
         self.form_data['__VIEWSTATE'] = view_state_str
         self.form_data['__EVENTVALIDATION'] = event_validation_str
         self.form_data['__VIEWSTATEGENERATOR'] = view_state_generator_str
-        bodystr = urlencode(self.form_data)
-        self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        bodystr = urlencode(self.form_data, encoding='utf-8')
+        self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
         # yield scrapy.Request(url=action_url_full, method='POST', body=bodystr, callback=self.post_zsbm1_parse,
         # headers=self.headers, dont_filter=True)
@@ -308,8 +308,8 @@ class JuniorQhSpider(scrapy.Spider):
         self.form_data['__EVENTVALIDATION'] = event_validation[0] if len(event_validation) > 0 else ''
         self.form_data['__VIEWSTATEGENERATOR'] = view_generator[0] if len(view_generator) > 0 else ''
 
-        bodystr = urlencode(self.form_data)
-        self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        bodystr = urlencode(self.form_data, encoding='utf-8')
+        self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
         yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.post2_zsbm1_parse, headers=self.headers,
                              dont_filter=True)
