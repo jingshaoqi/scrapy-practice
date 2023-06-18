@@ -11,7 +11,7 @@ class BaidutestSpider(scrapy.Spider):
         headers = {
 
         }
-        yield scrapy.Request(url='https://www.baidu.com/', callback=self.parse, headers=headers)
+        yield scrapy.Request(url='https://www.baidu.com/', callback=self.parse, dont_filter=True)
 
 
     def parse(self, response):

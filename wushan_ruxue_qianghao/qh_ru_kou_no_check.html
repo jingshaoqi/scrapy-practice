@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<head><link href="../App_Themes/%E4%B8%BB%E9%A2%9801/StyleSheet.css" type="text/css" rel="stylesheet" /><title>
+	学生报名抢号
+</title>
+
+
+        <script type="text/javascript" language="javascript">
+          
+            var str = getQueryString("TT"); //取得本项目开始时间 
+            str = str.substring(0, 19);
+            str = str.replace(/-/g, '/');
+            var endDate = new Date(str);
+            var end = endDate.getTime();      
+            window.onload = function countTime()
+            {
+              
+                //获取当前时间  
+                var date = new Date();
+                var now = date.getTime();
+               
+                //时间差  
+                var leftTime = end - now;
+                if (leftTime > 0  )
+                {
+                    //定义变量 d,h,m,s保存倒计时的时间  
+                    var d, h, m, s;
+                    if (leftTime >= 0) {
+                        d = Math.floor(leftTime / 1000 / 60 / 60 / 24).toString();
+                        if (d.length <= 1) d = "0" + d;
+                        h = Math.floor(leftTime / 1000 / 60 / 60 % 24).toString();
+                        if (h.length <= 1) h = "0" + h;
+                        m = Math.floor(leftTime / 1000 / 60 % 60).toString();
+                        if (m.length <= 1) m = "0" + m;
+                        s = Math.floor(leftTime / 1000 % 60).toString();
+                        if (s.length <= 1) s = "0" + s;
+                    }
+
+                    //递归每秒调用countTime方法，显示动态时间效果  
+                    document.getElementById("time").innerText = "";
+                    if (d == "00") //24小时之内的才显示
+                        document.getElementById("time").innerText = h + ":" + m + ":" + s;
+                   
+                    //else
+                        //document.getElementById("time").innerText = d + ":" + h + ":" + m + ":" + s;
+
+                    if (d == "00" && h == "00" && m == "00" && s == "00")  //结束
+                    {
+                       
+                        document.getElementById("time").innerText = "";
+                        document.getElementById("btn1").click();
+                        //window.location.href("JW_UserDL.aspx");
+                     
+                    }
+                    else setTimeout(countTime, 1000);
+                }
+            }
+            
+
+            function getQueryString(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) {
+                    return decodeURIComponent(r[2]);
+                }
+                return '';
+            }
+  
+      </script>
+
+</head>
+    
+<body style="line-height :220%; overflow-x :hidden ; overflow-y :auto ; ">
+    <form method="post" action="./JW_ZSBM1.aspx?XX=XQ003&amp;ID=23&amp;TT=2023%2f6%2f18+15%3a00%3a00" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/XQZS/WebResource.axd?d=QfDRD-qLec1fknq3pedJkdPO99SzHFp64JduNH1F9mOF5yM0s5-uDRo5-2Ai4WiHKWUv0RN-Pard4qKe55NBNdl8KEoWF22-71pj39CB9pY1&amp;t=637823653837077270" type="text/javascript"></script>
+
+
+<script src="/XQZS/ScriptResource.axd?d=PPoCtWRZ2xOzBsYrIYp8x5MYdQh8HrL2HZE8fcMDteQ40y5RKrrVO56eXbit9FxHZCfIisr0O_sYZ2ELFvzFyFQAHaeOsopa3yTLHEKS4q_kq0r9wdBq9WQbmcO3UOED8nPpOvc-vXGn3XGh7ehINEgYm3Vmhjx3983s8tzC45SepeK5V4juog6UqG28TvZD0&amp;t=ffffffffaa493ab8" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax 客户端框架未能加载。');
+//]]>
+</script>
+
+<script src="/XQZS/ScriptResource.axd?d=N0S7thaaWQDhtZp8ZtsnFOMGMOomtVq9ZmG4fGAJwZoP4xC6eBVGMo0LhpFvoVOuEzjPe82De5YEvJabB4gHGJqrBV95WTxX8f9N9f1F-hdXklS00Fg8Vm1eHcWl1JW-7Rf8TA9giCOWxVUMWG76ycp55kugvsRiOVuRK6egKU3yxVau6koEAzsosGQZ-gvj0&amp;t=ffffffffaa493ab8" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="5211EF33" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAryC4JZa7OcEZ25lJrCH8I4RrPpGzrD+ZG0Wk4Yrn35FkPkSIXzsm3iFxBUpFQGroxDnzLPo6YiwnK1MIiDGCD6/L9l4tn6Yvun8xmSmgYUASK3txIfPz1ZJyr9PwWboF5XF0mqBUpqlqP3kXOfqBSWsCkuvoCzgRz6nECRSrtIkVs5zPtMyPeJwrmzlELYsmcItes0nK4H5QVkFbgSrBHQF12p/gJhxP4EhxdjAgh6XE2dpcm0pmZDD5qF7bw3InA=" />
+</div>
+
+    <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ScriptManager1', 'form1', ['tUpdatePanel1','UpdatePanel1','tUpdatePanelAA','UpdatePanelAA','tUpdatePanel2','UpdatePanel2','tUpdatePanel3','UpdatePanel3'], ['TextBox_SFZH','TextBox_SFZH','TextBox_XM','TextBox_XM','LinkButtonSFZH','LinkButtonSFZH','btn1','btn1'], [], 90, '');
+//]]>
+</script>
+    
+    <div id="UpdateProgress1" style="display:none;">
+	
+       <div id="Layer1"><img src="../Images/loading1.gif"  /><img src="../Images/loading.gif"  /></div>
+        
+</div>    
+    <center >
+    
+    <div style =" position:relative; top  :-2300px; height :1px;">
+    <input type="submit" name="btn1" value="" id="btn1" />
+    </div>
+
+    <table border ="0" cellpadding ="0" cellspacing ="0" width ="760">
+        <tr align ="right" valign ="middle" >
+            <td>
+                <a href="javascript:history.back(-1)">返回</a>&nbsp;&nbsp;
+            </td>
+        </tr>
+        <tr align ="center" valign="middle" >
+            <td height="80">
+
+                <span id="Label1" style="color:Red;font-family:黑体;font-size:50pt;">公平  公正  公开</span>
+
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr align ="center" valign="middle" >
+            <td>
+                <div id="UpdatePanel1">
+	
+                <table border ="0" cellpadding ="0" cellspacing ="0" width ="100%" class ="hovertable">
+                    <tr align ="center" valign ="middle" >
+                        <td colspan="8" height="60">
+                            <span id="Label_FAMC" style="color:Blue;font-family:黑体;font-size:25pt;font-weight:bold;">平湖幼儿园2023年秋季小班抢号（第二批次）</span>
+                        </td>
+                    </tr>
+                    <tr align="center" valign="middle">
+                        <td>学校名称</td>
+                        <td align ="left" >
+                            
+                            <span id="Label_XXMC" style="color:Blue;">平湖幼儿园</span>
+                        </td>
+                        <td>年龄范围</td>
+                        <td align ="left" >
+                            <span id="Label_CSRQ1" style="color:Blue;">2019-09-01</span>至
+                            <span id="Label_CSRQ2" style="color:Blue;">2020-08-31</span>
+                        </td>
+                        <td>学位数</td>
+                        <td width="60">
+                            <span id="Label_ZSRS" style="color:Blue;">96</span>
+                        </td>
+                        <td width="60">已报</td>
+                        <td width="80">
+                            <span id="Label_YBRS" style="color:Red;font-weight:bold;">18</span>
+                        </td>
+                    </tr>
+                    <tr align="center" valign="middle">
+                        <td>开始时间</td>
+                        <td align ="left" >
+                            <span id="Label_StartTime" style="color:Blue;">2023/6/18 15:00:00</span>
+                        </td>
+                        <td>结束时间</td>
+                        <td align ="left" >
+                            <span id="Label_EndTime" style="color:Blue;">2023/6/18 16:00:00</span>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td align ="left" >
+                            
+                        </td>
+                        <td>状态</td>
+                        <td>
+                            <span id="Label_ZT" style="color:Red;font-weight:bold;">进行中</span>
+                        </td>
+                    </tr>
+                </table>
+                    
+                
+</div> 
+            </td>
+        </tr>
+        <tr align ="center" valign ="middle" >
+            <td>
+               <span id="time" style="font-weight:bold;color: #ff6a00; font-family :Arial Black ;font-size:120pt; "></span>
+            
+            </td>
+        </tr>
+    
+        <tr align ="center" valign="middle" >
+            <td>
+                <div id="UpdatePanelAA">
+	
+                <div id="PanelAA">
+		
+                <table border ="0" cellpadding ="0" cellspacing ="0"  width ="100%" class ="hovertable">
+                    <tr align ="center" valign ="middle" >
+                        <td >
+                          
+                            <table border ="0" cellpadding ="0" cellspacing ="0" width="620" class ="hovertable0">
+                                <tr  align ="center" valign ="middle" height="35" >
+                                    <td colspan="3" style ="font-size :14pt;color:red;">幼儿入学基本信息</td>
+                                </tr>
+                                <tr align="left">
+                                    <td align ="right" width="200" height="35" style =" border-bottom-style :dotted ;  border-bottom-width :thin ; border-bottom-color :Red ">身份证号</td>
+                                    <td width="20" align ="center" valign ="middle" style =" border-bottom-style :dotted ;  border-bottom-width :thin ; border-bottom-color :Red ; color:red; " >*</td>
+                                    <td width="400" style =" border-bottom-style :dotted ;  border-bottom-width :thin ; border-bottom-color :Red ">
+                                        <input name="TextBox_SFZH" type="text" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;TextBox_SFZH\&#39;,\&#39;\&#39;)&#39;, 0)" onkeypress="if (WebForm_TextBoxKeyHandler(event) == false) return false;" id="TextBox_SFZH" style="width:150px;" />
+                                        <a id="LinkButtonSFZH" href="javascript:__doPostBack(&#39;LinkButtonSFZH&#39;,&#39;&#39;)">校验</a>
+                                        <span id="LabelTS" style="color:Red;"></span>
+                                    </td>
+                                </tr>
+                           
+                               <tr align="left">
+                                    <td align ="right" width="200">姓名</td>
+                                    <td width="20" align ="center" valign ="middle" style ="color :red;" >*</td>
+                                    <td width="400">
+                                        <input name="TextBox_XM" type="text" readonly="readonly" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;TextBox_XM\&#39;,\&#39;\&#39;)&#39;, 0)" onkeypress="if (WebForm_TextBoxKeyHandler(event) == false) return false;" id="TextBox_XM" disabled="disabled" class="aspNetDisabled" style="color:Blue;background-color:#FFFFFF;border-style:None;width:150px;" />
+                                    </td>
+                                </tr>
+                                <tr align="left">
+                                    <td align="right" >性别</td>
+                                    <td></td>
+                                    <td >
+                                        <span id="Label_XB"></span>
+                                    </td>
+                                </tr>
+                                <tr align="left">
+                                    <td align="right" >出生日期</td>
+                                    <td></td>
+                                    <td >
+                                        <span id="Label_CSRQ"></span>
+                                    </td>
+                                </tr>
+                                <tr align="left">
+                                    <td align="right" >户籍地址</td>
+                                    <td width="20" align ="center" valign ="middle" style ="color :red;" >*</td>
+                                    <td >
+                                        <input name="TextBox_FJDZ" type="text" readonly="readonly" id="TextBox_FJDZ" disabled="disabled" class="aspNetDisabled" style="color:Blue;background-color:#FFFFFF;border-style:None;width:300px;" />
+                                        </td>
+                                </tr>
+                                <tr align="left">
+                                    <td align="right"></td>
+                                    <td align="center" style="color :red;" valign="middle"</td>
+                                    <td>
+                                        <span id="LabelFJTS" style="color:Red;"></span>
+                                    </td>
+                                </tr>
+                                <tr align="left">
+                                    <td align="right" >居住地址</td>
+                                    <td width="20" align ="center" valign ="middle" style ="color :red;" >*</td>
+                                    <td  >
+                                        <input name="TextBox_JZDZ" type="text" readonly="readonly" id="TextBox_JZDZ" disabled="disabled" class="aspNetDisabled" style="color:Blue;background-color:#FFFFFF;border-style:None;width:300px;" />
+                                    </td>
+                                </tr>
+                                <tr align="left">
+                                    <td align="right" >父(母)亲姓名</td>
+                                    <td width="20" align ="center" valign ="middle" style ="color :red;" >*</td>
+                                    <td >
+                                        <input name="TextBox_JFRXM" type="text" readonly="readonly" id="TextBox_JFRXM" disabled="disabled" class="aspNetDisabled" style="color:Blue;background-color:#FFFFFF;border-style:None;width:150px;" />
+                                    </td>
+                                </tr>
+                                <tr align="left">
+                                    <td align="right">父(母)亲身份证号</td>
+                                    <td width="20" align ="center" valign ="middle" style ="color :red;" >*</td>
+                                    <td >
+                                        <input name="TextBox_JFRSFZH" type="text" readonly="readonly" id="TextBox_JFRSFZH" disabled="disabled" class="aspNetDisabled" style="color:Blue;background-color:#FFFFFF;border-style:None;width:150px;" />
+                                    </td>
+                                </tr>
+                                <tr align="left">
+                                    <td align="right" style =" border-bottom-style :dotted ;  border-bottom-width :thin ; border-bottom-color :Red ">联系电话(手机）</td>
+                                    <td width="20" align ="center" valign ="middle" style =" border-bottom-style :dotted ;  border-bottom-width :thin ; border-bottom-color :Red ; color:red;" >*</td>
+                                    <td style =" border-bottom-style :dotted ;  border-bottom-width :thin ; border-bottom-color :Red ">
+                                        <input name="TextBox_TelePhone" type="text" readonly="readonly" id="TextBox_TelePhone" disabled="disabled" class="aspNetDisabled" style="color:Blue;background-color:#FFFFFF;border-style:None;width:150px;" />
+                                    </td>
+                                </tr>
+ 
+                                <tr align ="center" valign ="middle" >
+                                    <td colspan="3">
+                                        
+                                    </td>
+                                </tr>
+                                <tr align="center" valign="middle">
+                                    <td colspan="3" height="50">
+                                        
+                                        
+                                    </td>
+                                </tr>
+                                <tr align ="center" valign ="middle" >
+                                    <td colspan="3">
+
+                                        
+                                        
+
+                                    </td>
+                                </tr>
+                                <tr align="left" valign="middle">
+                                    <td colspan="3" >
+
+                                        
+
+                                    </td>
+                                </tr>
+                            </table>
+                           
+                        </td>
+                    </tr>  
+                </table>
+
+                
+	</div>
+                
+</div> 
+
+            </td>
+        </tr>
+
+        <tr align ="center" valign="middle" >
+            <td>
+                <div id="UpdatePanel2">
+	
+                <table border="0" width="100%"   cellpadding ="0" cellspacing="0"  class="hovertable5" ><TR align ="left" valign ="middle" ><td ><p>&nbsp;</p>
+<div>第二批次抢号时间为6月18日15:00&mdash;16:00，现场审核时间为6月18日16:00&mdash;18:00，网上抢号操作流程和第一批次相同。</div>
+<div>&nbsp;</div>
+<div>现场确认所需材料：</div>
+<div>&nbsp;</div>
+<div>户口簿，幼儿预防接种证，有效居住证明（房产证、购房合同或协议、公租房或廉租房证明、租赁合同、营业执照等任意一项）。</div>
+<div>&nbsp;</div>
+<div><strong style="font-family: 宋体; font-size: x-large;"><span style="color: rgb(255, 0, 0);">抢号学位数待第一批次现场审核结束后再正式公布。</span></strong></div>
+<p class="MsoNormal" style="text-indent:32.15pt;line-height:29.0pt;mso-line-height-rule:&#10;exactly"><span lang="EN-US" style="font-size:16.0pt;font-family:&quot;Times New Roman&quot;,serif;&#10;mso-fareast-font-family:方正仿宋_GBK"><o:p></o:p></span></p></td></tr></table>
+                
+</div> 
+            </td>
+        </tr>
+        <tr align ="center" valign ="middle" >
+            <td>
+                <div id="UpdatePanel3">
+	
+                <span id="LabelFFTS" style="color:Red;font-size:14pt;font-weight:bold;"></span>
+                
+</div> 
+            </td>
+        </tr>
+
+        <tr align ="right" valign="middle" >
+            <td >
+              <a href="javascript:history.back(-1)">返回</a>&nbsp;&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td  align ="left" valign ="middle" >
+
+            </td>
+        </tr>
+    </table>
+    </center>
+        <p>
+            &nbsp;</p>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+Sys.Application.add_init(function() {
+    $create(Sys.UI._UpdateProgress, {"associatedUpdatePanelId":null,"displayAfter":50,"dynamicLayout":true}, null, null, $get("UpdateProgress1"));
+});
+//]]>
+</script>
+</form>
+</body>
+</html>
