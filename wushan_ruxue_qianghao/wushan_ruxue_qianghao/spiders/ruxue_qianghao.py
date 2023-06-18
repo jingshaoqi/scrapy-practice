@@ -30,6 +30,8 @@ class RuxueQianghaoSpider(scrapy.Spider):
                  '__VIEWSTATEGENERATOR': '',
                  '__EVENTVALIDATION': ''
                  }
+    jw_main_url = ''
+    jw_main_headers = {}
 
     def start_requests(self):
         # wait
@@ -75,9 +77,11 @@ class RuxueQianghaoSpider(scrapy.Spider):
         self.headers['TE'] = 'trailers'
         if self.headers.get('Sec-Fetch-User') is not None:
             self.headers.pop('Sec-Fetch-User')
-
+        # 这里保存发现还没开始的时候的请求url和头
+        self.jw_main_url = main_url
+        self.jw_main_headers = self.headers
         # go to jw main.aspx web
-        yield scrapy.Request(url=main_url, headers=self.headers, callback=self.JWmain)
+        yield scrapy.Request(url=main_url, headers=self.headers, callback=self.JWmain, dont_filter=True)
 
 
     def JWmain(self, response):
@@ -105,7 +109,7 @@ class RuxueQianghaoSpider(scrapy.Spider):
             print('school_url_full:{}'.format(qh_rukou_url_full))
             # click to qianghao entrance
             self.headers['Referer'] = response.url
-            yield scrapy.Request(url=qh_rukou_url_full, headers=self.headers, callback=self.qh_ru_kou_check) #添加身份证号验证
+            yield scrapy.Request(url=qh_rukou_url_full, headers=self.headers, callback=self.qh_ru_kou_check, dont_filter=True) #添加身份证号验证
             #yield scrapy.Request(url=qh_rukou_url_full, headers=self.headers, callback=self.qh_rukou_parse)
             break
 
@@ -113,6 +117,17 @@ class RuxueQianghaoSpider(scrapy.Spider):
         with open('qh_ru_kou_check.html', 'w') as f:
             f.write(response.text)
             # 提取formdata信息
+        # 查看状态
+        zt = response.xpath('//tr/td/span[@id="Label_ZT"]/text()')
+        if zt is not None:
+            zt_s = zt.get()
+            if zt_s.find('进行中') < 0 :
+                #点击返回
+                print('状态是:{}'.format(zt_s))
+                time.sleep(0.01)
+                yield scrapy.Request(url=self.jw_main_url, headers=self.jw_main_headers, callback=self.JWmain, dont_filter=True)
+                return
+
         event_target = response.xpath('//input[@id="__EVENTTARGET"]/@value')
         event_target_str = event_target.extract()[0] if len(event_target) > 0 else ''
         event_argument = response.xpath('//input[@id="__EVENTARGUMENT"]/@value')
@@ -153,12 +168,12 @@ class RuxueQianghaoSpider(scrapy.Spider):
         if self.headers.get('Upgrade-Insecure-Requests') is not None:
             self.headers.pop('Upgrade-Insecure-Requests')
 
-        bodystr = urlencode(self.form_data)
-        self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        bodystr = urlencode(self.form_data, encoding='utf-8')
+        self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
 
         yield scrapy.Request(url=response.url, method="POST", body=bodystr, headers=self.headers,
-                             callback=self.SFZh_check_parse)
+                             callback=self.SFZh_check_parse, dont_filter=True)
 
     def SFZh_check_parse(self, response):
         with open('SFZh_check_parse.html', 'w') as f:
@@ -197,12 +212,12 @@ class RuxueQianghaoSpider(scrapy.Spider):
         if self.headers.get('Upgrade-Insecure-Requests') is not None:
             self.headers.pop('Upgrade-Insecure-Requests')
 
-        bodystr = urlencode(self.form_data)
-        self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        bodystr = urlencode(self.form_data, encoding='utf-8')
+        self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
 
         yield scrapy.Request(url=response.url, method="POST", body=bodystr, headers=self.headers,
-                             callback=self.submit_info)
+                             callback=self.submit_info, dont_filter=True)
 
     def submit_info(self, response):
         with open('submit_info.html', 'w') as f:

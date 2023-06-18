@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+
+<head>
+    <link href="../App_Themes/%E4%B8%BB%E9%A2%9801/StyleSheet.css" type="text/css" rel="stylesheet" />
+    <title>
+        学生报名抢号
+    </title>
+    <script type="text/javascript" language="javascript">
+    var str = getQueryString("TT"); //取得本项目开始时间 
+    str = str.substring(0, 19);
+    str = str.replace(/-/g, '/');
+    var endDate = new Date(str);
+    var end = endDate.getTime();
+    window.onload = function countTime() {
+
+        //获取当前时间  
+        var date = new Date();
+        var now = date.getTime();
+
+        //时间差  
+        var leftTime = end - now;
+        if (leftTime > 0) {
+            //定义变量 d,h,m,s保存倒计时的时间  
+            var d, h, m, s;
+            if (leftTime >= 0) {
+                d = Math.floor(leftTime / 1000 / 60 / 60 / 24).toString();
+                if (d.length <= 1) d = "0" + d;
+                h = Math.floor(leftTime / 1000 / 60 / 60 % 24).toString();
+                if (h.length <= 1) h = "0" + h;
+                m = Math.floor(leftTime / 1000 / 60 % 60).toString();
+                if (m.length <= 1) m = "0" + m;
+                s = Math.floor(leftTime / 1000 % 60).toString();
+                if (s.length <= 1) s = "0" + s;
+            }
+
+            //递归每秒调用countTime方法，显示动态时间效果  
+            document.getElementById("time").innerText = "";
+            if (d == "00") //24小时之内的才显示
+                document.getElementById("time").innerText = h + ":" + m + ":" + s;
+
+            //else
+            //document.getElementById("time").innerText = d + ":" + h + ":" + m + ":" + s;
+
+            if (d == "00" && h == "00" && m == "00" && s == "00") //结束
+            {
+
+                document.getElementById("time").innerText = "";
+                document.getElementById("btn1").click();
+                //window.location.href("JW_UserDL.aspx");
+
+            } else setTimeout(countTime, 1000);
+        }
+    }
+
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return decodeURIComponent(r[2]);
+        }
+        return '';
+    }
+    </script>
+</head>
+
+<body style="line-height :220%; overflow-x :hidden ; overflow-y :auto ; ">
+    <form method="post" action="./JW_ZSBM1.aspx?XX=XQ001&amp;ID=21&amp;TT=2023%2f6%2f18+15%3a00%3a00" id="form1">
+        <div class="aspNetHidden">
+            <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+            <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+            <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTk3MTcyMDMwMQ9kFgICAw9kFgYCCQ9kFgJmD2QWFgIBDw8WAh4EVGV4dAU65ber5bOh5bm85YS/5ZutMjAyM+W5tOeni+Wto+Wwj+ePreaKouWPt++8iOesrOS6jOaJueasoe+8iWRkAgMPDxYCHwAFBVhRMDAxZGQCBQ8PFgIfAAUP5ber5bOh5bm85YS/5ZutZGQCBw8PFgIfAAUKMjAxOS0wOS0wMWRkAgkPDxYCHwAFCjIwMjAtMDgtMzFkZAILDw8WAh8ABQEwZGQCDQ8PFgIfAAUBMGRkAg8PDxYCHwAFEjIwMjMvNi8xOCAxNTowMDowMGRkAhEPDxYCHwAFEjIwMjMvNi8xOCAxNjowMDowMGRkAhMPDxYCHwAFAjIxZGQCFQ8PFgIfAAUM5Y2z5bCG5byA5aeLZGQCCw9kFgJmD2QWAgIBDw8WAh4HVmlzaWJsZWhkFg4CBw8PFgweCUJhY2tDb2xvcgn///8AHgtCb3JkZXJTdHlsZQsqJVN5c3RlbS5XZWIuVUkuV2ViQ29udHJvbHMuQm9yZGVyU3R5bGUBHglGb3JlQ29sb3IKJR4IUmVhZE9ubHlnHgdFbmFibGVkaB4EXyFTQgJMZGQCDQ8PFgwfAgn///8AHwMLKwQBHwQKJR8FZx8GaB8HAkxkZAIPDw8WAh8AZWRkAhEPDxYMHwIJ////AB8DCysEAR8ECiUfBWcfBmgfBwJMZGQCEw8PFgwfAgn///8AHwMLKwQBHwQKJR8FZx8GaB8HAkxkZAIVDw8WDB8CCf///wAfAwsrBAEfBAolHwVnHwZoHwcCTGRkAhcPDxYMHwIJ////AB8DCysEAR8ECiUfBWcfBmgfBwJMZGQCDQ9kFgJmD2QWAgIBDxYCHwAFpgg8dGFibGUgYm9yZGVyPSIwIiB3aWR0aD0iMTAwJSIgICBjZWxscGFkZGluZyA9IjAiIGNlbGxzcGFjaW5nPSIwIiAgY2xhc3M9ImhvdmVydGFibGU1IiA+PFRSIGFsaWduID0ibGVmdCIgdmFsaWduID0ibWlkZGxlIiA+PHRkID48cD4mbmJzcDs8L3A+DQo8ZGl2PuesrOS6jOaJueasoeaKouWPt+aXtumXtOS4ujbmnIgxOOaXpTE1OjAwJm1kYXNoOzE2OjAw77yM546w5Zy65a6h5qC45pe26Ze05Li6NuaciDE45pelMTY6MDAmbWRhc2g7MTg6MDDvvIznvZHkuIrmiqLlj7fmk43kvZzmtYHnqIvlkoznrKzkuIDmibnmrKHnm7jlkIzjgII8L2Rpdj4NCjxkaXY+Jm5ic3A7PC9kaXY+DQo8ZGl2PueOsOWcuuehruiupOaJgOmcgOadkOaWme+8mjwvZGl2Pg0KPGRpdj4mbmJzcDs8L2Rpdj4NCjxkaXY+5oi35Y+j57C/77yM5bm85YS/6aKE6Ziy5o6l56eN6K+B77yM5pyJ5pWI5bGF5L2P6K+B5piO77yI5oi/5Lqn6K+B44CB6LSt5oi/5ZCI5ZCM5oiW5Y2P6K6u44CB5YWs56ef5oi/5oiW5buJ56ef5oi/6K+B5piO44CB56ef6LWB5ZCI5ZCM44CB6JCl5Lia5omn54Wn562J5Lu75oSP5LiA6aG577yJ44CCPC9kaXY+DQo8ZGl2PiZuYnNwOzwvZGl2Pg0KPGRpdj48c3Ryb25nIHN0eWxlPSJmb250LWZhbWlseTog5a6L5L2TOyBmb250LXNpemU6IHgtbGFyZ2U7Ij48c3BhbiBzdHlsZT0iY29sb3I6IHJnYigyNTUsIDAsIDApOyI+5oqi5Y+35a2m5L2N5pWw5b6F56ys5LiA5om55qyh546w5Zy65a6h5qC457uT5p2f5ZCO5YaN5q2j5byP5YWs5biD44CCPC9zcGFuPjwvc3Ryb25nPjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9InRleHQtaW5kZW50OjMyLjE1cHQ7bGluZS1oZWlnaHQ6MjkuMHB0O21zby1saW5lLWhlaWdodC1ydWxlOiYjMTA7ZXhhY3RseSI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LXNpemU6MTYuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyxzZXJpZjsmIzEwO21zby1mYXJlYXN0LWZvbnQtZmFtaWx5OuaWueato+S7v+Wui19HQksiPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD48L3RkPjwvdHI+PC90YWJsZT5kZGySwE1mQNUUrBYyauXt1JCi0MQhRuHn/AO4bIuNeyy1" />
+        </div>
+        <script type="text/javascript">
+        //<![CDATA[
+        var theForm = document.forms['form1'];
+        if (!theForm) {
+            theForm = document.form1;
+        }
+
+        function __doPostBack(eventTarget, eventArgument) {
+            if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+                theForm.__EVENTTARGET.value = eventTarget;
+                theForm.__EVENTARGUMENT.value = eventArgument;
+                theForm.submit();
+            }
+        }
+        //]]>
+        </script>
+        <script src="/XQZS/WebResource.axd?d=QfDRD-qLec1fknq3pedJkdPO99SzHFp64JduNH1F9mOF5yM0s5-uDRo5-2Ai4WiHKWUv0RN-Pard4qKe55NBNdl8KEoWF22-71pj39CB9pY1&amp;t=637823653837077270" type="text/javascript"></script>
+        <script src="/XQZS/ScriptResource.axd?d=PPoCtWRZ2xOzBsYrIYp8x5MYdQh8HrL2HZE8fcMDteQ40y5RKrrVO56eXbit9FxHZCfIisr0O_sYZ2ELFvzFyFQAHaeOsopa3yTLHEKS4q_kq0r9wdBq9WQbmcO3UOED8nPpOvc-vXGn3XGh7ehINEgYm3Vmhjx3983s8tzC45SepeK5V4juog6UqG28TvZD0&amp;t=ffffffffaa493ab8" type="text/javascript"></script>
+        <script type="text/javascript">
+        //<![CDATA[
+        if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax 客户端框架未能加载。');
+        //]]>
+        </script>
+        <script src="/XQZS/ScriptResource.axd?d=N0S7thaaWQDhtZp8ZtsnFOMGMOomtVq9ZmG4fGAJwZoP4xC6eBVGMo0LhpFvoVOuEzjPe82De5YEvJabB4gHGJqrBV95WTxX8f9N9f1F-hdXklS00Fg8Vm1eHcWl1JW-7Rf8TA9giCOWxVUMWG76ycp55kugvsRiOVuRK6egKU3yxVau6koEAzsosGQZ-gvj0&amp;t=ffffffffaa493ab8" type="text/javascript"></script>
+        <div class="aspNetHidden">
+            <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="5211EF33" />
+            <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAALVhGNTNczHHanx0OaAaKXVRrPpGzrD+ZG0Wk4Yrn35Foqjc6lBVbrmCylv55RTURiRVx8UgGAOezCFkBMkZQIQ" />
+        </div>
+        <script type="text/javascript">
+        //<![CDATA[
+        Sys.WebForms.PageRequestManager._initialize('ScriptManager1', 'form1', ['tUpdatePanel1', 'UpdatePanel1', 'tUpdatePanelAA', 'UpdatePanelAA', 'tUpdatePanel2', 'UpdatePanel2', 'tUpdatePanel3', 'UpdatePanel3'], ['btn1', 'btn1'], [], 90, '');
+        //]]>
+        </script>
+        <div id="UpdateProgress1" style="display:none;">
+            <div id="Layer1"><img src="../Images/loading1.gif" /><img src="../Images/loading.gif" /></div>
+        </div>
+        <center>
+            <div style=" position:relative; top  :-2300px; height :1px;">
+                <input type="submit" name="btn1" value="" id="btn1" />
+            </div>
+            <table border="0" cellpadding="0" cellspacing="0" width="760">
+                <tr align="right" valign="middle">
+                    <td>
+                        <a href="javascript:history.back(-1)">返回</a>&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr align="center" valign="middle">
+                    <td height="80">
+                        <span id="Label1" style="color:Red;font-family:黑体;font-size:50pt;">公平 公正 公开</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr align="center" valign="middle">
+                    <td>
+                        <div id="UpdatePanel1">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" class="hovertable">
+                                <tr align="center" valign="middle">
+                                    <td colspan="8" height="60">
+                                        <span id="Label_FAMC" style="color:Blue;font-family:黑体;font-size:25pt;font-weight:bold;">巫峡幼儿园2023年秋季小班抢号（第二批次）</span>
+                                    </td>
+                                </tr>
+                                <tr align="center" valign="middle">
+                                    <td>学校名称</td>
+                                    <td align="left">
+                                        <span id="Label_XXMC" style="color:Blue;">巫峡幼儿园</span>
+                                    </td>
+                                    <td>年龄范围</td>
+                                    <td align="left">
+                                        <span id="Label_CSRQ1" style="color:Blue;">2019-09-01</span>至
+                                        <span id="Label_CSRQ2" style="color:Blue;">2020-08-31</span>
+                                    </td>
+                                    <td>学位数</td>
+                                    <td width="60">
+                                        <span id="Label_ZSRS" style="color:Blue;">0</span>
+                                    </td>
+                                    <td width="60">已报</td>
+                                    <td width="80">
+                                        <span id="Label_YBRS" style="color:Red;font-weight:bold;">0</span>
+                                    </td>
+                                </tr>
+                                <tr align="center" valign="middle">
+                                    <td>开始时间</td>
+                                    <td align="left">
+                                        <span id="Label_StartTime" style="color:Blue;">2023/6/18 15:00:00</span>
+                                    </td>
+                                    <td>结束时间</td>
+                                    <td align="left">
+                                        <span id="Label_EndTime" style="color:Blue;">2023/6/18 16:00:00</span>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <td align="left">
+                                    </td>
+                                    <td>状态</td>
+                                    <td>
+                                        <span id="Label_ZT" style="color:Red;font-weight:bold;">即将开始</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr align="center" valign="middle">
+                    <td>
+                        <span id="time" style="font-weight:bold;color: #ff6a00; font-family :Arial Black ;font-size:120pt; "></span>
+                    </td>
+                </tr>
+                <tr align="center" valign="middle">
+                    <td>
+                        <div id="UpdatePanelAA">
+                        </div>
+                    </td>
+                </tr>
+                <tr align="center" valign="middle">
+                    <td>
+                        <div id="UpdatePanel2">
+                            <table border="0" width="100%" cellpadding="0" cellspacing="0" class="hovertable5">
+                                <TR align="left" valign="middle">
+                                    <td>
+                                        <p>&nbsp;</p>
+                                        <div>第二批次抢号时间为6月18日15:00&mdash;16:00，现场审核时间为6月18日16:00&mdash;18:00，网上抢号操作流程和第一批次相同。</div>
+                                        <div>&nbsp;</div>
+                                        <div>现场确认所需材料：</div>
+                                        <div>&nbsp;</div>
+                                        <div>户口簿，幼儿预防接种证，有效居住证明（房产证、购房合同或协议、公租房或廉租房证明、租赁合同、营业执照等任意一项）。</div>
+                                        <div>&nbsp;</div>
+                                        <div><strong style="font-family: 宋体; font-size: x-large;"><span style="color: rgb(255, 0, 0);">抢号学位数待第一批次现场审核结束后再正式公布。</span></strong></div>
+                                        <p class="MsoNormal" style="text-indent:32.15pt;line-height:29.0pt;mso-line-height-rule:&#10;exactly"><span lang="EN-US" style="font-size:16.0pt;font-family:&quot;Times New Roman&quot;,serif;&#10;mso-fareast-font-family:方正仿宋_GBK">
+                                                <o:p></o:p>
+                                            </span></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr align="center" valign="middle">
+                    <td>
+                        <div id="UpdatePanel3">
+                            <span id="LabelFFTS" style="color:Red;font-size:14pt;font-weight:bold;">如果倒计时为0时，未出现输入框，请退出(返回)重新进入</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr align="right" valign="middle">
+                    <td>
+                        <a href="javascript:history.back(-1)">返回</a>&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="middle">
+                    </td>
+                </tr>
+            </table>
+        </center>
+        <p>
+            &nbsp;</p>
+        <script type="text/javascript">
+        //<![CDATA[
+        Sys.Application.add_init(function() {
+            $create(Sys.UI._UpdateProgress, { "associatedUpdatePanelId": null, "displayAfter": 50, "dynamicLayout": true }, null, null, $get("UpdateProgress1"));
+        });
+        //]]>
+        </script>
+    </form>
+</body>
+
+</html>
