@@ -1,5 +1,6 @@
 import scrapy
-import  json
+import  re
+import json
 from urllib.parse import urljoin
 import time
 from urllib.parse import urlencode
@@ -66,10 +67,15 @@ class RuxueQianghaoSpider(scrapy.Spider):
                     self.headers['Cookie'] = i  # ASP.NET_SessionId=3rg5mw45ldudcbmsvfnyayj0
                     break
 
-        self.headers['referer'] = response.url  # https://wsemal.com/XQZS/JW/JW_iframe.aspx
+        self.headers['Referer'] = response.url  # https://wsemal.com/XQZS/JW/JW_iframe.aspx
         end_pr = items.get()
         main_url = urljoin(response.url, end_pr)  # https://wsemal.com/XQZS/JW/JWmain.aspx
         print(main_url)
+
+        self.headers['TE'] = 'trailers'
+        if self.headers.get('Sec-Fetch-User') is not None:
+            self.headers.pop('Sec-Fetch-User')
+
         # go to jw main.aspx web
         yield scrapy.Request(url=main_url, headers=self.headers, callback=self.JWmain)
 
@@ -88,7 +94,7 @@ class RuxueQianghaoSpider(scrapy.Spider):
             school_t = school.get()
             print(school_t)
             # 巫峡幼儿园 机关幼儿园 平湖幼儿园 西坪幼儿园 白杨幼儿园 圣泉幼儿园
-            if school_t.find('巫峡幼儿园') < 0:
+            if school_t.find('机关幼儿园') < 0:
                 continue
             school_url = itd[6].xpath('./a/@href')
             school_url_t = school_url.get()
@@ -98,52 +104,15 @@ class RuxueQianghaoSpider(scrapy.Spider):
             # 输出请求的URL
             print('school_url_full:{}'.format(qh_rukou_url_full))
             # click to qianghao entrance
-            self.headers['referer'] = response.url
-            #yield scrapy.Request(url=school_url_full, callback=self.school_parse_SFZH) #添加身份证号验证
-            yield scrapy.Request(url=qh_rukou_url_full, headers=self.headers, callback=self.qh_rukou_parse) #bu不添加身份证号验证
+            self.headers['Referer'] = response.url
+            yield scrapy.Request(url=qh_rukou_url_full, headers=self.headers, callback=self.qh_ru_kou_check) #添加身份证号验证
+            #yield scrapy.Request(url=qh_rukou_url_full, headers=self.headers, callback=self.qh_rukou_parse)
             break
 
-    def school_parse_SFZH(self, response):
-        with open('school_parse_SFZH.html', 'w') as f:
+    def qh_ru_kou_check(self, response):
+        with open('qh_ru_kou_check.html', 'w') as f:
             f.write(response.text)
-        # now should check identicard whether is normal
-        #print(response.text)
-        sfzh = response.xpath('//a[@id="LinkButtonSFZH"]')
-        sfzh_url = sfzh.xpath('./@href')
-        sfzh_url_t = sfzh_url.extract()[0]
-        print(sfzh_url_t)
-        # add data
-        fm_data = {'ScriptManager1': 'UpdatePanelAA|LinkButtonSFZH',
-                   '__EVENTTARGET':'TextBox_SFZH',
-                   'TextBox_SFZH': '500237202005319756',
-                   #'TextBox_XM': '',
-                   '__EVENTARGUMENT':'',
-                   '__LASTFOCUS':'',
-                   'TextBox_FJDZ': '重庆市巫山县高唐街道巫峡路110号4幢4单元1-2',
-                   'TextBox_JZDZ': '重庆市巫山县高唐街道巫峡路110号4幢4单元1-2',
-                   'TextBox_JFRXM': '王大海',
-                   'TextBox_JFRSFZH': '500237198905319744',
-                  'TextBox_TelePhone': '13278904979',
-                   '__ASYNCPOST':'true'}
-        yield scrapy.Request(url=response.url, method="POST", body=json.dumps(fm_data),callback=self.SFZH_check)
-
-    def SFZH_check(self, response):
-        with open('sfzh_check_sfzh.html', 'w') as f:
-            f.write(response.text)
-        #print(response.text)
-        self.qh_rukou_parse(response)
-
-    def qh_rukou_parse(self, response):
-        with open('qh_rukou_parse.html', 'w') as f:
-            f.write(response.text)
-        # now should check identicard whether is normal
-        # print(response.text)
-        # sfzh = response.xpath('//a[@id="LinkButtonSFZH"]')
-        # sfzh_url = sfzh.xpath('./@href')
-        # sfzh_url_t = sfzh_url.extract()[0]
-        # print(sfzh_url_t)
-        # add data
-        # 提取formdata信息
+            # 提取formdata信息
         event_target = response.xpath('//input[@id="__EVENTTARGET"]/@value')
         event_target_str = event_target.extract()[0] if len(event_target) > 0 else ''
         event_argument = response.xpath('//input[@id="__EVENTARGUMENT"]/@value')
@@ -154,32 +123,92 @@ class RuxueQianghaoSpider(scrapy.Spider):
         event_validation_str = event_validation.extract()[0] if len(event_validation) > 0 else ''
         view_state_generator = response.xpath('//input[@id="__VIEWSTATEGENERATOR"]/@value')
         view_state_generator_str = view_state_generator.extract()[0] if len(view_state_generator) > 0 else ''
-        # self.form_data['__EVENTTARGET'] = event_target_str 可能还得添加一行
-        self.form_data['__EVENTTARGET'] = event_target_str
+        self.form_data['ScriptManager1'] = 'UpdatePanelAA|LinkButtonSFZH'
+
+        self.form_data['__EVENTTARGET'] = 'LinkButtonSFZH'
         self.form_data['__EVENTARGUMENT'] = event_argument_str
         self.form_data['__VIEWSTATE'] = view_state_str
         self.form_data['__EVENTVALIDATION'] = event_validation_str
         self.form_data['__VIEWSTATEGENERATOR'] = view_state_generator_str
         self.form_data['__LASTFOCUS'] = ''
+        self.form_data['TextBox_XM'] = ''
+        self.form_data['TextBox_SFZH'] = '500237202005010046'
+        self.form_data['TextBox_FJDZ'] = ''
+        self.form_data['TextBox_JZDZ'] = ''
+        self.form_data['TextBox_JFRXM'] = ''
+        self.form_data['TextBox_JFRSFZH'] = ''
+        self.form_data['TextBox_TelePhone'] = ''
+        self.form_data['__ASYNCPOST'] = 'true'
+
+        self.headers['Referer'] = response.url
+        self.headers['X-Requested-With'] = 'XMLHttpRequest'
+        self.headers['X-MicrosoftAjax'] = 'Delta=true'
+        self.headers['Cache-Control'] = 'no-cache'
+        self.headers['Sec-Fetch-Dest'] = 'empty'
+        self.headers['Sec-Fetch-Mode'] = 'cors'
+        self.headers['Sec-Fetch-Site'] = 'same-origin'
+        self.headers['TE'] = 'trailers'
+        self.headers['Accept'] = '*/*'
+        self.headers['Origin'] = 'https://wsemal.com'
+        if self.headers.get('Upgrade-Insecure-Requests') is not None:
+            self.headers.pop('Upgrade-Insecure-Requests')
+
+        bodystr = urlencode(self.form_data)
+        self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        self.headers['Content-Length'] = '{}'.format(len(bodystr))
+
+        yield scrapy.Request(url=response.url, method="POST", body=bodystr, headers=self.headers,
+                             callback=self.SFZh_check_parse)
+
+    def SFZh_check_parse(self, response):
+        with open('SFZh_check_parse.html', 'w') as f:
+            f.write(response.text)
+        # 提取formdata信息
+        view_state = re.findall(r'__VIEWSTATE\|(.+?)\|', response.text)
+        view_generator = re.findall(r'__VIEWSTATEGENERATOR\|(.+?)\|', response.text)
+        event_validation = re.findall(r'__EVENTVALIDATION\|(.+?)\|', response.text)
+        self.form_data['ScriptManager1'] = 'UpdatePanelAA|Button1'
+        self.form_data['__VIEWSTATE'] = view_state[0] if len(view_state) > 0 else ''
+        self.form_data['__EVENTVALIDATION'] = event_validation[0] if len(event_validation) > 0 else ''
+        self.form_data['__VIEWSTATEGENERATOR'] = view_generator[0] if len(view_generator) > 0 else ''
+        self.form_data['__EVENTTARGET'] = ''
+        self.form_data['__EVENTARGUMENT'] = ''
+        self.form_data['__LASTFOCUS'] = ''
         self.form_data['TextBox_XM'] = '王秀丽'
-        self.form_data['TextBox_SFZH'] = '500237202005319756'
+        self.form_data['TextBox_SFZH'] = '500237202005010046'
         self.form_data['TextBox_FJDZ'] = '重庆市巫山县高唐街道巫峡路110号4幢4单元1-2'
         self.form_data['TextBox_JZDZ'] = '重庆市巫山县高唐街道巫峡路110号4幢4单元1-2'
         self.form_data['TextBox_JFRXM'] = '王大海'
         self.form_data['TextBox_JFRSFZH'] = '500237198905319744'
         self.form_data['TextBox_TelePhone'] = '13278904979'
         self.form_data['__ASYNCPOST'] = 'true'
-        self.form_data['submit'] = '提交' #这行的代码得改
+        self.form_data['Button1'] = '提交申请' #这行的代码得改
+
+        self.headers['Referer'] = response.url
+        self.headers['X-Requested-With'] = 'XMLHttpRequest'
+        self.headers['X-MicrosoftAjax'] = 'Delta=true'
+        self.headers['Cache-Control'] = 'no-cache'
+        self.headers['Sec-Fetch-Dest'] = 'empty'
+        self.headers['Sec-Fetch-Mode'] = 'cors'
+        self.headers['Sec-Fetch-Site'] = 'same-origin'
+        self.headers['TE'] = 'trailers'
+        self.headers['Accept'] = '*/*'
+        self.headers['Origin'] = 'https://wsemal.com'
+        if self.headers.get('Upgrade-Insecure-Requests') is not None:
+            self.headers.pop('Upgrade-Insecure-Requests')
+
         bodystr = urlencode(self.form_data)
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
 
-        yield scrapy.Request(url=response.url, method="POST", body=bodystr, headers=self.headers, callback=self.submit_info)
+        yield scrapy.Request(url=response.url, method="POST", body=bodystr, headers=self.headers,
+                             callback=self.submit_info)
 
     def submit_info(self, response):
         with open('submit_info.html', 'w') as f:
             f.write(response.text)
         print(response.text)
+
 
 
 
