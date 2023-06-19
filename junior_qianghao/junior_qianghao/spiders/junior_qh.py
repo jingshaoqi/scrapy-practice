@@ -211,6 +211,9 @@ class JuniorQhSpider(scrapy.Spider):
         if spt is None:
             return
         spt_t = spt.extract()[0]
+        if spt_t.find('JW_ZSBM1.aspx') < 0:
+            #说明还没有到开始抢号的时间，重新进入
+            return
         str_all = re.findall(r"href=\'(.+?)\';", spt_t)
         if str_all is None:
             return
@@ -261,14 +264,13 @@ class JuniorQhSpider(scrapy.Spider):
         self.headers['Sec-Fetch-Mode'] = 'cors'
         self.headers['Sec-Fetch-Site'] = 'same-origin'
         # 修改请求的数据 在实际的浏览器中测试分两次进行，一次是展开下拉列表，第二次是按提交按钮，
-        # 这里直接提交
-        #self.form_data['ScriptManager1'] = 'UpdatePanel3|DropDownListQHXX'
-        #self.form_data['__EVENTTARGET'] = 'DropDownListQHXX'
-        self.form_data['ScriptManager1'] = 'UpdatePanel3|ButtonOK'
-        self.form_data['__EVENTTARGET'] = ''
+        self.form_data['ScriptManager1'] = 'UpdatePanel3|DropDownListQHXX'
+        self.form_data['__EVENTTARGET'] = 'DropDownListQHXX'
+        #self.form_data['ScriptManager1'] = 'UpdatePanel3|ButtonOK'
+        #self.form_data['__EVENTTARGET'] = ''
         self.form_data['__LASTFOCUS'] = ''
         self.form_data['__ASYNCPOST'] = 'true'
-        self.form_data['ButtonOK'] = '提交申请'
+        #self.form_data['ButtonOK'] = '提交申请'
         self.form_data['DropDownListQHXX'] = self.school_code
         event_argument = response.xpath('//div/input[@id="__EVENTARGUMENT"]/@value')
         event_argument_str = event_argument.extract()[0] if len(event_argument) > 0 else ''
@@ -286,10 +288,8 @@ class JuniorQhSpider(scrapy.Spider):
         bodystr = urlencode(self.form_data, encoding='utf-8')
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
-        # yield scrapy.Request(url=action_url_full, method='POST', body=bodystr, callback=self.post_zsbm1_parse,
-        # headers=self.headers, dont_filter=True)
-        yield scrapy.Request(url=action_url_full, method='POST', body=bodystr, callback=self.button_ok_parse,
-                             headers=self.headers, dont_filter=True)
+        yield scrapy.Request(url=action_url_full, method='POST', body=bodystr, callback=self.post_zsbm1_parse,
+         headers=self.headers, dont_filter=True)
 
     def post_zsbm1_parse(self, response):
         with open('post_zsbm1_parse.aspx.html', 'w') as f:
@@ -311,17 +311,20 @@ class JuniorQhSpider(scrapy.Spider):
         bodystr = urlencode(self.form_data, encoding='utf-8')
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
-        yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.post2_zsbm1_parse, headers=self.headers,
-                             dont_filter=True)
+        yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.post2_zsbm1_parse,
+                             headers=self.headers, dont_filter=True)
 
     def post2_zsbm1_parse(self, response):
         with open('post2_zsbm1.aspx.html', 'w') as f:
             f.write(response.text)
+        print(response.text)
 
     def button_ok_parse(self, response):
         with open('button_ok.aspx.html', 'w') as f:
             f.write(response.text)
+        print(response.text)
 
+    #公告的时候是返回的这个
     def XSBMXZ1_parse(self, response):
         with open('JW_XSBMXZ1.aspx.html', 'w') as f:
             f.write(response.text)
