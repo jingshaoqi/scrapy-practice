@@ -33,6 +33,8 @@ class JuniorQhSpider(scrapy.Spider):
                  '__VIEWSTATEGENERATOR': '',
                  '__EVENTVALIDATION': ''
                  }
+    zsbm_url = ''
+    zsbm_headers={}
     yzm_url_full='' #保存验证码的url
     def start_requests(self):
         # wait
@@ -50,7 +52,8 @@ class JuniorQhSpider(scrapy.Spider):
             self.headers.pop('Referer')
         if self.headers.get('TE') is not None:
             self.headers.pop('TE')
-
+        if len(self.headers) != 11:
+            print('login_parse possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
         for url in self.start_urls:
             yield scrapy.Request(url=url, headers=self.headers, callback=self.parse, dont_filter=True)
 
@@ -83,6 +86,8 @@ class JuniorQhSpider(scrapy.Spider):
         if self.headers.get('Sec-Fetch-User') is not None:
             self.headers.pop('Sec-Fetch-User')
         self.user_dll_url = main_frm_url_full #https://wsemal.com/CZBM/JW/JW_UserDL.aspx
+        if len(self.headers) != 13:
+            print('parse possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
         yield scrapy.Request(url=main_frm_url_full, callback=self.main_parse, headers=self.headers, dont_filter=True)
 
     def main_parse(self, response):
@@ -104,6 +109,8 @@ class JuniorQhSpider(scrapy.Spider):
         self.headers['TE'] = 'trailers'
         if self.headers.get('Sec-Fetch-User') is not None:
             self.headers.pop('Sec-Fetch-User')
+        if self.headers.get('Upgrade-Insecure-Requests') is not None:
+            self.headers.pop('Upgrade-Insecure-Requests')
         # 提取formdata信息
         event_target = response.xpath('//div/input[@id="__EVENTTARGET"]/@value')
         event_target_str = event_target.extract()[0] if len(event_target) > 0 else ''
@@ -120,6 +127,8 @@ class JuniorQhSpider(scrapy.Spider):
         self.form_data['__VIEWSTATE'] = view_state_str
         self.form_data['__EVENTVALIDATION'] = event_validation_str
         self.form_data['__VIEWSTATEGENERATOR'] = view_state_generator_str
+        if len(self.headers) != 12:
+            print('yzm request possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
         yield scrapy.Request(url=self.yzm_url_full, callback=self.yzm_parse, headers=self.headers, dont_filter=True)
 
     # 解析验证码后按登录按钮
@@ -173,6 +182,12 @@ class JuniorQhSpider(scrapy.Spider):
                 self.headers.pop('Content-Length')
             if self.headers.get('Sec-Fetch-User') is not None:
                 self.headers.pop('Sec-Fetch-User')
+            if self.headers.get('Origin') is not None:
+                self.headers.pop('Origin')
+            if self.headers.get('Upgrade-Insecure-Requests') is not None:
+                self.headers.pop('Upgrade-Insecure-Requests')
+            if len(self.headers) != 12:
+                print('yzm rerequest possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
             yield scrapy.Request(url=self.yzm_url_full, callback=self.yzm_parse, headers=self.headers, dont_filter=True)
             return
         print('login success')
@@ -187,7 +202,17 @@ class JuniorQhSpider(scrapy.Spider):
                 self.headers['Cookie'] += ';' + i  # ASP.NET_SessionId=3rg5mw45ldudcbmsvfnyayj0
                 break
         # https://wsemal.com/CZBM/JW/JW_ZSBM.aspx
-        zsbm_url = urljoin(response.url, '../JW/JW_ZSBM.aspx')
+        #找到请求的下一个网页
+        zsbm = response.xpath('//script[contains(text(), "mainFrame") and contains(text(), "href")]/text()')
+        if zsbm is None:
+            print('not found zxbm page')
+            return
+        zsbm_t = zsbm.get()
+        zsbm_res = re.findall(r"href=\'(.+?)\';", zsbm_t)
+        if len(zsbm_res) <= 0:
+            return
+        zsbm_ur = zsbm_res[0] # ../JW/JW_ZSBM.aspx
+        zsbm_url = urljoin(response.url, zsbm_ur) # 'https://wsemal.com/CZBM/JW/JW_ZSBM.aspx'
         print('请求下一个网页：{}'.format(zsbm_url))
         if self.headers.get('Origin') is not None:
             self.headers.pop('Origin')
@@ -198,6 +223,11 @@ class JuniorQhSpider(scrapy.Spider):
             self.headers.pop('Content-Length')
         if self.headers.get('Sec-Fetch-User') is not None:
             self.headers.pop('Sec-Fetch-User')
+        if len(self.headers) != 13:
+            print('login_parse 2 possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
+        # 从这个请求开始得到抢号的界面，没有开始的时候是其他界面
+        self.zsbm_url = zsbm_url
+        self.zsbm_headers = self.headers
         yield scrapy.Request(url=zsbm_url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
 
     def ZSBM_parse(self, response):
@@ -213,6 +243,10 @@ class JuniorQhSpider(scrapy.Spider):
         spt_t = spt.extract()[0]
         if spt_t.find('JW_ZSBM1.aspx') < 0:
             #说明还没有到开始抢号的时间，重新进入
+            time.sleep(0.3)
+            if len(self.headers) != 13:
+                print('ZSBM_parse possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
+            yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
             return
         str_all = re.findall(r"href=\'(.+?)\';", spt_t)
         if str_all is None:
@@ -229,19 +263,28 @@ class JuniorQhSpider(scrapy.Spider):
     def ZSBM1_parse(self, response):
         with open('JW_ZSBM1.aspx.html', 'w') as f:
             f.write(response.text)
+        #a判断状态是否在进行中
+        zt = response.xpath('//span[@id="Label_ZT"]/text()')
+        if zt is None or zt.get().find("进行中") < 0:
+            yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers, dont_filter=True)
+            return
         #解析响应中有用的数据
         #先要获取学校名称和代号
         schools = response.xpath('//tr/td/select/option')
         if schools is None:
             print('not have schools')
             return
+        #这里没有判断选择的学校是否已满了。
         select_school_name = '巫山二中'
         select_school_code = 'A23317'
         for i in schools:
             school_name = i.xpath('./text()').extract()[0]
-            self.school_code = i.xpath('./@value').extract()[0]
             if school_name.find(select_school_name) >= 0:
+                self.school_code = i.xpath('./@value').extract()[0]
                 break
+        if len(self.school_code) <= 0:
+            print('not found {} in the list'.format(select_school_name))
+            return
 
         #再要获取下一个请求的url
         action_url = response.xpath('//body/form[@id="form1" and @method="post"]/@action')
@@ -257,6 +300,7 @@ class JuniorQhSpider(scrapy.Spider):
             self.headers.pop('Sec-Fetch-User')
         if self.headers.get('Upgrade-Insecure-Requests') is not None:
             self.headers.pop('Upgrade-Insecure-Requests')
+        self.headers['Accept'] = '*/*'
         self.headers['Origin'] = 'https://wsemal.com'
         self.headers['Cache-Control'] = 'no-cache'
         self.headers['X-MicrosoftAjax'] = 'Delta=true'
@@ -288,6 +332,8 @@ class JuniorQhSpider(scrapy.Spider):
         bodystr = urlencode(self.form_data, encoding='utf-8')
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
+        if len(self.headers) != 17:
+            print('zsbm1 post first possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
         yield scrapy.Request(url=action_url_full, method='POST', body=bodystr, callback=self.post_zsbm1_parse,
          headers=self.headers, dont_filter=True)
 
@@ -311,6 +357,9 @@ class JuniorQhSpider(scrapy.Spider):
         bodystr = urlencode(self.form_data, encoding='utf-8')
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
+
+        if len(self.headers) != 17:
+            print('zsbm1 post second possible headers is not correct, len of headers is:{}'.format(len(self.headers)))
         yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.post2_zsbm1_parse,
                              headers=self.headers, dont_filter=True)
 
