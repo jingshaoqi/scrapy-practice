@@ -154,8 +154,8 @@ class ModifypassworldSpider(scrapy.Spider):
         self.form_data['L_password'] = 'a201025Q'
         self.form_data['L_YZM'] = res
         self.form_data['Button1'] = '登录'
-        bodystr = urlencode(self.form_data)
-        self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        bodystr = urlencode(self.form_data, encoding='utf-8')
+        self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
         # 准备好了数据 按 登录 按钮
         yield scrapy.Request(url=self.user_dll_url, method='POST', body=bodystr,
@@ -168,6 +168,29 @@ class ModifypassworldSpider(scrapy.Spider):
         # 获取cookie XSQHUserName的值
         if response.headers.get('Set-Cookie') is None:
             print('login fail')
+            # 再次请求一个验证码
+            print('try to get another yanzhengma')
+            self.headers['Referer'] = self.user_dll_url
+            self.headers['Accept'] = 'image/avif,image/webp,*/*'
+            self.headers['Sec-Fetch-Dest'] = 'image'
+            self.headers['Sec-Fetch-Mode'] = 'no-cors'
+            self.headers['Sec-Fetch-Site'] = 'same-origin'
+            self.headers['TE'] = 'trailers'
+            # 请求头中删除不需要的
+            if self.headers.get('Content-Type') is not None:
+                self.headers.pop('Content-Type')
+            if self.headers.get('Content-Length') is not None:
+                self.headers.pop('Content-Length')
+            if self.headers.get('Sec-Fetch-User') is not None:
+                self.headers.pop('Sec-Fetch-User')
+            if self.headers.get('Origin') is not None:
+                self.headers.pop('Origin')
+            if self.headers.get('Upgrade-Insecure-Requests') is not None:
+                self.headers.pop('Upgrade-Insecure-Requests')
+            if len(self.headers) != 12:
+                print('yzm rerequest possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
+            yield scrapy.Request(url=self.yzm_url_full, callback=self.yzm_parse, headers=self.headers,
+                                     dont_filter=True)
             return
         print('login success')
         ckie = response.headers['Set-Cookie']
@@ -222,8 +245,8 @@ class ModifypassworldSpider(scrapy.Spider):
         self.form_data['L_password2'] = 'a201025Q'
         self.form_data['L_password3'] = 'a201025Q'
         self.form_data['TextBox_PWD'] = '17783631632'
-        bodystr = urlencode(self.form_data)
-        self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        bodystr = urlencode(self.form_data, encoding='utf-8')
+        self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
         # yield scrapy.Request(url=action_url_full, method='POST', body=bodystr, callback=self.post_zsbm1_parse,
         # headers=self.headers, dont_filter=True)
