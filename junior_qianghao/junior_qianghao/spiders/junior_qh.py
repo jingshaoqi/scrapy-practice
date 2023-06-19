@@ -266,6 +266,7 @@ class JuniorQhSpider(scrapy.Spider):
         #a判断状态是否在进行中
         zt = response.xpath('//span[@id="Label_ZT"]/text()')
         if zt is None or zt.get().find("进行中") < 0:
+            time.sleep(0.5)
             yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers, dont_filter=True)
             return
         #解析响应中有用的数据
@@ -276,7 +277,7 @@ class JuniorQhSpider(scrapy.Spider):
             return
         #这里没有判断选择的学校是否已满了。
         select_school_name = '巫山二中'
-        select_school_code = 'A23317'
+        select_school_code = 'A23317' #A23313;A23317;B23301;B23304
         for i in schools:
             school_name = i.xpath('./text()').extract()[0]
             if school_name.find(select_school_name) >= 0:
