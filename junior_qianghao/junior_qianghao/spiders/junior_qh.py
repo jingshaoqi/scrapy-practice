@@ -309,14 +309,15 @@ class JuniorQhSpider(scrapy.Spider):
         self.headers['Sec-Fetch-Mode'] = 'cors'
         self.headers['Sec-Fetch-Site'] = 'same-origin'
         # 修改请求的数据 在实际的浏览器中测试分两次进行，一次是展开下拉列表，第二次是按提交按钮，
-        self.form_data['ScriptManager1'] = 'UpdatePanel3|DropDownListQHXX'
-        self.form_data['__EVENTTARGET'] = 'DropDownListQHXX'
+        form_data = {}
+        form_data['ScriptManager1'] = 'UpdatePanel3|DropDownListQHXX'
+        form_data['__EVENTTARGET'] = 'DropDownListQHXX'
         #self.form_data['ScriptManager1'] = 'UpdatePanel3|ButtonOK'
         #self.form_data['__EVENTTARGET'] = ''
-        self.form_data['__LASTFOCUS'] = ''
-        self.form_data['__ASYNCPOST'] = 'true'
+        form_data['__LASTFOCUS'] = ''
+        form_data['__ASYNCPOST'] = 'true'
         #self.form_data['ButtonOK'] = '提交申请'
-        self.form_data['DropDownListQHXX'] = self.school_code
+        form_data['DropDownListQHXX'] = self.school_code
         event_argument = response.xpath('//input[@id="__EVENTARGUMENT"]/@value')
         event_argument_str = event_argument.extract()[0] if len(event_argument) > 0 else ''
         view_state = response.xpath('//input[@id="__VIEWSTATE"]/@value')
@@ -326,36 +327,39 @@ class JuniorQhSpider(scrapy.Spider):
         view_state_generator = response.xpath('//input[@id="__VIEWSTATEGENERATOR"]/@value')
         view_state_generator_str = view_state_generator.extract()[0] if len(view_state_generator) > 0 else ''
 
-        self.form_data['__EVENTARGUMENT'] = event_argument_str
-        self.form_data['__VIEWSTATE'] = view_state_str
-        self.form_data['__EVENTVALIDATION'] = event_validation_str
-        self.form_data['__VIEWSTATEGENERATOR'] = view_state_generator_str
-        bodystr = urlencode(self.form_data, encoding='utf-8')
+        form_data['__EVENTARGUMENT'] = event_argument_str
+        form_data['__VIEWSTATE'] = view_state_str
+        form_data['__EVENTVALIDATION'] = event_validation_str
+        form_data['__VIEWSTATEGENERATOR'] = view_state_generator_str
+        bodystr = urlencode(form_data, encoding='utf-8')
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
         if len(self.headers) != 17:
             print('zsbm1 post first possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
         yield scrapy.Request(url=action_url_full, method='POST', body=bodystr, callback=self.post_zsbm1_parse,
-         headers=self.headers, dont_filter=True)
+                             headers=self.headers, dont_filter=True)
+
 
     def post_zsbm1_parse(self, response):
         with open('post_zsbm1_parse.aspx.html', 'w') as f:
             f.write(response.text)
         #再提交一次
-        self.form_data['ScriptManager1'] = 'UpdatePanel3|ButtonOK'
-        self.form_data['__EVENTTARGET'] = ''
-        self.form_data['__LASTFOCUS'] = ''
-        self.form_data['__ASYNCPOST'] = 'true'
-        self.form_data['ButtonOK'] = '提交申请'
-        self.form_data['DropDownListQHXX'] = self.school_code
+        form_data = {}
+        form_data['ScriptManager1'] = 'UpdatePanel3|ButtonOK'
+        form_data['__EVENTTARGET'] = ''
+        form_data['__EVENTARGUMENT'] = ''
+        form_data['__LASTFOCUS'] = ''
+        form_data['__ASYNCPOST'] = 'true'
+        form_data['ButtonOK'] = '提交申请'
+        form_data['DropDownListQHXX'] = self.school_code
         view_state = re.findall(r'__VIEWSTATE\|(.+?)\|', response.text)
         view_generator = re.findall(r'__VIEWSTATEGENERATOR\|(.+?)\|', response.text)
         event_validation = re.findall(r'__EVENTVALIDATION\|(.+?)\|', response.text)
-        self.form_data['__VIEWSTATE'] = view_state[0] if len(view_state)>0 else ''
-        self.form_data['__EVENTVALIDATION'] = event_validation[0] if len(event_validation) > 0 else ''
-        self.form_data['__VIEWSTATEGENERATOR'] = view_generator[0] if len(view_generator) > 0 else ''
+        form_data['__VIEWSTATE'] = view_state[0] if len(view_state)>0 else ''
+        form_data['__EVENTVALIDATION'] = event_validation[0] if len(event_validation) > 0 else ''
+        form_data['__VIEWSTATEGENERATOR'] = view_generator[0] if len(view_generator) > 0 else ''
 
-        bodystr = urlencode(self.form_data, encoding='utf-8')
+        bodystr = urlencode(form_data, encoding='utf-8')
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
 
