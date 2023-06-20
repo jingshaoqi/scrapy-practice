@@ -317,13 +317,13 @@ class JuniorQhSpider(scrapy.Spider):
         self.form_data['__ASYNCPOST'] = 'true'
         #self.form_data['ButtonOK'] = '提交申请'
         self.form_data['DropDownListQHXX'] = self.school_code
-        event_argument = response.xpath('//div/input[@id="__EVENTARGUMENT"]/@value')
+        event_argument = response.xpath('//input[@id="__EVENTARGUMENT"]/@value')
         event_argument_str = event_argument.extract()[0] if len(event_argument) > 0 else ''
-        view_state = response.xpath('//div/input[@id="__VIEWSTATE"]/@value')
+        view_state = response.xpath('//input[@id="__VIEWSTATE"]/@value')
         view_state_str = view_state.extract()[0] if len(view_state) > 0 else ''
-        event_validation = response.xpath('//div/input[@id="__EVENTVALIDATION"]/@value')
+        event_validation = response.xpath('//input[@id="__EVENTVALIDATION"]/@value')
         event_validation_str = event_validation.extract()[0] if len(event_validation) > 0 else ''
-        view_state_generator = response.xpath('//div/input[@id="__VIEWSTATEGENERATOR"]/@value')
+        view_state_generator = response.xpath('//input[@id="__VIEWSTATEGENERATOR"]/@value')
         view_state_generator_str = view_state_generator.extract()[0] if len(view_state_generator) > 0 else ''
 
         self.form_data['__EVENTARGUMENT'] = event_argument_str
