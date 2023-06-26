@@ -37,16 +37,7 @@ class RuxueQianghaoSpider(scrapy.Spider):
     s_time = datetime.datetime.now()
 
     def start_requests(self):
-        # wait
-        self.s_time = datetime.datetime.now()
-        desttime = '2023-6-17 8:00:00'
-        a2time = time.strptime(desttime, '%Y-%m-%d %H:%M:%S')
-        while 1:
-            localtm = time.localtime()
-            if localtm >= a2time:
-                break
-            else:
-                time.sleep(0.01)
+
         if self.headers.get('Cookie') is not None:
             self.headers.pop('Cookie')
         if self.headers.get('Referer') is not None:
@@ -99,8 +90,8 @@ class RuxueQianghaoSpider(scrapy.Spider):
                 continue
             school = itd[2].xpath('./text()')
             school_t = school.get()
-            # 巫峡幼儿园 机关幼儿园 平湖幼儿园 西坪幼儿园 白杨幼儿园 圣泉幼儿园
-            if school_t.find('平湖幼儿园') < 0:
+            # 巫峡幼儿园 机关幼儿园 平湖幼儿园 西坪幼儿园 白杨幼儿园 圣泉幼儿园 南峰小学附属幼儿园
+            if school_t.find('南峰小学') < 0:
                 continue
             school_url = itd[6].xpath('./a/@href')
             school_url_t = school_url.get()
@@ -111,6 +102,18 @@ class RuxueQianghaoSpider(scrapy.Spider):
             print('school_url_full:{}'.format(qh_rukou_url_full))
             # click to qianghao entrance
             self.headers['Referer'] = response.url
+
+            # wait
+            self.s_time = datetime.datetime.now()
+            desttime = '2023-6-28 9:00:00'
+            a2time = time.strptime(desttime, '%Y-%m-%d %H:%M:%S')
+            while 1:
+                localtm = time.localtime()
+                if localtm >= a2time:
+                    break
+                else:
+                    time.sleep(0.01)
+
             yield scrapy.Request(url=qh_rukou_url_full, headers=self.headers, callback=self.qh_ru_kou_check, dont_filter=True) #添加身份证号验证
             break
 
@@ -125,7 +128,7 @@ class RuxueQianghaoSpider(scrapy.Spider):
             if zt_s.find('进行中') < 0:
                 #点击返回
                 print('状态是:{}'.format(zt_s))
-                time.sleep(0.3)
+                time.sleep(0.2)
                 yield scrapy.Request(url=self.jw_main_url, headers=self.jw_main_headers, callback=self.JWmain, dont_filter=True)
                 return
 
@@ -148,7 +151,7 @@ class RuxueQianghaoSpider(scrapy.Spider):
         self.form_data['__VIEWSTATEGENERATOR'] = view_state_generator_str
         self.form_data['__LASTFOCUS'] = ''
         self.form_data['TextBox_XM'] = ''
-        self.form_data['TextBox_SFZH'] = '500237202005319879'
+        self.form_data['TextBox_SFZH'] = '500237201710319992'
         self.form_data['TextBox_FJDZ'] = ''
         self.form_data['TextBox_JZDZ'] = ''
         self.form_data['TextBox_JFRXM'] = ''
@@ -190,13 +193,13 @@ class RuxueQianghaoSpider(scrapy.Spider):
         self.form_data['__EVENTTARGET'] = ''
         self.form_data['__EVENTARGUMENT'] = ''
         self.form_data['__LASTFOCUS'] = ''
-        self.form_data['TextBox_XM'] = '王秀丽'
-        self.form_data['TextBox_SFZH'] = '500237202005319879'
-        self.form_data['TextBox_FJDZ'] = '重庆市巫山县高唐街道巫峡路110号4幢4单元1-2'
-        self.form_data['TextBox_JZDZ'] = '重庆市巫山县高唐街道巫峡路110号4幢4单元1-2'
-        self.form_data['TextBox_JFRXM'] = '王大海'
-        self.form_data['TextBox_JFRSFZH'] = '500237198905319744'
-        self.form_data['TextBox_TelePhone'] = '13278904979'
+        self.form_data['TextBox_XM'] = '王海丽'
+        self.form_data['TextBox_SFZH'] = '500237201710319992'
+        self.form_data['TextBox_FJDZ'] = '重庆市巫山县高唐街道巫峡路112号4幢3单元1-2'
+        self.form_data['TextBox_JZDZ'] = '重庆市巫山县高唐街道巫峡路112号4幢3单元1-2'
+        self.form_data['TextBox_JFRXM'] = '向大海'
+        self.form_data['TextBox_JFRSFZH'] = '500237198910319853'
+        self.form_data['TextBox_TelePhone'] = '13277154979'
         self.form_data['__ASYNCPOST'] = 'true'
         self.form_data['Button1'] = '提交申请'
 
