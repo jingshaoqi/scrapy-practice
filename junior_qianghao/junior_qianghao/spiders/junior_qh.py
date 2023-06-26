@@ -37,15 +37,7 @@ class JuniorQhSpider(scrapy.Spider):
     zsbm_headers={}
     yzm_url_full='' #保存验证码的url
     def start_requests(self):
-        # wait
-        desttime = '2023-6-17 8:00:00'
-        a2time = time.strptime(desttime, '%Y-%m-%d %H:%M:%S')
-        while 1:
-            localtm = time.localtime()
-            if localtm >= a2time:
-                break
-            else:
-                time.sleep(0.01)
+
         if self.headers.get('Cookie') is not None:
             self.headers.pop('Cookie')
         if self.headers.get('Referer') is not None:
@@ -228,6 +220,15 @@ class JuniorQhSpider(scrapy.Spider):
         # 从这个请求开始得到抢号的界面，没有开始的时候是其他界面
         self.zsbm_url = zsbm_url
         self.zsbm_headers = self.headers
+        # 添加一个等待时间控制
+        desttime = '2023-7-2 8:30:00'
+        a2time = time.strptime(desttime, '%Y-%m-%d %H:%M:%S')
+        while 1:
+            localtm = time.localtime()
+            if localtm >= a2time:
+                break
+            else:
+                time.sleep(0.01)
         yield scrapy.Request(url=zsbm_url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
 
     def ZSBM_parse(self, response):
