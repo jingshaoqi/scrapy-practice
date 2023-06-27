@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 import json
 import re
 from urllib.parse import urlencode
@@ -149,6 +150,7 @@ class JuniorQhSpider(scrapy.Spider):
         bodystr = urlencode(self.form_data)
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
+        print('username:{} password:{}'.format(self.form_data['L_username'], self.form_data['L_password']))
         #准备好了数据 按 登录 按钮
         yield scrapy.Request(url=self.user_dll_url, method='POST', body=bodystr,
                              callback=self.login_parse, headers=self.headers, dont_filter=True)
@@ -221,14 +223,21 @@ class JuniorQhSpider(scrapy.Spider):
         self.zsbm_url = zsbm_url
         self.zsbm_headers = self.headers
         # 添加一个等待时间控制
-        desttime = '2023-7-2 8:30:00'
-        a2time = time.strptime(desttime, '%Y-%m-%d %H:%M:%S')
+        desttime = '2023-7-2 8:30:00 000000'
+        a2time = datetime.strptime(desttime, '%Y-%m-%d %H:%M:%S %f')
+        wt = 0
+        wt_delta = 0.01
         while 1:
-            localtm = time.localtime()
+            localtm = datetime.now()
             if localtm >= a2time:
                 break
             else:
-                time.sleep(0.01)
+                if wt >= 1:
+                    dt = a2time - localtm
+                    print('left time:{}'.format(dt))
+                    wt = 0
+                time.sleep(wt_delta)
+                wt += wt_delta
         yield scrapy.Request(url=zsbm_url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
 
     def ZSBM_parse(self, response):
