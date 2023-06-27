@@ -34,7 +34,7 @@ class RuxueQianghaoSpider(scrapy.Spider):
     jw_main_url = ''
     jw_main_headers = {}
 
-    s_time = datetime.datetime.now()
+    s_time = datetime.now()
 
     def start_requests(self):
 
@@ -104,7 +104,6 @@ class RuxueQianghaoSpider(scrapy.Spider):
             self.headers['Referer'] = response.url
 
             # wait
-            self.s_time = datetime.datetime.now()
             desttime = '2023-6-28 9:00:00 000000'
             a2time = datetime.strptime(desttime, '%Y-%m-%d %H:%M:%S %f')
             wt = 0
@@ -120,7 +119,7 @@ class RuxueQianghaoSpider(scrapy.Spider):
                         wt = 0
                     time.sleep(wt_delta)
                     wt += wt_delta
-
+            self.s_time = datetime.now()
             yield scrapy.Request(url=qh_rukou_url_full, headers=self.headers, callback=self.qh_ru_kou_check, dont_filter=True) #添加身份证号验证
             break
 
@@ -233,7 +232,7 @@ class RuxueQianghaoSpider(scrapy.Spider):
     def submit_info(self, response):
         with open('submit_info.html', 'w') as f:
             f.write(response.text)
-        e_time = datetime.datetime.now()
+        e_time = datetime.now()
         c=e_time-self.s_time
         print('cost:{}'.format(c))
         print(response.text)
