@@ -143,8 +143,8 @@ class JuniorQhSpider(scrapy.Spider):
         self.headers['Sec-Fetch-User'] = '?1'
 
         #现在使用用户名，密码，验证码登录
-        self.form_data['L_username'] = '500237201011301419'
-        self.form_data['L_password'] = 'a201025Q'
+        self.form_data['L_username'] = '500223201101127081'
+        self.form_data['L_password'] = 'Zmh666666'
         self.form_data['L_YZM'] = res
         self.form_data['Button1'] = '登录'
         bodystr = urlencode(self.form_data)
@@ -223,7 +223,7 @@ class JuniorQhSpider(scrapy.Spider):
         self.zsbm_url = zsbm_url
         self.zsbm_headers = self.headers
         # 添加一个等待时间控制
-        desttime = '2023-7-2 8:30:00 000000'
+        desttime = '2023-7-2 14:30:00 000000'
         a2time = datetime.strptime(desttime, '%Y-%m-%d %H:%M:%S %f')
         wt = 0
         wt_delta = 0.01
