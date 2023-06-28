@@ -31,6 +31,13 @@ class RuxueQianghaoSpider(scrapy.Spider):
                  '__VIEWSTATEGENERATOR': '',
                  '__EVENTVALIDATION': ''
                  }
+    TextBox_XM = '王文'
+    TextBox_SFZH = '500237198910319861'
+    TextBox_FJDZ = '重庆市巫山县高唐街道巫峡路132号2幢3单元1-2'
+    TextBox_JZDZ = '重庆市巫山县高唐街道巫峡路132号2幢3单元1-2'
+    TextBox_JFRXM = '王心'
+    TextBox_JFRSFZH = '50023719891031987X'
+    TextBox_TelePhone = '18967789689'
     jw_main_url = ''
     jw_main_headers = {}
 
@@ -157,7 +164,7 @@ class RuxueQianghaoSpider(scrapy.Spider):
         self.form_data['__VIEWSTATEGENERATOR'] = view_state_generator_str
         self.form_data['__LASTFOCUS'] = ''
         self.form_data['TextBox_XM'] = ''
-        self.form_data['TextBox_SFZH'] = '500237201710319992'
+        self.form_data['TextBox_SFZH'] = self.TextBox_SFZH
         self.form_data['TextBox_FJDZ'] = ''
         self.form_data['TextBox_JZDZ'] = ''
         self.form_data['TextBox_JFRXM'] = ''
@@ -199,13 +206,13 @@ class RuxueQianghaoSpider(scrapy.Spider):
         self.form_data['__EVENTTARGET'] = ''
         self.form_data['__EVENTARGUMENT'] = ''
         self.form_data['__LASTFOCUS'] = ''
-        self.form_data['TextBox_XM'] = '王海丽'
-        self.form_data['TextBox_SFZH'] = '500237201710319992'
-        self.form_data['TextBox_FJDZ'] = '重庆市巫山县高唐街道巫峡路112号4幢3单元1-2'
-        self.form_data['TextBox_JZDZ'] = '重庆市巫山县高唐街道巫峡路112号4幢3单元1-2'
-        self.form_data['TextBox_JFRXM'] = '向大海'
-        self.form_data['TextBox_JFRSFZH'] = '500237198910319853'
-        self.form_data['TextBox_TelePhone'] = '13277154979'
+        self.form_data['TextBox_XM'] = self.TextBox_XM
+        self.form_data['TextBox_SFZH'] = self.TextBox_SFZH
+        self.form_data['TextBox_FJDZ'] = self.TextBox_FJDZ
+        self.form_data['TextBox_JZDZ'] = self.TextBox_JZDZ
+        self.form_data['TextBox_JFRXM'] = self.TextBox_JFRXM
+        self.form_data['TextBox_JFRSFZH'] = self.TextBox_JFRSFZH
+        self.form_data['TextBox_TelePhone'] = self.TextBox_TelePhone
         self.form_data['__ASYNCPOST'] = 'true'
         self.form_data['Button1'] = '提交申请'
 
@@ -225,8 +232,8 @@ class RuxueQianghaoSpider(scrapy.Spider):
         bodystr = urlencode(self.form_data, encoding='utf-8')
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
-
-        yield scrapy.Request(url=response.url, method="POST", body=bodystr, headers=self.headers,
+        req_url = response.url
+        yield scrapy.Request(url=req_url, method="POST", body=bodystr, headers=self.headers,
                              callback=self.submit_info, dont_filter=True)
 
     def submit_info(self, response):
@@ -236,6 +243,12 @@ class RuxueQianghaoSpider(scrapy.Spider):
         c=e_time-self.s_time
         print('cost:{}'.format(c))
         print(response.text)
+        ind = response.text.find('抢注成功')
+        if ind < 0:
+            yield scrapy.Request(url=self.jw_main_url, headers=self.jw_main_headers, callback=self.JWmain,
+                                 dont_filter=True)
+        else:
+            print('finish')
 
 
 
