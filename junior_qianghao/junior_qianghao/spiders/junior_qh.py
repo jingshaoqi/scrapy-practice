@@ -248,14 +248,19 @@ class JuniorQhSpider(scrapy.Spider):
         #再进入 https://wsemal.com/CZBM/JW/JW_XSBMXZ1.aspx
         # 它的参数需要解析出来才行
         spt = response.xpath('//script/text()')
-        if spt is None:
+        if spt is None or len(spt) <= 0:
+            # 说明还没有到开始抢号的时间，重新进入
+            time.sleep(0.3)
+            if len(self.headers) != 13:
+                print('ZSBM_parse 1possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
+            yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
             return
         spt_t = spt.extract()[0]
         if spt_t.find('JW_ZSBM1.aspx') < 0:
             #说明还没有到开始抢号的时间，重新进入
             time.sleep(0.3)
             if len(self.headers) != 13:
-                print('ZSBM_parse possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
+                print('ZSBM_parse 2possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
             yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
             return
         str_all = re.findall(r"href=\'(.+?)\';", spt_t)
@@ -280,14 +285,42 @@ class JuniorQhSpider(scrapy.Spider):
             yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers, dont_filter=True)
             return
         #解析响应中有用的数据
-        #先要获取学校名称和代号
+
+        select_school_name = '巫山二中'
+        #判断选择的学校是否已经满了
+        ful_sch = response.xpath('//div[@id="UpdatePanel2"]/table/tr')
+        choose_suc = 0
+        for y in ful_sch:
+            tds = y.xpath('./td/text()')
+            if len(tds) < 6:
+                continue
+            sch_name = tds[1].get()
+            if sch_name.find(select_school_name) < 0:
+                continue
+            num = int(tds[4].get())
+            if num > 0:
+                choose_suc = 1
+                break
+        if choose_suc == 0:
+            #再次选择
+            select_school_name = '巫峡初中'
+            for y in ful_sch:
+                tds = y.xpath('./td/text()')
+                if len(tds) < 6:
+                    continue
+                sch_name = tds[1].get()
+                if sch_name.find(select_school_name) < 0:
+                    continue
+                num = int(tds[4].get())
+                if num > 0:
+                    choose_suc = 1
+                    break
+        # select_school_code = 'A23317' #A23313;A23317;B23301;B23304
+        # 先要获取学校名称和代号
         schools = response.xpath('//tr/td/select/option')
-        if schools is None:
+        if schools is None or len(schools) <= 0:
             print('not have schools')
             return
-        #这里没有判断选择的学校是否已满了。
-        select_school_name = '巫山二中'
-        select_school_code = 'A23317' #A23313;A23317;B23301;B23304
         for i in schools:
             school_name = i.xpath('./text()').extract()[0]
             if school_name.find(select_school_name) >= 0:
