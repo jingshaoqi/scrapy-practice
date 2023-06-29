@@ -149,7 +149,7 @@ class JuniorQhSpider(scrapy.Spider):
         self.form_data['Button1'] = '登录'
         bodystr = urlencode(self.form_data)
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-        self.headers['Content-Length'] = '{}'.format(len(bodystr))
+        #self.headers['Content-Length'] = '{}'.format(len(bodystr))
         if self.headers.get('TE') is not None:
             self.headers.pop('TE')
         print('username:{} password:{}'.format(self.form_data['L_username'], self.form_data['L_password']))
@@ -378,7 +378,7 @@ class JuniorQhSpider(scrapy.Spider):
         form_data['__VIEWSTATEGENERATOR'] = view_state_generator_str
         bodystr = urlencode(form_data, encoding='utf-8')
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
-        self.headers['Content-Length'] = '{}'.format(len(bodystr))
+        #self.headers['Content-Length'] = '{}'.format(len(bodystr))
         if len(self.headers) != 17:
             print('zsbm1 post first possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
         yield scrapy.Request(url=action_url_full, method='POST', body=bodystr, callback=self.post_zsbm1_parse,
@@ -406,7 +406,7 @@ class JuniorQhSpider(scrapy.Spider):
 
         bodystr = urlencode(form_data, encoding='utf-8')
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
-        self.headers['Content-Length'] = '{}'.format(len(bodystr))
+        #self.headers['Content-Length'] = '{}'.format(len(bodystr))
 
         if len(self.headers) != 17:
             print('zsbm1 post second possible headers is not correct, len of headers is:{}'.format(len(self.headers)))
