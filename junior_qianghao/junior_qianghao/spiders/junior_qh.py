@@ -150,6 +150,8 @@ class JuniorQhSpider(scrapy.Spider):
         bodystr = urlencode(self.form_data)
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
         self.headers['Content-Length'] = '{}'.format(len(bodystr))
+        if self.headers.get('TE') is not None:
+            self.headers.pop('TE')
         print('username:{} password:{}'.format(self.form_data['L_username'], self.form_data['L_password']))
         #准备好了数据 按 登录 按钮
         yield scrapy.Request(url=self.user_dll_url, method='POST', body=bodystr,
