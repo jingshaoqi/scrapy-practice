@@ -46,6 +46,14 @@ class ModifypassworldSpider(scrapy.Spider):
     def main_parse(self, response):
         with open('JW_UserDL.aspx.html', 'w') as f:
             f.write(response.text)
+        #b 保存之前的cookie
+        cke_pre = response.request.headers['Cookie']
+        cke = str(cke_pre) +';XSQHUserName=LKk4kUK/Kftip9Ih7A/8S2O3VlrviGcN'
+        headers={'Cookie':cke}
+        yield scrapy.Request(url = 'https://wsemal.com/CZBM/JW/JW_ZSBM.aspx', callback=self.que_ren_parse,headers=headers,
+                             dont_filter=True)
+        return
+
         # 现在来获取验证码的图片
         yzm_url = response.xpath('//table/tr/td/input[@id="ImageButtonYZM"]/@src')
         if yzm_url is None:
@@ -54,6 +62,7 @@ class ModifypassworldSpider(scrapy.Spider):
         yzm_url_t = yzm_url.extract()[0]
         self.yzm_url_full = urljoin(response.url, yzm_url_t)
         # https://wsemal.com/CZBM/JW/JW_UserDL.aspx
+
 
         # 提取formdata信息
         event_target = response.xpath('//input[@id="__EVENTTARGET"]/@value')
@@ -86,7 +95,7 @@ class ModifypassworldSpider(scrapy.Spider):
         bodystr = urlencode(self.form_data, encoding='utf-8')
         headers = {}
         headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
-        headers['Content-Length'] = '{}'.format(len(bodystr))
+        #headers['Content-Length'] = '{}'.format(len(bodystr))
         # 准备好了数据 按 登录 按钮
         yield scrapy.Request(url=self.user_dll_url, method='POST', body=bodystr,
                              callback=self.login_parse, headers=headers, dont_filter=True)
@@ -139,7 +148,7 @@ class ModifypassworldSpider(scrapy.Spider):
         bodystr = urlencode(self.form_data, encoding='utf-8')
         headers = {}
         headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
-        headers['Content-Length'] = '{}'.format(len(bodystr))
+        #headers['Content-Length'] = '{}'.format(len(bodystr))
         print('exit post_md_parse')
         yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.que_ren_parse,
                              headers=headers, dont_filter=True)
