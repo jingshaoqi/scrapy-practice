@@ -187,7 +187,7 @@ class RuxueQianghaoSpider(scrapy.Spider):
 
         bodystr = urlencode(self.form_data, encoding='utf-8')
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
-        self.headers['Content-Length'] = '{}'.format(len(bodystr))
+        #self.headers['Content-Length'] = '{}'.format(len(bodystr))
 
         yield scrapy.Request(url=response.url, method="POST", body=bodystr, headers=self.headers,
                              callback=self.SFZh_check_parse, dont_filter=True)
@@ -231,7 +231,7 @@ class RuxueQianghaoSpider(scrapy.Spider):
 
         bodystr = urlencode(self.form_data, encoding='utf-8')
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
-        self.headers['Content-Length'] = '{}'.format(len(bodystr))
+        #self.headers['Content-Length'] = '{}'.format(len(bodystr))
         req_url = response.url
         yield scrapy.Request(url=req_url, method="POST", body=bodystr, headers=self.headers,
                              callback=self.submit_info, dont_filter=True)

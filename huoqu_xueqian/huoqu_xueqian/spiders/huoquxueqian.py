@@ -78,7 +78,7 @@ class HuoquxueqianSpider(scrapy.Spider):
         bodystr = urlencode(form_data, encoding='utf-8')
         headers = {}
         headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
-        headers['Content-Length'] = '{}'.format(len(bodystr))
+        #headers['Content-Length'] = '{}'.format(len(bodystr))
         yield scrapy.Request(url=response.url, method='POST', body=bodystr, headers=headers,
                              callback=self.sfzh_check_parse, dont_filter=True, meta=meta)
 
@@ -123,6 +123,6 @@ class HuoquxueqianSpider(scrapy.Spider):
         bodystr = urlencode(form_data, encoding='utf-8')
         headers = {}
         headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
-        headers['Content-Length'] = '{}'.format(len(bodystr))
+        #headers['Content-Length'] = '{}'.format(len(bodystr))
         yield scrapy.Request(url=response.url, method='POST', body=bodystr, headers=headers,
                              callback=self.sfzh_check_parse, dont_filter=True, meta=response.meta)

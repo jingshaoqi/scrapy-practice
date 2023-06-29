@@ -79,7 +79,7 @@ class MutilloginSpider(scrapy.Spider):
         headers = {}
         headers['Referer'] = self.user_dll_url
         headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
-        headers['Content-Length'] = '{}'.format(len(bodystr))
+        #headers['Content-Length'] = '{}'.format(len(bodystr))
         headers['Origin'] = 'https://wsemal.com'
         headers['Host'] = 'wsemal.com'
         # 准备好了数据 按 登录 按钮
@@ -134,7 +134,7 @@ class MutilloginSpider(scrapy.Spider):
         bodystr = urlencode(self.form_data, encoding='utf-8')
         headers={}
         headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
-        headers['Content-Length'] = '{}'.format(len(bodystr))
+        #headers['Content-Length'] = '{}'.format(len(bodystr))
         print('exit post_md_parse')
         yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.que_ren_parse,
                              headers=headers, dont_filter=True)
