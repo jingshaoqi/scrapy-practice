@@ -302,7 +302,7 @@ class JuniorQhSpider(scrapy.Spider):
             num = int(tds[4].get())
             if num > 0:
                 choose_suc = 1
-                break
+            break
         if choose_suc == 0:
             #再次选择
             select_school_name = '巫峡初中'
@@ -316,7 +316,10 @@ class JuniorQhSpider(scrapy.Spider):
                 num = int(tds[4].get())
                 if num > 0:
                     choose_suc = 1
-                    break
+                break
+        if choose_suc == 0:
+            print('cant find suitable school:{}'.format(select_school_name))
+            return
         # select_school_code = 'A23317' #A23313;A23317;B23301;B23304
         # 先要获取学校名称和代号
         schools = response.xpath('//tr/td/select/option')
