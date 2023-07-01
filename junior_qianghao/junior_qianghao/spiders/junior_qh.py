@@ -154,6 +154,7 @@ class JuniorQhSpider(scrapy.Spider):
             self.headers.pop('TE')
         print('username:{} password:{}'.format(self.form_data['L_username'], self.form_data['L_password']))
         #准备好了数据 按 登录 按钮
+        print('请求下一个网页self.user_dll_url：{}'.format(self.user_dll_url))
         yield scrapy.Request(url=self.user_dll_url, method='POST', body=bodystr,
                              callback=self.login_parse, headers=self.headers, dont_filter=True)
     #登录结果分析，登录结果中添加了 cookie XSQHUserName
@@ -209,7 +210,7 @@ class JuniorQhSpider(scrapy.Spider):
             return
         zsbm_ur = zsbm_res[0] # ../JW/JW_ZSBM.aspx
         zsbm_url = urljoin(response.url, zsbm_ur) # 'https://wsemal.com/CZBM/JW/JW_ZSBM.aspx'
-        print('请求下一个网页：{}'.format(zsbm_url))
+        print('请求下一个网页zsbm_url：{}'.format(zsbm_url))
         if self.headers.get('Origin') is not None:
             self.headers.pop('Origin')
         # 请求头中删除不需要的
@@ -274,7 +275,7 @@ class JuniorQhSpider(scrapy.Spider):
         #yield scrapy.Request(url=xsbmxz1_url, callback=self.XSBMXZ1_parse, headers=self.headers, dont_filter=True)
 
         zsbm1_url = urljoin(response.url, str_all[0])
-        print('请求下一个网页：{}'.format(zsbm1_url))
+        print('请求下一个网页zsbm1_url：{}'.format(zsbm1_url))
         yield scrapy.Request(url=zsbm1_url, callback=self.ZSBM1_parse, headers=self.headers, dont_filter=True)
 
     def ZSBM1_parse(self, response):
@@ -282,7 +283,7 @@ class JuniorQhSpider(scrapy.Spider):
             f.write(response.text)
         #a判断状态是否在进行中
         zt = response.xpath('//span[@id="Label_ZT"]/text()')
-        if zt is None or zt.get().find("进行中") < 0:
+        if zt is None or len(zt) <= 0 or zt.get().find("进行中") < 0:
             time.sleep(0.1)
             yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers, dont_filter=True)
             return
@@ -305,7 +306,7 @@ class JuniorQhSpider(scrapy.Spider):
             break
         if choose_suc == 0:
             #再次选择
-            select_school_name = '巫峡初中'
+            select_school_name = '巫山二中'
             for y in ful_sch:
                 tds = y.xpath('./td/text()')
                 if len(tds) < 6:
@@ -386,6 +387,7 @@ class JuniorQhSpider(scrapy.Spider):
         #self.headers['Content-Length'] = '{}'.format(len(bodystr))
         if len(self.headers) != 17:
             print('zsbm1 post first possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
+        print('请求下一个网页action_url_full：{}'.format(action_url_full))
         yield scrapy.Request(url=action_url_full, method='POST', body=bodystr, callback=self.post_zsbm1_parse,
                              headers=self.headers, dont_filter=True)
 
@@ -415,6 +417,7 @@ class JuniorQhSpider(scrapy.Spider):
 
         if len(self.headers) != 17:
             print('zsbm1 post second possible headers is not correct, len of headers is:{}'.format(len(self.headers)))
+        print('请求下一个网页response.url：{}'.format(response.url))
         yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.post2_zsbm1_parse,
                              headers=self.headers, dont_filter=True)
 
