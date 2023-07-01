@@ -260,7 +260,7 @@ class JuniorQhSpider(scrapy.Spider):
         spt_t = spt.extract()[0]
         if spt_t.find('JW_ZSBM1.aspx') < 0:
             #说明还没有到开始抢号的时间，重新进入
-            time.sleep(0.3)
+            time.sleep(0.1)
             if len(self.headers) != 13:
                 print('ZSBM_parse 2possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
             yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
@@ -283,7 +283,7 @@ class JuniorQhSpider(scrapy.Spider):
         #a判断状态是否在进行中
         zt = response.xpath('//span[@id="Label_ZT"]/text()')
         if zt is None or zt.get().find("进行中") < 0:
-            time.sleep(0.2)
+            time.sleep(0.1)
             yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers, dont_filter=True)
             return
         #解析响应中有用的数据
@@ -322,6 +322,8 @@ class JuniorQhSpider(scrapy.Spider):
         schools = response.xpath('//tr/td/select/option')
         if schools is None or len(schools) <= 0:
             print('not have schools')
+            yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers,
+                                 dont_filter=True)
             return
         for i in schools:
             school_name = i.xpath('./text()').extract()[0]
