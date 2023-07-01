@@ -283,7 +283,7 @@ class JuniorQhSpider(scrapy.Spider):
         #a判断状态是否在进行中
         zt = response.xpath('//span[@id="Label_ZT"]/text()')
         if zt is None or zt.get().find("进行中") < 0:
-            time.sleep(0.5)
+            time.sleep(0.2)
             yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers, dont_filter=True)
             return
         #解析响应中有用的数据
@@ -416,6 +416,9 @@ class JuniorQhSpider(scrapy.Spider):
     def post2_zsbm1_parse(self, response):
         with open('post2_zsbm1.aspx.html', 'w') as f:
             f.write(response.text)
+        if response.text.find('网络拥堵') >= 0:
+            yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers,
+                                 dont_filter=True)
         print(response.text)
 
     def button_ok_parse(self, response):
