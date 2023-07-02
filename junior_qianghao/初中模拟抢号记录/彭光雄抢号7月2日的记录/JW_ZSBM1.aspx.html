@@ -1,0 +1,334 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<head><link href="../App_Themes/%E4%B8%BB%E9%A2%9801/StyleSheet.css" type="text/css" rel="stylesheet" /><title>
+	学生报名抢号
+</title>
+
+
+        <script type="text/javascript" language="javascript">
+          
+            var str = getQueryString("TT"); //取得本项目开始时间 
+            str = str.substring(0, 19);
+            str = str.replace(/-/g, '/');
+            var endDate = new Date(str);
+            var end = endDate.getTime();          
+            window.onload = function countTime()
+            {              
+                //获取当前时间  
+                var date = new Date();
+                var now = date.getTime();
+               
+                //时间差  
+                var leftTime = end - now;
+               
+                if (leftTime > 0  )
+                {
+                    //定义变量 d,h,m,s保存倒计时的时间  
+                    var d, h, m, s;
+                    if (leftTime >= 0) {
+                        d = Math.floor(leftTime / 1000 / 60 / 60 / 24).toString();
+                        if (d.length <= 1) d = "0" + d;
+                        h = Math.floor(leftTime / 1000 / 60 / 60 % 24).toString();
+                        if (h.length <= 1) h = "0" + h;
+                        m = Math.floor(leftTime / 1000 / 60 % 60).toString();
+                        if (m.length <= 1) m = "0" + m;
+                        s = Math.floor(leftTime / 1000 % 60).toString();
+                        if (s.length <= 1) s = "0" + s;
+                    }
+
+                    //递归每秒调用countTime方法，显示动态时间效果  
+                    document.getElementById("time").innerText = "";
+                    if (d == "00") //24小时之内的才显示
+                        document.getElementById("time").innerText = h + ":" + m + ":" + s;
+                   
+                    //else
+                        //document.getElementById("time").innerText = d + ":" + h + ":" + m + ":" + s;
+
+                    if (d == "00" && h == "00" && m == "00" && s == "00")  //结束
+                    {
+                       
+                        document.getElementById("time").innerText = "";
+                        document.getElementById("btn1").click();
+                        //window.location.href("JW_UserDL.aspx");
+                     
+                    }
+                    else setTimeout(countTime, 1000);
+                }
+            }
+            
+
+            function getQueryString(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) {
+                    return decodeURIComponent(r[2]);
+                }
+                return '';
+            }
+  
+      </script>
+
+<link href="../App_Themes/%E4%B8%BB%E9%A2%9801/StyleSheet.css" type="text/css" rel="stylesheet" /></head>
+    
+<body style="line-height :220%; overflow-x :hidden ; overflow-y :hidden  ; ">
+    <form method="post" action="./JW_ZSBM1.aspx?TT=2023%2f7%2f2+8%3a30%3a00&amp;PC=%u7b2c%u4e00%u6279%u6b21(A%u8f6e)" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJMTQ0NjAyMjg1D2QWAgIDD2QWBgIDD2QWAmYPZBYIZg8PFgIeBFRleHQFEuesrOS4gOaJueasoShB6L2uKWRkAgEPDxYCHwAFCei/m+ihjOS4rWRkAgIPDxYCHwAFEDIwMjMvNy8yIDg6MzA6MDBkZAIDDw8WAh8ABRAyMDIzLzcvMiA5OjMwOjAwZGQCBA9kFgJmD2QWAgIBDxYCHwAFhAY8dGFibGUgYm9yZGVyID0iMCIgY2VsbHBhZGRpbmcgPSIwIiBjZWxsc3BhY2luZyA9IjAiIHdpZHRoPSI0NTAiY2xhc3MgPSJob3ZlcnRhYmxlNSI+PHRyIGFsaWduID0iY2VudGVyIiB2YWxpZ24gPSJtaWRkbGUiICBzdHlsZSA9ImJhY2tncm91bmQtY29sb3IgOiNmN2Y3ZmYiPjx0ZCByb3dzcGFuPSIyIj7mibnmrKE8L3RkPjx0ZCByb3dzcGFuPSIyIj7lrabmoKHlkI3np7A8L3RkPjx0ZCBjb2xzcGFuPSIzIj7nlLfnlJ88L3RkPjx0ZCByb3dzcGFuPSIyIj7nirbmgIE8L3RkPjwvdHI+PHRyIGFsaWduID0iY2VudGVyIiB2YWxpZ24gPSJtaWRkbGUiICBzdHlsZSA9ImJhY2tncm91bmQtY29sb3IgOiNmN2Y3ZmYiPjx0ZD7orqHliJI8L3RkPjx0ZD7lt7LmiqU8L3RkPjx0ZD7liankvZk8L3RkPjwvdHI+PHRyIGFsaWduID0iY2VudGVyIiB2YWxpZ24gPSJtaWRkbGUiID48dGQ+56ys5LiA5om55qyhKEHova4pPC90ZD48dGQ+5ber5bGx5LqM5LitPC90ZD48dGQ+NzA8L3RkPjx0ZD4wPC90ZD48dGQgc3R5bGU9IkNvbG9yOnJlZCI+NzA8L3RkPjx0ZCBzdHlsZSA9ImNvbG9yOmdyZWVuIDsiPui/m+ihjOS4rTwvdGQ+PC90cj48dHIgYWxpZ24gPSJjZW50ZXIiIHZhbGlnbiA9Im1pZGRsZSIgPjx0ZD7nrKzkuIDmibnmrKEoQei9rik8L3RkPjx0ZD7pq5jllJDliJ3kuK08L3RkPjx0ZD43MDwvdGQ+PHRkPjA8L3RkPjx0ZCBzdHlsZT0iQ29sb3I6cmVkIj43MDwvdGQ+PHRkIHN0eWxlID0iY29sb3I6Z3JlZW4gOyI+6L+b6KGM5LitPC90ZD48L3RyPjwvdGFibGU+ZAIFD2QWAmYPZBYCAgEPZBYeZg8PFgIfAAUM5Y2X5bOw5bCP5a2mZGQCAQ8PFgIeCEltYWdlVXJsBTZ+L1Bob3RvLzIwMjMvNTAwMjM3MjAxMDExMzAxNDE5LkpwZz8yMDIzMDcwMjA4MzAwMTY4MTRkZAICDw8WAh8ABRHlsI/lraYyMDE357qnNOePrWRkAgMPDxYCHwAFBuW9remRq2RkAgQPDxYCHwAFA+eUt2RkAgUPDxYCHwAFEjUwMDIzNzIwMTAxMTMwMTQxOWRkAgYPDxYCHwAFCzE3NzgzNjMxNjMyZGQCBw8PFgIfAAUM5q2j5byP5a2m5qChZGQCCA8QDxYCHgdWaXNpYmxlZ2QQFQMJ5pyq6YCJ5oupDOW3q+WxseS6jOS4rQzpq5jllJDliJ3kuK0VAwAGQTIzMzEzBkEyMzMxNxQrAwNnZ2cWAWZkAgkPDxYCHwBlZGQCCg8PFgIfAAUM5q2j5byP5om55qyhZGQCCw8PFgIfAGVkZAIODw8WAh8ABQzmraPlvI/orrDlvZVkZAIPDw8WAh8AZWRkAhAPDxYCHwAFHEEyMzMxMztBMjMzMTc7QjIzMzAxO0IyMzMwNDtkZGSt+rlaYi05j7RZtr8Xg8In+pM4vO9VnG/ygCtFOE3kaQ==" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/CZBM/WebResource.axd?d=PneS_Af7TBZ6SLz8257bm1T8OL2jMX5cFPCv7TcJ5-KgiryMUvuhzsaKXXwCsZX3ccAPZqIW0vzWar_GfC6_28Dh0f4IajzyMTGW34uYnRY1&amp;t=636043008074468324" type="text/javascript"></script>
+
+
+<script src="/CZBM/ScriptResource.axd?d=X4UOfuZmq2KgJL7wIKpywht2iZanyj2VjhnbmzCEoypyw6oYNfuiIcmEaV49efVg0JAUAfp4hk5fcEOoOiZSiYnu7WmuLaQ79k4ARuPjSA_uwdNqcjOVayWrOiI6vspWR9-wIAFJx64eZTYYHfbm-Okcd3bZzYFE0OB3R53L8tbBr6G402IM7r8tD9UW7bby0&amp;t=ffffffffc7ae6e38" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax 客户端框架未能加载。');
+//]]>
+</script>
+
+<script src="/CZBM/ScriptResource.axd?d=VfuVgiz2sVlr8ff55_UTvjzbid01q47992flvHCas3YAGfNt4UwM1xW3F205fs9tjUM_5WpmkECHxeyjhwGr45TYOg_UrCLQMlNP9QMcwG8mFAXM8nrmbaR4gIAJpdIWP1hjcqFFmJtBp0D9X7blqZBsxnru4EbV7NvbYrv-rLmB889SJaqot6CNXRW6v6SM0&amp;t=ffffffffc7ae6e38" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="FA79984F" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAXhTeDSTeDKV6kSudZr8St8RrPpGzrD+ZG0Wk4Yrn35FjYv07y7dk7ijxIRSwPYQf15duMFJc+35rKP708urKCWb/OLsHhL6UZD8cfQXuCgB4ff9ORD19oNJGKr/BGeZYVwrCDHDkmX3NVPQA4muUf3" />
+</div>
+
+    <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ScriptManager1', 'form1', ['tUpdatePanel1','UpdatePanel1','tUpdatePanel2','UpdatePanel2','tUpdatePanel3','UpdatePanel3'], ['btn1','btn1','DropDownListQHXX','DropDownListQHXX'], [], 90, '');
+//]]>
+</script>
+    
+    <div id="UpdateProgress1" style="display:none;">
+	
+       <div id="Layer1"><img src="../Images/loading1.gif"  /><img src="../Images/loading.gif"  /></div>
+        
+</div>    
+    <center >
+    
+    <div style =" position:relative; top  :-2300px; height :1px;">
+    <input type="submit" name="btn1" value="" id="btn1" />
+    </div>
+
+    <div>
+    <table border ="0" cellpadding ="0" cellspacing ="0" >
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr align ="center" valign="middle" >
+            <td  style ="font-family:黑体; font-size :50pt; color:red ;">
+                公平 公正 公开                
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr align ="center" valign ="middle" >
+            <td>
+                <div id="UpdatePanel1">
+	
+                <table border="0" cellpadding ="0" cellspacing ="0" width=450 class ="hovertable5">
+                    <tr align ="center" valign ="middle" >
+                        <td width="60">开放批次</td>
+                        <td>
+                            <span id="Label_PC" style="color:Blue;">第一批次(A轮)</span>
+                        </td>
+                      
+                        <td width="60">状态</td>
+                      
+                        <td>
+                            <span id="Label_ZT" style="color:Red;font-weight:bold;">进行中</span>
+                        </td>
+                      
+                    </tr>
+                    <tr align ="center" valign ="middle" >
+                        <td>开始时间</td>
+                        <td>
+                            <span id="Label_StartTime" style="color:Blue;">2023/7/2 8:30:00</span>
+                        </td>
+                      
+                        <td>
+                            结束时间</td>
+                      
+                        <td>
+                            <span id="Label_EndTime" style="color:Blue;">2023/7/2 9:30:00</span>
+                        </td>
+                      
+                    </tr>
+                    </table>
+                
+</div> 
+            </td>
+        </tr>
+        <tr align ="center" valign="middle" >
+            <td>
+               <div id="UpdatePanel2">
+	
+                <table border ="0" cellpadding ="0" cellspacing ="0" width="450"class ="hovertable5"><tr align ="center" valign ="middle"  style ="background-color :#f7f7ff"><td rowspan="2">批次</td><td rowspan="2">学校名称</td><td colspan="3">男生</td><td rowspan="2">状态</td></tr><tr align ="center" valign ="middle"  style ="background-color :#f7f7ff"><td>计划</td><td>已报</td><td>剩余</td></tr><tr align ="center" valign ="middle" ><td>第一批次(A轮)</td><td>巫山二中</td><td>70</td><td>0</td><td style="Color:red">70</td><td style ="color:green ;">进行中</td></tr><tr align ="center" valign ="middle" ><td>第一批次(A轮)</td><td>高唐初中</td><td>70</td><td>0</td><td style="Color:red">70</td><td style ="color:green ;">进行中</td></tr></table>
+               
+</div>  
+              
+            </td>
+        </tr>
+        <tr align ="center" valign ="middle" >
+            <td>
+               <span id="time" style="font-weight:bold;color: #ff6a00; font-family :Arial Black ;font-size:120pt; "></span>
+            
+            </td>
+        </tr>
+    
+        <tr align ="center" valign="middle" >
+            <td>
+               <div id="UpdatePanel3">
+	
+
+                <div id="PanelAA">
+		
+                <table border ="0" cellpadding ="0" cellspacing ="0" width=450 class ="hovertable5">
+                    <tr align ="center" valign ="middle" >
+                        <td width="60">学校</td>
+                        <td align ="left" >
+                            <span id="Label_YXXMC" style="color:Blue;">南峰小学</span>
+                        </td>
+                        <td colspan="1" rowspan="6">
+                            <img id="ImageP" src="../Photo/2023/500237201011301419.Jpg?202307020830016814" style="height:160px;width:120px;" />
+                        </td>
+                    </tr>
+                    <tr align="center" valign="middle">
+                        <td>班级</td>
+                        <td align="left">
+                            <span id="Label_YBJ" style="color:Blue;">小学2017级4班</span>
+                        </td>
+                    </tr>
+                    <tr align="center" valign="middle">
+                        <td>姓名</td>
+                        <td align="left">
+                            <span id="Label_XM" style="color:Blue;">彭鑫</span>
+                        </td>
+                    </tr>
+                    <tr align="center" valign="middle">
+                        <td>性别</td>
+                        <td align="left">
+                            <span id="Label_XB" style="color:Blue;">男</span>
+                        </td>
+                    </tr>
+                    <tr align="center" valign="middle">
+                        <td>身份证号</td>
+                        <td align="left">
+                            <span id="Label_SFZH" style="color:Blue;">500237201011301419</span>
+                        </td>
+                    </tr>
+                    <tr align="center" valign="middle">
+                        <td>联系电话</td>
+                        <td align="left">
+                            <span id="Label_TelePhone" style="color:Blue;">17783631632</span>
+                        </td>
+                    </tr>
+                    <tr align="center" valign="middle">
+                        <td>
+                            <span id="LabelQH1">正式学校</span>
+                        </td>
+                        <td align="left" colspan="2">
+                            <select name="DropDownListQHXX" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;DropDownListQHXX\&#39;,\&#39;\&#39;)&#39;, 0)" id="DropDownListQHXX" style="width:150px;">
+			<option selected="selected" value="">未选择</option>
+			<option value="A23313">巫山二中</option>
+			<option value="A23317">高唐初中</option>
+
+		</select>
+                            <span id="Label_QHXXMC" style="color:Red;"></span>
+                        </td>
+                       
+                    </tr>
+                    <tr align="center" valign="middle">
+                        <td>
+                            <span id="LabelQH2">正式批次</span>
+                        </td>
+                        <td align="left" colspan="2">
+                            <span id="Label_QHPC" style="color:Red;"></span>
+                        </td>
+                       
+                    </tr>
+                    <tr align="center" valign="middle">
+                        <td colspan="3">
+                            
+                        </td>
+                    </tr>
+                    <tr align="center" valign="middle">
+                        <td colspan="3">
+
+                            
+
+                        </td>
+                    </tr>
+                    <tr align="center" valign="middle">
+                        <td>
+                            <span id="LabelQH3">正式记录</span>
+                        </td>
+                        <td align="left" colspan="2">
+                            <span id="Label_QHREC" style="color:Blue;"></span>
+                            
+                        </td>
+                    </tr>
+                </table>
+                
+	</div>
+               
+                
+</div>  
+            </td>
+        </tr>
+
+      
+       
+        <tr>
+            <td  align ="left" valign ="middle"  >
+
+            </td>
+        </tr>
+    </table>
+
+
+ <br /> <br />
+       
+    </div>
+
+  
+    </center>
+      
+     
+    
+
+<script type="text/javascript">
+//<![CDATA[
+Sys.Application.add_init(function() {
+    $create(Sys.UI._UpdateProgress, {"associatedUpdatePanelId":null,"displayAfter":50,"dynamicLayout":true}, null, null, $get("UpdateProgress1"));
+});
+//]]>
+</script>
+</form>
+</body>
+</html>

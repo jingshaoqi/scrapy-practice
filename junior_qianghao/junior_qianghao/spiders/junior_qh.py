@@ -253,7 +253,7 @@ class JuniorQhSpider(scrapy.Spider):
         spt = response.xpath('//script/text()')
         if spt is None or len(spt) <= 0:
             # 说明还没有到开始抢号的时间，重新进入
-            time.sleep(0.3)
+            time.sleep(0.1)
             if len(self.headers) != 13:
                 print('ZSBM_parse 1possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
             yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
@@ -424,10 +424,11 @@ class JuniorQhSpider(scrapy.Spider):
     def post2_zsbm1_parse(self, response):
         with open('post2_zsbm1.aspx.html', 'w') as f:
             f.write(response.text)
-        if response.text.find('网络拥堵') >= 0:
-            yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers,
-                                 dont_filter=True)
+        #if response.text.find('网络拥堵') >= 0:
         print(response.text)
+        time.sleep(0.01)
+        yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers,
+                                 dont_filter=True)
 
     def button_ok_parse(self, response):
         with open('button_ok.aspx.html', 'w') as f:
