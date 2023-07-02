@@ -296,6 +296,7 @@ class JuniorQhSpider(scrapy.Spider):
                 continue
             num = int(tds[4].get())
             if num > 0:
+                logging.info('{} 还有{}个空位'.format(select_school_name, num))
                 choose_suc = 1
             break
         if choose_suc == 0:
@@ -310,6 +311,7 @@ class JuniorQhSpider(scrapy.Spider):
                     continue
                 num = int(tds[4].get())
                 if num > 0:
+                    logging.info('{} 还有{}个空位'.format(select_school_name, num))
                     choose_suc = 1
                 break
         if choose_suc == 0:
@@ -419,9 +421,10 @@ class JuniorQhSpider(scrapy.Spider):
     def post2_zsbm1_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
-        #if response.text.find('网络拥堵') >= 0:
-        time.sleep(0.01)
-        logging.info('请求下一个网页response.url：{}'.format(self.zsbm_url))
+        #如果成功抢到就停止运行
+        if response.text.find('已成功报名') >= 0:
+            return
+        logging.info('继续抢号 zsbm_url：{}'.format(self.zsbm_url))
         yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers,
                              dont_filter=True)
 
