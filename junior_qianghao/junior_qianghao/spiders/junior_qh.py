@@ -6,6 +6,10 @@ from urllib.parse import urlencode
 import scrapy
 from urllib.parse import urljoin
 import ddddocr
+import logging
+import logging.config
+
+logging.basicConfig(filename='logging.log', level=logging.DEBUG, format='%(asctime)s %(funcName)s:%(lineno)d %(message)s',  encoding='utf-8', filemode='a')
 
 class JuniorQhSpider(scrapy.Spider):
     name = "junior_qh"
@@ -51,9 +55,8 @@ class JuniorQhSpider(scrapy.Spider):
             yield scrapy.Request(url=url, headers=self.headers, callback=self.parse, dont_filter=True)
 
     def parse(self, response):
-        # windows10 下open打开的编码格式为cp936,而服务器返回的是utf-8
-        with open('JW_iframe.aspx.html', encoding=response.encoding, mode='w') as f:
-            f.write(response.text)
+        logging.info('response.url:{}'.format(response.url))
+        logging.info(response.text)
         #print(response.text)
         # find mainframe
         main_frm = response.xpath('//tr/td/div/iframe[@id="mainFrame"]/@src')
@@ -80,13 +83,11 @@ class JuniorQhSpider(scrapy.Spider):
         if self.headers.get('Sec-Fetch-User') is not None:
             self.headers.pop('Sec-Fetch-User')
         self.user_dll_url = main_frm_url_full #https://wsemal.com/CZBM/JW/JW_UserDL.aspx
-        if len(self.headers) != 13:
-            print('parse possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
         yield scrapy.Request(url=main_frm_url_full, callback=self.main_parse, headers=self.headers, dont_filter=True)
 
     def main_parse(self, response):
-        with open('JW_UserDL.aspx.html',  encoding=response.encoding, mode='w') as f:
-            f.write(response.text)
+        logging.info('response.url:{}'.format(response.url))
+        logging.info(response.text)
         # 现在来获取验证码的图片
         yzm_url = response.xpath('//table/tr/td/input[@id="ImageButtonYZM"]/@src')
         if yzm_url is None:
@@ -121,14 +122,12 @@ class JuniorQhSpider(scrapy.Spider):
         self.form_data['__VIEWSTATE'] = view_state_str
         self.form_data['__EVENTVALIDATION'] = event_validation_str
         self.form_data['__VIEWSTATEGENERATOR'] = view_state_generator_str
-        if len(self.headers) != 12:
-            print('yzm request possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
         yield scrapy.Request(url=self.yzm_url_full, callback=self.yzm_parse, headers=self.headers, dont_filter=True)
 
     # 解析验证码后按登录按钮
     def yzm_parse(self, response):
         # 保存验证码图片
-        with open('yan_zheng_ma.jpg',  encoding=response.encoding, mode='wb') as f:
+        with open('yan_zheng_ma.jpg',  mode='wb') as f:
             f.write(response.body)
         # 利用 ddddocr识别验证码
         ocr = ddddocr.DdddOcr()
@@ -155,16 +154,16 @@ class JuniorQhSpider(scrapy.Spider):
             self.headers.pop('TE')
         print('username:{} password:{}'.format(self.form_data['L_username'], self.form_data['L_password']))
         #准备好了数据 按 登录 按钮
-        print('请求下一个网页self.user_dll_url：{}'.format(self.user_dll_url))
+        logging.info('请求下一个网页self.user_dll_url：{}'.format(self.user_dll_url))
         yield scrapy.Request(url=self.user_dll_url, method='POST', body=bodystr,
                              callback=self.login_parse, headers=self.headers, dont_filter=True)
     #登录结果分析，登录结果中添加了 cookie XSQHUserName
     def login_parse(self, response):
-        with open('login_res.html',  encoding=response.encoding, mode='w') as f:
-            f.write(response.text)
+        logging.info('response.url:{}'.format(response.url))
+        logging.info(response.text)
         # 获取cookie XSQHUserName的值
         if response.headers.get('Set-Cookie') is None:
-            print('login fail')
+            logging.info('login fail')
             #再次请求一个验证码
             print('try to get another yanzhengma')
             self.headers['Referer'] = self.user_dll_url
@@ -184,14 +183,12 @@ class JuniorQhSpider(scrapy.Spider):
                 self.headers.pop('Origin')
             if self.headers.get('Upgrade-Insecure-Requests') is not None:
                 self.headers.pop('Upgrade-Insecure-Requests')
-            if len(self.headers) != 12:
-                print('yzm rerequest possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
             yield scrapy.Request(url=self.yzm_url_full, callback=self.yzm_parse, headers=self.headers, dont_filter=True)
             return
-        print('login success')
+        logging.info('login success')
         ckie = response.headers['Set-Cookie']
         if str(ckie).find('XSQHUserName') < 0:
-            print('login fail too.')
+            logging.info('login fail too.')
             return
         fdf = str(ckie).split(';')
         # 只需要有用的值
@@ -203,7 +200,7 @@ class JuniorQhSpider(scrapy.Spider):
         #找到请求的下一个网页
         zsbm = response.xpath('//script[contains(text(), "mainFrame") and contains(text(), "href")]/text()')
         if zsbm is None:
-            print('not found zxbm page')
+            logging.info('not found zxbm page')
             return
         zsbm_t = zsbm.get()
         zsbm_res = re.findall(r"href=\'(.+?)\';", zsbm_t)
@@ -222,7 +219,7 @@ class JuniorQhSpider(scrapy.Spider):
         if self.headers.get('Sec-Fetch-User') is not None:
             self.headers.pop('Sec-Fetch-User')
         if len(self.headers) != 13:
-            print('login_parse 2 possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
+            logging.info('login_parse 2 possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
         # 从这个请求开始得到抢号的界面，没有开始的时候是其他界面
         self.zsbm_url = zsbm_url
         self.zsbm_headers = self.headers
@@ -245,8 +242,8 @@ class JuniorQhSpider(scrapy.Spider):
         yield scrapy.Request(url=zsbm_url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
 
     def ZSBM_parse(self, response):
-        with open('JW_ZSBM.aspx.html',  encoding=response.encoding, mode='w') as f:
-            f.write(response.text)
+        logging.info('response.url:{}'.format(response.url))
+        logging.info(response.text)
         # https://wsemal.com/CZBM/JW/JW_UserDL.aspx
         self.headers['Referer'] = response.url
         #再进入 https://wsemal.com/CZBM/JW/JW_XSBMXZ1.aspx
@@ -255,16 +252,12 @@ class JuniorQhSpider(scrapy.Spider):
         if spt is None or len(spt) <= 0:
             # 说明还没有到开始抢号的时间，重新进入
             time.sleep(0.1)
-            if len(self.headers) != 13:
-                print('ZSBM_parse 1possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
             yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
             return
         spt_t = spt.extract()[0]
         if spt_t.find('JW_ZSBM1.aspx') < 0:
             #说明还没有到开始抢号的时间，重新进入
             time.sleep(0.1)
-            if len(self.headers) != 13:
-                print('ZSBM_parse 2possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
             yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
             return
         str_all = re.findall(r"href=\'(.+?)\';", spt_t)
@@ -276,12 +269,12 @@ class JuniorQhSpider(scrapy.Spider):
         #yield scrapy.Request(url=xsbmxz1_url, callback=self.XSBMXZ1_parse, headers=self.headers, dont_filter=True)
 
         zsbm1_url = urljoin(response.url, str_all[0])
-        print('请求下一个网页zsbm1_url：{}'.format(zsbm1_url))
+        logging.info('请求下一个网页zsbm1_url：{}'.format(zsbm1_url))
         yield scrapy.Request(url=zsbm1_url, callback=self.ZSBM1_parse, headers=self.headers, dont_filter=True)
 
     def ZSBM1_parse(self, response):
-        with open('JW_ZSBM1.aspx.html',  encoding=response.encoding, mode='w') as f:
-            f.write(response.text)
+        logging.info('response.url:{}'.format(response.url))
+        logging.info(response.text)
         #a判断状态是否在进行中
         zt = response.xpath('//span[@id="Label_ZT"]/text()')
         if zt is None or len(zt) <= 0 or zt.get().find("进行中") < 0:
@@ -320,15 +313,15 @@ class JuniorQhSpider(scrapy.Spider):
                     choose_suc = 1
                 break
         if choose_suc == 0:
-            print('cant find suitable school:{}'.format(select_school_name))
+            logging.info('cant find suitable school:{}'.format(select_school_name))
             return
         else:
-            print('find suitable school:{}'.format(select_school_name))
+            logging.info('find suitable school:{}'.format(select_school_name))
         # select_school_code = 'A23317' #A23313;A23317;B23301;B23304
         # 先要获取学校名称和代号
         schools = response.xpath('//tr/td/select/option')
         if schools is None or len(schools) <= 0:
-            print('not have schools')
+            logging.info('not have schools')
             yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers,
                                  dont_filter=True)
             return
@@ -338,7 +331,7 @@ class JuniorQhSpider(scrapy.Spider):
                 self.school_code = i.xpath('./@value').extract()[0]
                 break
         if len(self.school_code) <= 0:
-            print('not found {} in the list'.format(select_school_name))
+            logging.info('not found {} in the list'.format(select_school_name))
             return
 
         #再要获取下一个请求的url
@@ -388,16 +381,16 @@ class JuniorQhSpider(scrapy.Spider):
         bodystr = urlencode(form_data, encoding='utf-8')
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         #self.headers['Content-Length'] = '{}'.format(len(bodystr))
-        if len(self.headers) != 17:
-            print('zsbm1 post first possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
-        print('请求下一个网页action_url_full：{}'.format(action_url_full))
+
+        logging.info('请求下一个网页action_url_full：{}'.format(action_url_full))
+        logging.info('length:{} bodystr:{}'.format(len(bodystr), bodystr))
         yield scrapy.Request(url=action_url_full, method='POST', body=bodystr, callback=self.post_zsbm1_parse,
                              headers=self.headers, dont_filter=True)
 
 
     def post_zsbm1_parse(self, response):
-        with open('post_zsbm1_parse.aspx.html',  encoding=response.encoding, mode='w') as f:
-            f.write(response.text)
+        logging.info('response.url:{}'.format(response.url))
+        logging.info(response.text)
         #再提交一次
         form_data = {}
         form_data['ScriptManager1'] = 'UpdatePanel3|ButtonOK'
@@ -418,30 +411,29 @@ class JuniorQhSpider(scrapy.Spider):
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         #self.headers['Content-Length'] = '{}'.format(len(bodystr))
 
-        if len(self.headers) != 17:
-            print('zsbm1 post second possible headers is not correct, len of headers is:{}'.format(len(self.headers)))
-        print('请求下一个网页response.url：{}'.format(response.url))
+        logging.info('请求下一个网页response.url：{}'.format(response.url))
+        logging.info('length:{} bodystr:{}'.format(len(bodystr), bodystr))
         yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.post2_zsbm1_parse,
                              headers=self.headers, dont_filter=True)
 
     def post2_zsbm1_parse(self, response):
-        with open('post2_zsbm1.aspx.html',  encoding=response.encoding, mode='w') as f:
-            f.write(response.text)
+        logging.info('response.url:{}'.format(response.url))
+        logging.info(response.text)
         #if response.text.find('网络拥堵') >= 0:
-        print(response.text)
         time.sleep(0.01)
+        logging.info('请求下一个网页response.url：{}'.format(self.zsbm_url))
         yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers,
-                                 dont_filter=True)
+                             dont_filter=True)
 
     def button_ok_parse(self, response):
-        with open('button_ok.aspx.html',  encoding=response.encoding, mode='w') as f:
-            f.write(response.text)
+        logging.info('response.url:{}'.format(response.url))
+        logging.info(response.text)
         print(response.text)
 
     #公告的时候是返回的这个
     def XSBMXZ1_parse(self, response):
-        with open('JW_XSBMXZ1.aspx.html',  encoding=response.encoding, mode='w') as f:
-            f.write(response.text)
+        logging.info('response.url:{}'.format(response.url))
+        logging.info(response.text)
         # https://wsemal.com/CZBM/JW/JW_XSBMXZ1.aspx
         self.headers['Referer'] = response.url
         # https://wsemal.com/CZBM/JW/JW_ZSBM.aspx?FS=YES
@@ -450,7 +442,7 @@ class JuniorQhSpider(scrapy.Spider):
         return #当前已经结束
         yield scrapy.Request(url=next_url, callback=self.ZSBM_FS_YES_parse, headers=self.headers, dont_filter=True)
     def ZSBM_FS_YES_parse(self, response):
-        with open('JW_ZSBM_FS_YES.aspx.html',  encoding=response.encoding, mode='w') as f:
-            f.write(response.text)
+        logging.info('response.url:{}'.format(response.url))
+        logging.info(response.text)
         with open('JW_ZSBM_FS_YES.body.html',  encoding=response.encoding, mode='w') as f:
             f.write(response.body)
