@@ -1,224 +1,432 @@
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head><link href="../App_Themes/%E4%B8%BB%E9%A2%9801/StyleSheet.css" type="text/css" rel="stylesheet" /><title>
-	ÓÃ»§µÇÂ¼
-</title><link href="StyleSheet.css" rel="stylesheet" type="text/css" />
-    
-    <script language="javascript">
-function as_btnbg()
-{
-    document.getElementById('ImageButton1').src='images/loading.gif';
-}
-   function changeCode() 
-    {
-      document.getElementById('ImageButtonYZM').src = document.getElementById('ImageButtonYZM').src +'?'; 
-    }
-   function GGTitle(ss) {
-       form1.Hselcet.value = ss;
-       document.getElementById("btn1").click();
-   }
-
-
-</script>   
-
-<style>
-a {text-decoration: none}
-a:hover {color:red}
-</style>
-
-</head>
-<body style="overflow-x: hidden ; overflow-y: hidden;" >
-    <form name="form1" method="post" action="JW_UserDL.aspx" id="form1">
-<div>
-<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
-<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
-<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE0MjU4MDI0MTIPZBYCAgMPZBYGAgkPDxYCHghJbWFnZVVybAUXfi9wdWJsaWMvY2hlY2tjb2RlLmFzcHhkZAINDxYCHgRUZXh0ZWQCDw8WAh8BBcs7PHRhYmxlIGJvcmRlcj0iMCIgd2lkdGg9IjkwJSIgICBjZWxscGFkZGluZyA9IjAiIGNlbGxzcGFjaW5nPSIwIiAgY2xhc3M9ImhvdmVydGFibGU1IiA+PFRSIGFsaWduID0ibGVmdCIgdmFsaWduID0ibWlkZGxlIiA+PHRkID48cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjE2LjBwdDtmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OzsmIzEwO21zby1oYW5zaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7Y29sb3I6cmVkIj7ms6jmhI/kuovpobnvvJo8L3NwYW4+PC9iPjxiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1zaXplOjE2LjBwdDsmIzEwO2NvbG9yOnJlZCI+PG86cD48L286cD48L3NwYW4+PC9iPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJ0ZXh0LWluZGVudDoyMS4wcHQ7bXNvLWNoYXItaW5kZW50LWNvdW50OjIuMCI+PHNwYW4gbGFuZz0iRU4tVVMiPjEuPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OzsmIzEwO21zby1oYW5zaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDsiPueUqOaIt+WQjeS4ujxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPui6q+S7veivgeWPtzwvc3Bhbj7vvIzliJ3lp4vlr4bnoIHkuLo8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj7ouqvku73or4Hlj7flkI7lha3kvY08L3NwYW4+77ybPC9zcGFuPiA8c3BhbiBsYW5nPSJFTi1VUyI+PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9InRleHQtaW5kZW50OjIxLjBwdDttc28tY2hhci1pbmRlbnQtY291bnQ6Mi4wIj48c3BhbiBsYW5nPSJFTi1VUyI+Mi48L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7OyYjMTA7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyI+6aaW5qyh55m75b2V5pe26K+3PHNwYW4gc3R5bGU9ImNvbG9yOnJlZCI+5L+u5pS55a+G56CBPC9zcGFuPu+8jOWvhueggeinhOWImeimgeaxgiZsZHF1bzs8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj7lrZfmr408L3NwYW4+PC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6cmVkIj4rPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Ozttc28taGFuc2ktZm9udC1mYW1pbHk6JiMxMDsmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7Y29sb3I6cmVkIj7mlbDlrZc8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JiMxMDsmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyI+JnJkcXVvO++8mzwvc3Bhbj4gPHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxoMyBzdHlsZT0iY29sb3I6IHJlZDsiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6IG1lZGl1bTsiPjxzcGFuIGxhbmc9IkVOLVVTIj4mbmJzcDsgJm5ic3A7IDMu5qih5ouf5oqi5Y+36aG755+l77yaPC9zcGFuPjwvc3Bhbj48L2gzPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9InRleHQtaW5kZW50OjIxLjBwdDttc28tY2hhci1pbmRlbnQtY291bnQ6Mi4wIj48c3BhbiBsYW5nPSJFTi1VUyI+PHN0MTpjaHNkYXRlIHllYXI9IjIwMjMiIG1vbnRoPSI3IiBkYXk9IjIiIGlzbHVuYXJkYXRlPSJGYWxzZSIgaXNyb2NkYXRlPSJGYWxzZSIgdzpzdD0ib24iPu+8iDHvvIkyMDIzPHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7JiMxMDsgbXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Ozttc28taGFuc2ktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7Ij48c3BhbiBsYW5nPSJFTi1VUyI+5bm0PC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6cmVkIj42PC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1mYW1pbHk65a6L5L2TO21zby1hc2NpaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiYjMTA7ICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oztjb2xvcjpyZWQiPjxzcGFuIGxhbmc9IkVOLVVTIj7mnIg8L3NwYW4+PC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPjE3PC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1mYW1pbHk65a6L5L2TO21zby1hc2NpaS1mb250LWZhbWlseTomIzEwOyAmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oztjb2xvcjpyZWQiPjxzcGFuIGxhbmc9IkVOLVVTIj7ml6U8L3NwYW4+PC9zcGFuPjwvc3QxOmNoc2RhdGU+PC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7JiMxMDttc28tYXNjaWktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O21zby1oYW5zaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDsiPuS4iuWNiDwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyI+ODozMDwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk65a6L5L2TO21zby1hc2NpaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7JiMxMDttc28taGFuc2ktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7Ij7oh7M8L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiPjEwOjIwPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Ozttc28taGFuc2ktZm9udC1mYW1pbHk6JiMxMDsmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDsiPui/m+ihjDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPuesrOS4gOaJueasoTwvc3Bhbj48L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJjb2xvcjpyZWQiPkE8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JiMxMDsmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oztjb2xvcjpyZWQiPui9riZuYnNwOyA8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogbWVkaXVtOyI+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiDlrovkvZM7IGNvbG9yOiByZWQ7Ij7mqKHmi588L3NwYW4+PC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Ozttc28taGFuc2ktZm9udC1mYW1pbHk6JiMxMDsmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDsiPuaKouWPt+eUs+ivt++8mzwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyI+Jm5ic3A7Jm5ic3A7IDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJ0ZXh0LWluZGVudDoyMS4wcHQ7bXNvLWNoYXItaW5kZW50LWNvdW50OjIuMCI+PHNwYW4gbGFuZz0iRU4tVVMiPjxzdDE6Y2hzZGF0ZSB5ZWFyPSIyMDIzIiBtb250aD0iNyIgZGF5PSIyIiBpc2x1bmFyZGF0ZT0iRmFsc2UiIGlzcm9jZGF0ZT0iRmFsc2UiIHc6c3Q9Im9uIj7vvIgy77yJMjAyMzxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1mYW1pbHk65a6L5L2TOyYjMTA7IG1zby1hc2NpaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyI+PHNwYW4gbGFuZz0iRU4tVVMiPuW5tDwvc3Bhbj48L3NwYW4+PHNwYW4gc3R5bGU9ImNvbG9yOnJlZCI+Njwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O21zby1oYW5zaS1mb250LWZhbWlseTomIzEwOyAmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7Y29sb3I6cmVkIj48c3BhbiBsYW5nPSJFTi1VUyI+5pyIPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4xNzwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JiMxMDsgJnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O21zby1oYW5zaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7Y29sb3I6cmVkIj48c3BhbiBsYW5nPSJFTi1VUyI+5pelPC9zcGFuPjwvc3Bhbj48L3N0MTpjaHNkYXRlPjwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk65a6L5L2TOyYjMTA7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Ozttc28taGFuc2ktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7Ij7kuIrljYg8L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiPjEwOjMwPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OzsmIzEwO21zby1oYW5zaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDsiPuiHszwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyI+MTI6MDA8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O21zby1oYW5zaS1mb250LWZhbWlseTomIzEwOyZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyI+6L+b6KGMPHNwYW4gc3R5bGU9ImNvbG9yOnJlZCI+56ys5LiA5om55qyhPC9zcGFuPjwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImNvbG9yOnJlZCI+Qjwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk65a6L5L2TO21zby1hc2NpaS1mb250LWZhbWlseTomIzEwOyZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Ozttc28taGFuc2ktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O2NvbG9yOnJlZCI+6L2uPC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjogcmdiKDI1NSwgMCwgMCk7IGZvbnQtZmFtaWx5OiDlrovkvZM7Ij4mbmJzcDs8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogbWVkaXVtOyI+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMjU1LCAwLCAwKTsgZm9udC1mYW1pbHk6IOWui+S9kzsiPuaooeaLnzwvc3Bhbj48L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O21zby1oYW5zaS1mb250LWZhbWlseTomIzEwOyZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyI+5oqi5Y+355Sz6K+377ybPC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0idGV4dC1pbmRlbnQ6MjEuMHB0O21zby1jaGFyLWluZGVudC1jb3VudDoyLjAiPjxzcGFuIGxhbmc9IkVOLVVTIj7vvIgz77yJPHN0MTpjaHNkYXRlIHllYXI9IjIwMjMiIG1vbnRoPSI3IiBkYXk9IjIiIGlzbHVuYXJkYXRlPSJGYWxzZSIgaXNyb2NkYXRlPSJGYWxzZSIgdzpzdD0ib24iPjIwMjM8c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9IiI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSIiPjxmb250IGZhY2U9IuWui+S9kyI+5bm0PC9mb250PjY8L3NwYW4+PC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6IHJlZDsiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iIj48Zm9udCBmYWNlPSLlrovkvZMiPuaciDwvZm9udD4xNzwvc3Bhbj48L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiYjMTA7ICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Ozttc28taGFuc2ktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O2NvbG9yOnJlZCI+PHNwYW4gbGFuZz0iRU4tVVMiPuaXpTwvc3Bhbj48L3NwYW4+PC9zdDE6Y2hzZGF0ZT48L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzsmIzEwO21zby1hc2NpaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyI+5LiL5Y2IPC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj4yOjMwPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OzsmIzEwO21zby1oYW5zaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDsiPuiHs+S4i+WNiDwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyI+NTowMDwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk65a6L5L2TO21zby1hc2NpaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiYjMTA7JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7Ij7vvIzov5vooYw8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj7nrKzkuozmibnmrKE8L3NwYW4+PC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjogcmdiKDI1NSwgMCwgMCk7IGZvbnQtZmFtaWx5OiDlrovkvZM7Ij4mbmJzcDs8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogbWVkaXVtOyI+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMjU1LCAwLCAwKTsgZm9udC1mYW1pbHk6IOWui+S9kzsiPuaooeaLnzwvc3Bhbj48L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O21zby1oYW5zaS1mb250LWZhbWlseTomIzEwOyZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyI+5oqi5Y+355Sz6K+344CCPC9zcGFuPiZuYnNwOzwvcD4NCjxwPjxmb250IGZhY2U9Im1vbm9zcGFjZSI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogMTBweDsiPiZuYnNwOyAmbmJzcDs8L3NwYW4+PC9mb250Pu+8iDTvvInmqKHmi5/miqLlj7fnlLPor7fml7bmqKHns4rlrabmoKHlkI3np7DvvIznlKhB5qCh44CBQuagoeOAgUPmoKHjgIFE5qCh5Luj5pu/77yM5omA5aGr5oql5YaF5a655LiO5q2j5byP5oqi5Y+35peg5YWz77yM5qih5ouf5oqi5Y+355Sz6K+357uT5p2f77yM5aGr5oql5YaF5a655YWo6YOo5riF56m644CC5qih5ouf5oqi5Y+35Lit5Ye6546w5Zuw6Zq+5ZKM6Zeu6aKY6K+35Y+K5pe25Y+N6aaI57uZ54+t5Li75Lu744CCPC9wPg0KPHA+Jm5ic3A7PC9wPjwvdGQ+PC90cj48L3RhYmxlPmQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgEFDkltYWdlQnV0dG9uWVpNZtstZnQc83lHUIWpkHL83xH8CCM=" />
-</div>
-
-<script type="text/javascript">
-//<![CDATA[
-var theForm = document.forms['form1'];
-if (!theForm) {
-    theForm = document.form1;
-}
-function __doPostBack(eventTarget, eventArgument) {
-    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
-        theForm.__EVENTTARGET.value = eventTarget;
-        theForm.__EVENTARGUMENT.value = eventArgument;
-        theForm.submit();
-    }
-}
-//]]>
-</script>
-
-
-<script src="/CZBM/WebResource.axd?d=8Uvvw0ObJs2LZ6COfPIW2hmqB8bBDxQe2tik7cMeoQb1_z4P9FbGSGW-fPB27QrAiGo4H9SEZ5KHcNVuTMvZKpHhkbc1&amp;t=637934761421556111" type="text/javascript"></script>
-
-
-<script src="/CZBM/ScriptResource.axd?d=C4somQM6khAiNaKtoaUjZxft4003E4EryF7K7_E9rcmvBbkOPk1wibFkYlcMfvRAxt4jKVnionLNBeZOy54p5-H-MOwBlF8okNjxXD1ETWx8fk18YltiVm9slvjNZL39PNvOVNc2bGY_7Fn8EtaPVB0DDPVd2CgImlvuvghgURdzJDU30&amp;t=3f4a792d" type="text/javascript"></script>
-<script type="text/javascript">
-//<![CDATA[
-if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax ¿Í»§¶Ë¿ò¼ÜÎ´ÄÜ¼ÓÔØ¡£');
-//]]>
-</script>
-
-<script src="/CZBM/ScriptResource.axd?d=TId_8xdQB6akyzE2MsB52nrwrSRysEdvpV63lAkWT_SO79S8KP6YGfWTMOfwQpnoBelBLYwBY1obCSD4mTWDe35MKhriCw8PHr6RgLZQmjBA6VNuNwW1ooii6mwTYUw4wo0r450nvOVGuIbDIABG0fMXnQJHMKzuux_v_h9PlCrs8AuZ0&amp;t=3f4a792d" type="text/javascript"></script>
-<div>
-
-	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="8CB90623" />
-	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWBQLptechAp2kkqwLAvT7rtoIAveog9IMAoznisYGfFpo9Q4XDgJZCBMCdtzPJYhBd3U=" />
-</div>
-   
-
-   <script type="text/javascript">
-//<![CDATA[
-Sys.WebForms.PageRequestManager._initialize('ScriptManager1', document.getElementById('form1'));
-Sys.WebForms.PageRequestManager.getInstance()._updateControls([], [], [], 90);
-//]]>
-</script>
-
-
-    <div>
-    <center >
-    <table border ="0" cellpadding ="0" cellspacing ="0" width="100%">
-        <tr align ="center" valign ="middle" >
-            <td>
-                <table border ="0" cellpadding ="0" cellspacing ="0" style ="line-height :300%;">
-                   <tr align ="center" valign ="middle" >
-                      <td align ="right" valign ="middle" >&nbsp;</td>
-                      <td align ="right" valign ="middle" colspan="3" >&nbsp;</td>
-                      <td align ="right" valign ="middle" >&nbsp;</td>
-                   </tr>
-                   <tr align ="center" valign ="middle" >
-                      <td style =" border-bottom-style :dotted ;  border-bottom-width :thin ; border-bottom-color :Red " 
-                           colspan="5" >
-                          <img alt="" src="../Images/Welcome.gif" style="height: 32px; width: 152px" /><span id="Label1" style="color:Red;font-family:Î¢ÈíÑÅºÚ;font-size:16pt;font-weight:bold;">»¶Ó­µÇÂ¼</span></td>
-                   </tr>
-                   <tr align ="center" valign ="middle" >
-                      <td colspan="5" height="10"></td>
-                   </tr>
-                   <tr align ="center" valign ="middle" >
-                      <td width="80" rowspan="3" align ="right" >
-                          <img alt="" src="../Images/53.png" style="height: 70px; width: 80px" /></td>
-                      <td align ="right" valign ="middle" >ÓÃ»§Ãû</td>
-                      <td>&nbsp;</td>
-                      <td>     
-                         
-                          <input name="L_username" type="text" id="L_username" style="width: 160px" />
-                         
-                      </td>
-                      <td width="20" align ="left" valign ="middle" ></td>
-                   </tr>
-                   <tr align ="center" valign ="middle" >
-                      <td align ="right" valign ="middle" >ÃÜÂë</td>
-                      <td>&nbsp;</td>
-                      <td>       
-                         
-                          <input name="L_password" type="password" id="L_password" style="width: 160px" />
-                            
-                     </td>
-                      <td>          
-                          &nbsp;</td>
-                   </tr>
-                   <tr align ="center" valign ="middle" >
-                      <td align ="right" valign ="middle" >ÑéÖ¤Âë</td>
-                      <td>&nbsp;</td>
-                      <td align ="left" valign ="middle" >          
-                          <table border ="0" cellpadding ="0" cellspacing ="0">
-                             <tr align ="center" valign ="middle" >
-                                <td>
-                                   
-                                   <input id="Text2" name="L_YZM" type="text" style="width: 50px" />
-                                   
-                                </td>
-                                <td>&nbsp;</td>
-                                <td>
-                                   
-                                   <input type="image" name="ImageButtonYZM" id="ImageButtonYZM" disabled="disabled" src="../public/checkcode.aspx" style="height:25px;width:50px;border-width:0px;" />
-                                    
-                                </td>
-                                <td>&nbsp;</td>
-                                <td>
-                                   <a href="javascript:changeCode()"style="text-decoration: underline;">»»Ò»ÕÅ</a>
-                                </td>
-                             </tr>
-                          </table>
-          
-                      </td>
-                      <td align ="left" valign ="middle" >          
-                          &nbsp;</td>
-                   </tr>
-                   <tr align ="center" valign ="middle" >
-                      <td colspan="5" height="10"></td>
-                   </tr>
-                   <tr align ="center" valign ="middle" >
-                      <td >
-                          &nbsp;</td>
-                      <td  colspan="3" >
-                          <input type="submit" name="Button1" value="µÇÂ¼" id="Button1" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" style="height:30px;width:100px;" />
-                       </td>
-                      <td >
-                          &nbsp;</td>
-                   </tr>
-                </table>
-
-            </td>
-        </tr>
-        <tr align ="center" valign ="middle" >
-            <td height="30">
-               <div>
-                  
-                </div>
-
-            </td>
-        </tr>
-      <tr align ="center" valign ="middle" >
-         <td >
-         
-   
-         
-         </td>
-      </tr>
-      <tr align ="center" valign ="middle" >
-          <td>
-
-              <table border="0" width="90%"   cellpadding ="0" cellspacing="0"  class="hovertable5" ><TR align ="left" valign ="middle" ><td ><p class="MsoNormal"><b><span style="font-size:16.0pt;font-family:ËÎÌå;mso-ascii-font-family:&quot;Times New Roman&quot;;&#10;mso-hansi-font-family:&quot;Times New Roman&quot;;color:red">×¢ÒâÊÂÏî£º</span></b><b><span lang="EN-US" style="font-size:16.0pt;&#10;color:red"><o:p></o:p></span></b></p>
-<p class="MsoNormal" style="text-indent:21.0pt;mso-char-indent-count:2.0"><span lang="EN-US">1.</span><span style="font-family:ËÎÌå;mso-ascii-font-family:&quot;Times New Roman&quot;;&#10;mso-hansi-font-family:&quot;Times New Roman&quot;">ÓÃ»§ÃûÎª<span style="color:red">Éí·İÖ¤ºÅ</span>£¬³õÊ¼ÃÜÂëÎª<span style="color:red">Éí·İÖ¤ºÅºóÁùÎ»</span>£»</span> <span lang="EN-US"><o:p></o:p></span></p>
-<p class="MsoNormal" style="text-indent:21.0pt;mso-char-indent-count:2.0"><span lang="EN-US">2.</span><span style="font-family:ËÎÌå;mso-ascii-font-family:&quot;Times New Roman&quot;;&#10;mso-hansi-font-family:&quot;Times New Roman&quot;">Ê×´ÎµÇÂ¼Ê±Çë<span style="color:red">ĞŞ¸ÄÃÜÂë</span>£¬ÃÜÂë¹æÔòÒªÇó&ldquo;<span style="color:red">×ÖÄ¸</span></span><span lang="EN-US" style="color:red">+</span><span style="font-family:ËÎÌå;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10;&quot;Times New Roman&quot;;color:red">Êı×Ö</span><span style="font-family:ËÎÌå;mso-ascii-font-family:&#10;&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">&rdquo;£»</span> <span lang="EN-US"><o:p></o:p></span></p>
-<h3 style="color: red;"><span style="font-size: medium;"><span lang="EN-US">&nbsp; &nbsp; 3.Ä£ÄâÇÀºÅĞëÖª£º</span></span></h3>
-<p class="MsoNormal" style="text-indent:21.0pt;mso-char-indent-count:2.0"><span lang="EN-US"><st1:chsdate year="2023" month="7" day="2" islunardate="False" isrocdate="False" w:st="on">£¨1£©2023<span lang="EN-US" style="font-family:ËÎÌå;&#10; mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;"><span lang="EN-US">Äê</span></span><span style="color:red">6</span><span lang="EN-US" style="font-family:ËÎÌå;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10; &quot;Times New Roman&quot;;color:red"><span lang="EN-US">ÔÂ</span></span><span style="color:red">17</span><span lang="EN-US" style="font-family:ËÎÌå;mso-ascii-font-family:&#10; &quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;;color:red"><span lang="EN-US">ÈÕ</span></span></st1:chsdate></span><span style="font-family:ËÎÌå;&#10;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">ÉÏÎç</span><span lang="EN-US">8:30</span><span style="font-family:ËÎÌå;mso-ascii-font-family:&quot;Times New Roman&quot;;&#10;mso-hansi-font-family:&quot;Times New Roman&quot;">ÖÁ</span><span lang="EN-US">10:20</span><span style="font-family:ËÎÌå;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10;&quot;Times New Roman&quot;">½øĞĞ<span style="color:red">µÚÒ»Åú´Î</span></span><span lang="EN-US" style="color:red">A</span><span style="font-family:ËÎÌå;mso-ascii-font-family:&#10;&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;;color:red">ÂÖ&nbsp; </span><span style="font-size: medium;"><span style="font-family: ËÎÌå; color: red;">Ä£Äâ</span></span><span style="font-family:ËÎÌå;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10;&quot;Times New Roman&quot;">ÇÀºÅÉêÇë£»</span><span lang="EN-US">&nbsp;&nbsp; <o:p></o:p></span></p>
-<p class="MsoNormal" style="text-indent:21.0pt;mso-char-indent-count:2.0"><span lang="EN-US"><st1:chsdate year="2023" month="7" day="2" islunardate="False" isrocdate="False" w:st="on">£¨2£©2023<span lang="EN-US" style="font-family:ËÎÌå;&#10; mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;"><span lang="EN-US">Äê</span></span><span style="color:red">6</span><span lang="EN-US" style="font-family:ËÎÌå;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10; &quot;Times New Roman&quot;;color:red"><span lang="EN-US">ÔÂ</span></span><span style="color:red">17</span><span lang="EN-US" style="font-family:ËÎÌå;mso-ascii-font-family:&#10; &quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;;color:red"><span lang="EN-US">ÈÕ</span></span></st1:chsdate></span><span style="font-family:ËÎÌå;&#10;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">ÉÏÎç</span><span lang="EN-US">10:30</span><span style="font-family:ËÎÌå;mso-ascii-font-family:&quot;Times New Roman&quot;;&#10;mso-hansi-font-family:&quot;Times New Roman&quot;">ÖÁ</span><span lang="EN-US">12:00</span><span style="font-family:ËÎÌå;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10;&quot;Times New Roman&quot;">½øĞĞ<span style="color:red">µÚÒ»Åú´Î</span></span><span lang="EN-US" style="color:red">B</span><span style="font-family:ËÎÌå;mso-ascii-font-family:&#10;&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;;color:red">ÂÖ</span><span style="color: rgb(255, 0, 0); font-family: ËÎÌå;">&nbsp;</span><span style="font-size: medium;"><span style="color: rgb(255, 0, 0); font-family: ËÎÌå;">Ä£Äâ</span></span><span style="font-family:ËÎÌå;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10;&quot;Times New Roman&quot;">ÇÀºÅÉêÇë£»</span><span lang="EN-US"><o:p></o:p></span></p>
-<p class="MsoNormal" style="text-indent:21.0pt;mso-char-indent-count:2.0"><span lang="EN-US">£¨3£©<st1:chsdate year="2023" month="7" day="2" islunardate="False" isrocdate="False" w:st="on">2023<span lang="EN-US" style=""><span lang="EN-US" style=""><font face="ËÎÌå">Äê</font>6</span></span><span lang="EN-US" style="color: red;"><span lang="EN-US" style=""><font face="ËÎÌå">ÔÂ</font>17</span></span><span lang="EN-US" style="font-family:ËÎÌå;mso-ascii-font-family:&#10; &quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;;color:red"><span lang="EN-US">ÈÕ</span></span></st1:chsdate></span><span style="font-family:ËÎÌå;&#10;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">ÏÂÎç</span><span lang="EN-US">2:30</span><span style="font-family:ËÎÌå;mso-ascii-font-family:&quot;Times New Roman&quot;;&#10;mso-hansi-font-family:&quot;Times New Roman&quot;">ÖÁÏÂÎç</span><span lang="EN-US">5:00</span><span style="font-family:ËÎÌå;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10;&quot;Times New Roman&quot;">£¬½øĞĞ<span style="color:red">µÚ¶şÅú´Î</span></span><span style="color: rgb(255, 0, 0); font-family: ËÎÌå;">&nbsp;</span><span style="font-size: medium;"><span style="color: rgb(255, 0, 0); font-family: ËÎÌå;">Ä£Äâ</span></span><span style="font-family:ËÎÌå;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10;&quot;Times New Roman&quot;">ÇÀºÅÉêÇë¡£</span>&nbsp;</p>
-<p><font face="monospace"><span style="font-size: 10px;">&nbsp; &nbsp;</span></font>£¨4£©Ä£ÄâÇÀºÅÉêÇëÊ±Ä£ºıÑ§Ğ£Ãû³Æ£¬ÓÃAĞ£¡¢BĞ£¡¢CĞ£¡¢DĞ£´úÌæ£¬ËùÌî±¨ÄÚÈİÓëÕıÊ½ÇÀºÅÎŞ¹Ø£¬Ä£ÄâÇÀºÅÉêÇë½áÊø£¬Ìî±¨ÄÚÈİÈ«²¿Çå¿Õ¡£Ä£ÄâÇÀºÅÖĞ³öÏÖÀ§ÄÑºÍÎÊÌâÇë¼°Ê±·´À¡¸ø°àÖ÷ÈÎ¡£</p>
-<p>&nbsp;</p></td></tr></table>
-
-          </td>
-      </tr>
-      <tr>
-         <td height="10"></td>
-      </tr>
-
-   
-    </table>
-
-
-    </center>
-    </div>
-
-
-        
-
-
-    
-
-<script type="text/javascript">
-//<![CDATA[
-Sys.Application.initialize();
-//]]>
-</script>
-</form>
-</body>
-</html>
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head><link href="../App_Themes/%E4%B8%BB%E9%A2%9801/StyleSheet.css" type="text/css" rel="stylesheet" /><title>
+
+	ç”¨æˆ·ç™»å½•
+
+</title><link href="StyleSheet.css" rel="stylesheet" type="text/css" />
+
+    
+
+    <script language="javascript">
+
+function as_btnbg()
+
+{
+
+    document.getElementById('ImageButton1').src='images/loading.gif';
+
+}
+
+   function changeCode() 
+
+    {
+
+      document.getElementById('ImageButtonYZM').src = document.getElementById('ImageButtonYZM').src +'?'; 
+
+    }
+
+   function GGTitle(ss) {
+
+       form1.Hselcet.value = ss;
+
+       document.getElementById("btn1").click();
+
+   }
+
+
+
+
+
+</script>   
+
+
+
+<style>
+
+a {text-decoration: none}
+
+a:hover {color:red}
+
+</style>
+
+
+
+</head>
+
+<body style="overflow-x: hidden ; overflow-y: hidden;" >
+
+    <form method="post" action="./JW_UserDL.aspx" id="form1">
+
+<div class="aspNetHidden">
+
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE0MjU4MDI0MTIPZBYCAgMPZBYGAgkPDxYCHghJbWFnZVVybAUXfi9wdWJsaWMvY2hlY2tjb2RlLmFzcHhkZAINDxYCHgRUZXh0ZWQCDw8WAh8BBcs7PHRhYmxlIGJvcmRlcj0iMCIgd2lkdGg9IjkwJSIgICBjZWxscGFkZGluZyA9IjAiIGNlbGxzcGFjaW5nPSIwIiAgY2xhc3M9ImhvdmVydGFibGU1IiA+PFRSIGFsaWduID0ibGVmdCIgdmFsaWduID0ibWlkZGxlIiA+PHRkID48cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjE2LjBwdDtmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OzsmIzEwO21zby1oYW5zaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7Y29sb3I6cmVkIj7ms6jmhI/kuovpobnvvJo8L3NwYW4+PC9iPjxiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1zaXplOjE2LjBwdDsmIzEwO2NvbG9yOnJlZCI+PG86cD48L286cD48L3NwYW4+PC9iPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJ0ZXh0LWluZGVudDoyMS4wcHQ7bXNvLWNoYXItaW5kZW50LWNvdW50OjIuMCI+PHNwYW4gbGFuZz0iRU4tVVMiPjEuPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OzsmIzEwO21zby1oYW5zaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDsiPueUqOaIt+WQjeS4ujxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPui6q+S7veivgeWPtzwvc3Bhbj7vvIzliJ3lp4vlr4bnoIHkuLo8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj7ouqvku73or4Hlj7flkI7lha3kvY08L3NwYW4+77ybPC9zcGFuPiA8c3BhbiBsYW5nPSJFTi1VUyI+PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9InRleHQtaW5kZW50OjIxLjBwdDttc28tY2hhci1pbmRlbnQtY291bnQ6Mi4wIj48c3BhbiBsYW5nPSJFTi1VUyI+Mi48L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7OyYjMTA7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyI+6aaW5qyh55m75b2V5pe26K+3PHNwYW4gc3R5bGU9ImNvbG9yOnJlZCI+5L+u5pS55a+G56CBPC9zcGFuPu+8jOWvhueggeinhOWImeimgeaxgiZsZHF1bzs8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj7lrZfmr408L3NwYW4+PC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6cmVkIj4rPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Ozttc28taGFuc2ktZm9udC1mYW1pbHk6JiMxMDsmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7Y29sb3I6cmVkIj7mlbDlrZc8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JiMxMDsmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyI+JnJkcXVvO++8mzwvc3Bhbj4gPHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxoMyBzdHlsZT0iY29sb3I6IHJlZDsiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6IG1lZGl1bTsiPjxzcGFuIGxhbmc9IkVOLVVTIj4mbmJzcDsgJm5ic3A7IDMu5qih5ouf5oqi5Y+36aG755+l77yaPC9zcGFuPjwvc3Bhbj48L2gzPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9InRleHQtaW5kZW50OjIxLjBwdDttc28tY2hhci1pbmRlbnQtY291bnQ6Mi4wIj48c3BhbiBsYW5nPSJFTi1VUyI+PHN0MTpjaHNkYXRlIHllYXI9IjIwMjMiIG1vbnRoPSI3IiBkYXk9IjIiIGlzbHVuYXJkYXRlPSJGYWxzZSIgaXNyb2NkYXRlPSJGYWxzZSIgdzpzdD0ib24iPu+8iDHvvIkyMDIzPHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7JiMxMDsgbXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Ozttc28taGFuc2ktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7Ij48c3BhbiBsYW5nPSJFTi1VUyI+5bm0PC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6cmVkIj42PC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1mYW1pbHk65a6L5L2TO21zby1hc2NpaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiYjMTA7ICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oztjb2xvcjpyZWQiPjxzcGFuIGxhbmc9IkVOLVVTIj7mnIg8L3NwYW4+PC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPjE3PC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1mYW1pbHk65a6L5L2TO21zby1hc2NpaS1mb250LWZhbWlseTomIzEwOyAmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oztjb2xvcjpyZWQiPjxzcGFuIGxhbmc9IkVOLVVTIj7ml6U8L3NwYW4+PC9zcGFuPjwvc3QxOmNoc2RhdGU+PC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7JiMxMDttc28tYXNjaWktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O21zby1oYW5zaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDsiPuS4iuWNiDwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyI+ODozMDwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk65a6L5L2TO21zby1hc2NpaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7JiMxMDttc28taGFuc2ktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7Ij7oh7M8L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiPjEwOjIwPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Ozttc28taGFuc2ktZm9udC1mYW1pbHk6JiMxMDsmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDsiPui/m+ihjDxzcGFuIHN0eWxlPSJjb2xvcjpyZWQiPuesrOS4gOaJueasoTwvc3Bhbj48L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJjb2xvcjpyZWQiPkE8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JiMxMDsmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oztjb2xvcjpyZWQiPui9riZuYnNwOyA8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogbWVkaXVtOyI+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiDlrovkvZM7IGNvbG9yOiByZWQ7Ij7mqKHmi588L3NwYW4+PC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Ozttc28taGFuc2ktZm9udC1mYW1pbHk6JiMxMDsmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDsiPuaKouWPt+eUs+ivt++8mzwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyI+Jm5ic3A7Jm5ic3A7IDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJ0ZXh0LWluZGVudDoyMS4wcHQ7bXNvLWNoYXItaW5kZW50LWNvdW50OjIuMCI+PHNwYW4gbGFuZz0iRU4tVVMiPjxzdDE6Y2hzZGF0ZSB5ZWFyPSIyMDIzIiBtb250aD0iNyIgZGF5PSIyIiBpc2x1bmFyZGF0ZT0iRmFsc2UiIGlzcm9jZGF0ZT0iRmFsc2UiIHc6c3Q9Im9uIj7vvIgy77yJMjAyMzxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1mYW1pbHk65a6L5L2TOyYjMTA7IG1zby1hc2NpaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyI+PHNwYW4gbGFuZz0iRU4tVVMiPuW5tDwvc3Bhbj48L3NwYW4+PHNwYW4gc3R5bGU9ImNvbG9yOnJlZCI+Njwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O21zby1oYW5zaS1mb250LWZhbWlseTomIzEwOyAmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7Y29sb3I6cmVkIj48c3BhbiBsYW5nPSJFTi1VUyI+5pyIPC9zcGFuPjwvc3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6cmVkIj4xNzwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JiMxMDsgJnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O21zby1oYW5zaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7Y29sb3I6cmVkIj48c3BhbiBsYW5nPSJFTi1VUyI+5pelPC9zcGFuPjwvc3Bhbj48L3N0MTpjaHNkYXRlPjwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk65a6L5L2TOyYjMTA7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Ozttc28taGFuc2ktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7Ij7kuIrljYg8L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiPjEwOjMwPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OzsmIzEwO21zby1oYW5zaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDsiPuiHszwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyI+MTI6MDA8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O21zby1oYW5zaS1mb250LWZhbWlseTomIzEwOyZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyI+6L+b6KGMPHNwYW4gc3R5bGU9ImNvbG9yOnJlZCI+56ys5LiA5om55qyhPC9zcGFuPjwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImNvbG9yOnJlZCI+Qjwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk65a6L5L2TO21zby1hc2NpaS1mb250LWZhbWlseTomIzEwOyZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Ozttc28taGFuc2ktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O2NvbG9yOnJlZCI+6L2uPC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjogcmdiKDI1NSwgMCwgMCk7IGZvbnQtZmFtaWx5OiDlrovkvZM7Ij4mbmJzcDs8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogbWVkaXVtOyI+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMjU1LCAwLCAwKTsgZm9udC1mYW1pbHk6IOWui+S9kzsiPuaooeaLnzwvc3Bhbj48L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O21zby1oYW5zaS1mb250LWZhbWlseTomIzEwOyZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyI+5oqi5Y+355Sz6K+377ybPC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0idGV4dC1pbmRlbnQ6MjEuMHB0O21zby1jaGFyLWluZGVudC1jb3VudDoyLjAiPjxzcGFuIGxhbmc9IkVOLVVTIj7vvIgz77yJPHN0MTpjaHNkYXRlIHllYXI9IjIwMjMiIG1vbnRoPSI3IiBkYXk9IjIiIGlzbHVuYXJkYXRlPSJGYWxzZSIgaXNyb2NkYXRlPSJGYWxzZSIgdzpzdD0ib24iPjIwMjM8c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9IiI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSIiPjxmb250IGZhY2U9IuWui+S9kyI+5bm0PC9mb250PjY8L3NwYW4+PC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6IHJlZDsiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iIj48Zm9udCBmYWNlPSLlrovkvZMiPuaciDwvZm9udD4xNzwvc3Bhbj48L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiYjMTA7ICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Ozttc28taGFuc2ktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O2NvbG9yOnJlZCI+PHNwYW4gbGFuZz0iRU4tVVMiPuaXpTwvc3Bhbj48L3NwYW4+PC9zdDE6Y2hzZGF0ZT48L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzsmIzEwO21zby1hc2NpaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyI+5LiL5Y2IPC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj4yOjMwPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7bXNvLWFzY2lpLWZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OzsmIzEwO21zby1oYW5zaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDsiPuiHs+S4i+WNiDwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyI+NTowMDwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk65a6L5L2TO21zby1hc2NpaS1mb250LWZhbWlseTomcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7bXNvLWhhbnNpLWZvbnQtZmFtaWx5OiYjMTA7JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7Ij7vvIzov5vooYw8c3BhbiBzdHlsZT0iY29sb3I6cmVkIj7nrKzkuozmibnmrKE8L3NwYW4+PC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjogcmdiKDI1NSwgMCwgMCk7IGZvbnQtZmFtaWx5OiDlrovkvZM7Ij4mbmJzcDs8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogbWVkaXVtOyI+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMjU1LCAwLCAwKTsgZm9udC1mYW1pbHk6IOWui+S9kzsiPuaooeaLnzwvc3Bhbj48L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OuWui+S9kzttc28tYXNjaWktZm9udC1mYW1pbHk6JnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7O21zby1oYW5zaS1mb250LWZhbWlseTomIzEwOyZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyI+5oqi5Y+355Sz6K+344CCPC9zcGFuPiZuYnNwOzwvcD4NCjxwPjxmb250IGZhY2U9Im1vbm9zcGFjZSI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogMTBweDsiPiZuYnNwOyAmbmJzcDs8L3NwYW4+PC9mb250Pu+8iDTvvInmqKHmi5/miqLlj7fnlLPor7fml7bmqKHns4rlrabmoKHlkI3np7DvvIznlKhB5qCh44CBQuagoeOAgUPmoKHjgIFE5qCh5Luj5pu/77yM5omA5aGr5oql5YaF5a655LiO5q2j5byP5oqi5Y+35peg5YWz77yM5qih5ouf5oqi5Y+355Sz6K+357uT5p2f77yM5aGr5oql5YaF5a655YWo6YOo5riF56m644CC5qih5ouf5oqi5Y+35Lit5Ye6546w5Zuw6Zq+5ZKM6Zeu6aKY6K+35Y+K5pe25Y+N6aaI57uZ54+t5Li75Lu744CCPC9wPg0KPHA+Jm5ic3A7PC9wPjwvdGQ+PC90cj48L3RhYmxlPmQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgEFDkltYWdlQnV0dG9uWVpNtjA448TKR8DdP55HClsg5KeZ2jZ1wisJnq7fzF7WwLA=" />
+
+</div>
+
+
+
+<script type="text/javascript">
+
+//<![CDATA[
+
+var theForm = document.forms['form1'];
+
+if (!theForm) {
+
+    theForm = document.form1;
+
+}
+
+function __doPostBack(eventTarget, eventArgument) {
+
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+
+        theForm.__EVENTTARGET.value = eventTarget;
+
+        theForm.__EVENTARGUMENT.value = eventArgument;
+
+        theForm.submit();
+
+    }
+
+}
+
+//]]>
+
+</script>
+
+
+
+
+
+<script src="/CZBM/WebResource.axd?d=PneS_Af7TBZ6SLz8257bm1T8OL2jMX5cFPCv7TcJ5-KgiryMUvuhzsaKXXwCsZX3ccAPZqIW0vzWar_GfC6_28Dh0f4IajzyMTGW34uYnRY1&amp;t=636043007952281841" type="text/javascript"></script>
+
+
+
+
+
+<script src="/CZBM/ScriptResource.axd?d=X4UOfuZmq2KgJL7wIKpywht2iZanyj2VjhnbmzCEoypyw6oYNfuiIcmEaV49efVg0JAUAfp4hk5fcEOoOiZSiYnu7WmuLaQ79k4ARuPjSA_uwdNqcjOVayWrOiI6vspWR9-wIAFJx64eZTYYHfbm-Okcd3bZzYFE0OB3R53L8tbBr6G402IM7r8tD9UW7bby0&amp;t=ffffffffc7ae6e38" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+//<![CDATA[
+
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax å®¢æˆ·ç«¯æ¡†æ¶æœªèƒ½åŠ è½½ã€‚');
+
+//]]>
+
+</script>
+
+
+
+<script src="/CZBM/ScriptResource.axd?d=VfuVgiz2sVlr8ff55_UTvjzbid01q47992flvHCas3YAGfNt4UwM1xW3F205fs9tjUM_5WpmkECHxeyjhwGr45TYOg_UrCLQMlNP9QMcwG8mFAXM8nrmbaR4gIAJpdIWP1hjcqFFmJtBp0D9X7blqZBsxnru4EbV7NvbYrv-rLmB889SJaqot6CNXRW6v6SM0&amp;t=ffffffffc7ae6e38" type="text/javascript"></script>
+
+<div class="aspNetHidden">
+
+
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="8CB90623" />
+
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAU5hw54zFbcGf8WUKDWbrMLn0bwOLEFjEtUn1QWCJr2ScUbQYtRNUVtfQasqJY+h35ac4/HhzGpPOy3mQnJwftczfg78Z8BXhXifTCAVkevdycbgq1wLCvjBW7qgiEjOVecZCD3izc+/kk+MfH7aBrY" />
+
+</div>
+
+   
+
+
+
+   <script type="text/javascript">
+
+//<![CDATA[
+
+Sys.WebForms.PageRequestManager._initialize('ScriptManager1', 'form1', [], [], [], 90, '');
+
+//]]>
+
+</script>
+
+
+
+
+
+    <div>
+
+    <center >
+
+    <table border ="0" cellpadding ="0" cellspacing ="0" width="100%">
+
+        <tr align ="center" valign ="middle" >
+
+            <td>
+
+                <table border ="0" cellpadding ="0" cellspacing ="0" style ="line-height :300%;">
+
+                   <tr align ="center" valign ="middle" >
+
+                      <td align ="right" valign ="middle" >&nbsp;</td>
+
+                      <td align ="right" valign ="middle" colspan="3" >&nbsp;</td>
+
+                      <td align ="right" valign ="middle" >&nbsp;</td>
+
+                   </tr>
+
+                   <tr align ="center" valign ="middle" >
+
+                      <td style =" border-bottom-style :dotted ;  border-bottom-width :thin ; border-bottom-color :Red " 
+
+                           colspan="5" >
+
+                          <img alt="" src="../Images/Welcome.gif" style="height: 32px; width: 152px" /><span id="Label1" style="color:Red;font-family:å¾®è½¯é›…é»‘;font-size:16pt;font-weight:bold;">æ¬¢è¿ç™»å½•</span></td>
+
+                   </tr>
+
+                   <tr align ="center" valign ="middle" >
+
+                      <td colspan="5" height="10"></td>
+
+                   </tr>
+
+                   <tr align ="center" valign ="middle" >
+
+                      <td width="80" rowspan="3" align ="right" >
+
+                          <img alt="" src="../Images/53.png" style="height: 70px; width: 80px" /></td>
+
+                      <td align ="right" valign ="middle" >ç”¨æˆ·å</td>
+
+                      <td>&nbsp;</td>
+
+                      <td>     
+
+                         
+
+                          <input name="L_username" type="text" id="L_username" style="width: 160px" />
+
+                         
+
+                      </td>
+
+                      <td width="20" align ="left" valign ="middle" ></td>
+
+                   </tr>
+
+                   <tr align ="center" valign ="middle" >
+
+                      <td align ="right" valign ="middle" >å¯†ç </td>
+
+                      <td>&nbsp;</td>
+
+                      <td>       
+
+                         
+
+                          <input name="L_password" type="password" id="L_password" style="width: 160px" />
+
+                            
+
+                     </td>
+
+                      <td>          
+
+                          &nbsp;</td>
+
+                   </tr>
+
+                   <tr align ="center" valign ="middle" >
+
+                      <td align ="right" valign ="middle" >éªŒè¯ç </td>
+
+                      <td>&nbsp;</td>
+
+                      <td align ="left" valign ="middle" >          
+
+                          <table border ="0" cellpadding ="0" cellspacing ="0">
+
+                             <tr align ="center" valign ="middle" >
+
+                                <td>
+
+                                   
+
+                                   <input id="Text2" name="L_YZM" type="text" style="width: 50px" />
+
+                                   
+
+                                </td>
+
+                                <td>&nbsp;</td>
+
+                                <td>
+
+                                   
+
+                                   <input type="image" name="ImageButtonYZM" id="ImageButtonYZM" disabled="disabled" class="aspNetDisabled" src="../public/checkcode.aspx" style="height:25px;width:50px;" />
+
+                                    
+
+                                </td>
+
+                                <td>&nbsp;</td>
+
+                                <td>
+
+                                   <a href="javascript:changeCode()"style="text-decoration: underline;">æ¢ä¸€å¼ </a>
+
+                                </td>
+
+                             </tr>
+
+                          </table>
+
+          
+
+                      </td>
+
+                      <td align ="left" valign ="middle" >          
+
+                          &nbsp;</td>
+
+                   </tr>
+
+                   <tr align ="center" valign ="middle" >
+
+                      <td colspan="5" height="10"></td>
+
+                   </tr>
+
+                   <tr align ="center" valign ="middle" >
+
+                      <td >
+
+                          &nbsp;</td>
+
+                      <td  colspan="3" >
+
+                          <input type="submit" name="Button1" value="ç™»å½•" id="Button1" class="btn1_mouseout" onmouseover="this.className=&#39;btn1_mouseover&#39;" onmouseout="this.className=&#39;btn1_mouseout&#39;" style="height:30px;width:100px;" />
+
+                       </td>
+
+                      <td >
+
+                          &nbsp;</td>
+
+                   </tr>
+
+                </table>
+
+
+
+            </td>
+
+        </tr>
+
+        <tr align ="center" valign ="middle" >
+
+            <td height="30">
+
+               <div>
+
+                  
+
+                </div>
+
+
+
+            </td>
+
+        </tr>
+
+      <tr align ="center" valign ="middle" >
+
+         <td >
+
+         
+
+   
+
+         
+
+         </td>
+
+      </tr>
+
+      <tr align ="center" valign ="middle" >
+
+          <td>
+
+
+
+              <table border="0" width="90%"   cellpadding ="0" cellspacing="0"  class="hovertable5" ><TR align ="left" valign ="middle" ><td ><p class="MsoNormal"><b><span style="font-size:16.0pt;font-family:å®‹ä½“;mso-ascii-font-family:&quot;Times New Roman&quot;;&#10;mso-hansi-font-family:&quot;Times New Roman&quot;;color:red">æ³¨æ„äº‹é¡¹ï¼š</span></b><b><span lang="EN-US" style="font-size:16.0pt;&#10;color:red"><o:p></o:p></span></b></p>
+
+<p class="MsoNormal" style="text-indent:21.0pt;mso-char-indent-count:2.0"><span lang="EN-US">1.</span><span style="font-family:å®‹ä½“;mso-ascii-font-family:&quot;Times New Roman&quot;;&#10;mso-hansi-font-family:&quot;Times New Roman&quot;">ç”¨æˆ·åä¸º<span style="color:red">èº«ä»½è¯å·</span>ï¼Œåˆå§‹å¯†ç ä¸º<span style="color:red">èº«ä»½è¯å·åå…­ä½</span>ï¼›</span> <span lang="EN-US"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="text-indent:21.0pt;mso-char-indent-count:2.0"><span lang="EN-US">2.</span><span style="font-family:å®‹ä½“;mso-ascii-font-family:&quot;Times New Roman&quot;;&#10;mso-hansi-font-family:&quot;Times New Roman&quot;">é¦–æ¬¡ç™»å½•æ—¶è¯·<span style="color:red">ä¿®æ”¹å¯†ç </span>ï¼Œå¯†ç è§„åˆ™è¦æ±‚&ldquo;<span style="color:red">å­—æ¯</span></span><span lang="EN-US" style="color:red">+</span><span style="font-family:å®‹ä½“;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10;&quot;Times New Roman&quot;;color:red">æ•°å­—</span><span style="font-family:å®‹ä½“;mso-ascii-font-family:&#10;&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">&rdquo;ï¼›</span> <span lang="EN-US"><o:p></o:p></span></p>
+
+<h3 style="color: red;"><span style="font-size: medium;"><span lang="EN-US">&nbsp; &nbsp; 3.æ¨¡æ‹ŸæŠ¢å·é¡»çŸ¥ï¼š</span></span></h3>
+
+<p class="MsoNormal" style="text-indent:21.0pt;mso-char-indent-count:2.0"><span lang="EN-US"><st1:chsdate year="2023" month="7" day="2" islunardate="False" isrocdate="False" w:st="on">ï¼ˆ1ï¼‰2023<span lang="EN-US" style="font-family:å®‹ä½“;&#10; mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;"><span lang="EN-US">å¹´</span></span><span style="color:red">6</span><span lang="EN-US" style="font-family:å®‹ä½“;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10; &quot;Times New Roman&quot;;color:red"><span lang="EN-US">æœˆ</span></span><span style="color:red">17</span><span lang="EN-US" style="font-family:å®‹ä½“;mso-ascii-font-family:&#10; &quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;;color:red"><span lang="EN-US">æ—¥</span></span></st1:chsdate></span><span style="font-family:å®‹ä½“;&#10;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">ä¸Šåˆ</span><span lang="EN-US">8:30</span><span style="font-family:å®‹ä½“;mso-ascii-font-family:&quot;Times New Roman&quot;;&#10;mso-hansi-font-family:&quot;Times New Roman&quot;">è‡³</span><span lang="EN-US">10:20</span><span style="font-family:å®‹ä½“;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10;&quot;Times New Roman&quot;">è¿›è¡Œ<span style="color:red">ç¬¬ä¸€æ‰¹æ¬¡</span></span><span lang="EN-US" style="color:red">A</span><span style="font-family:å®‹ä½“;mso-ascii-font-family:&#10;&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;;color:red">è½®&nbsp; </span><span style="font-size: medium;"><span style="font-family: å®‹ä½“; color: red;">æ¨¡æ‹Ÿ</span></span><span style="font-family:å®‹ä½“;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10;&quot;Times New Roman&quot;">æŠ¢å·ç”³è¯·ï¼›</span><span lang="EN-US">&nbsp;&nbsp; <o:p></o:p></span></p>
+
+<p class="MsoNormal" style="text-indent:21.0pt;mso-char-indent-count:2.0"><span lang="EN-US"><st1:chsdate year="2023" month="7" day="2" islunardate="False" isrocdate="False" w:st="on">ï¼ˆ2ï¼‰2023<span lang="EN-US" style="font-family:å®‹ä½“;&#10; mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;"><span lang="EN-US">å¹´</span></span><span style="color:red">6</span><span lang="EN-US" style="font-family:å®‹ä½“;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10; &quot;Times New Roman&quot;;color:red"><span lang="EN-US">æœˆ</span></span><span style="color:red">17</span><span lang="EN-US" style="font-family:å®‹ä½“;mso-ascii-font-family:&#10; &quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;;color:red"><span lang="EN-US">æ—¥</span></span></st1:chsdate></span><span style="font-family:å®‹ä½“;&#10;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">ä¸Šåˆ</span><span lang="EN-US">10:30</span><span style="font-family:å®‹ä½“;mso-ascii-font-family:&quot;Times New Roman&quot;;&#10;mso-hansi-font-family:&quot;Times New Roman&quot;">è‡³</span><span lang="EN-US">12:00</span><span style="font-family:å®‹ä½“;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10;&quot;Times New Roman&quot;">è¿›è¡Œ<span style="color:red">ç¬¬ä¸€æ‰¹æ¬¡</span></span><span lang="EN-US" style="color:red">B</span><span style="font-family:å®‹ä½“;mso-ascii-font-family:&#10;&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;;color:red">è½®</span><span style="color: rgb(255, 0, 0); font-family: å®‹ä½“;">&nbsp;</span><span style="font-size: medium;"><span style="color: rgb(255, 0, 0); font-family: å®‹ä½“;">æ¨¡æ‹Ÿ</span></span><span style="font-family:å®‹ä½“;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10;&quot;Times New Roman&quot;">æŠ¢å·ç”³è¯·ï¼›</span><span lang="EN-US"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="text-indent:21.0pt;mso-char-indent-count:2.0"><span lang="EN-US">ï¼ˆ3ï¼‰<st1:chsdate year="2023" month="7" day="2" islunardate="False" isrocdate="False" w:st="on">2023<span lang="EN-US" style=""><span lang="EN-US" style=""><font face="å®‹ä½“">å¹´</font>6</span></span><span lang="EN-US" style="color: red;"><span lang="EN-US" style=""><font face="å®‹ä½“">æœˆ</font>17</span></span><span lang="EN-US" style="font-family:å®‹ä½“;mso-ascii-font-family:&#10; &quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;;color:red"><span lang="EN-US">æ—¥</span></span></st1:chsdate></span><span style="font-family:å®‹ä½“;&#10;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">ä¸‹åˆ</span><span lang="EN-US">2:30</span><span style="font-family:å®‹ä½“;mso-ascii-font-family:&quot;Times New Roman&quot;;&#10;mso-hansi-font-family:&quot;Times New Roman&quot;">è‡³ä¸‹åˆ</span><span lang="EN-US">5:00</span><span style="font-family:å®‹ä½“;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10;&quot;Times New Roman&quot;">ï¼Œè¿›è¡Œ<span style="color:red">ç¬¬äºŒæ‰¹æ¬¡</span></span><span style="color: rgb(255, 0, 0); font-family: å®‹ä½“;">&nbsp;</span><span style="font-size: medium;"><span style="color: rgb(255, 0, 0); font-family: å®‹ä½“;">æ¨¡æ‹Ÿ</span></span><span style="font-family:å®‹ä½“;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&#10;&quot;Times New Roman&quot;">æŠ¢å·ç”³è¯·ã€‚</span>&nbsp;</p>
+
+<p><font face="monospace"><span style="font-size: 10px;">&nbsp; &nbsp;</span></font>ï¼ˆ4ï¼‰æ¨¡æ‹ŸæŠ¢å·ç”³è¯·æ—¶æ¨¡ç³Šå­¦æ ¡åç§°ï¼Œç”¨Aæ ¡ã€Bæ ¡ã€Cæ ¡ã€Dæ ¡ä»£æ›¿ï¼Œæ‰€å¡«æŠ¥å†…å®¹ä¸æ­£å¼æŠ¢å·æ— å…³ï¼Œæ¨¡æ‹ŸæŠ¢å·ç”³è¯·ç»“æŸï¼Œå¡«æŠ¥å†…å®¹å…¨éƒ¨æ¸…ç©ºã€‚æ¨¡æ‹ŸæŠ¢å·ä¸­å‡ºç°å›°éš¾å’Œé—®é¢˜è¯·åŠæ—¶åé¦ˆç»™ç­ä¸»ä»»ã€‚</p>
+
+<p>&nbsp;</p></td></tr></table>
+
+
+
+          </td>
+
+      </tr>
+
+      <tr>
+
+         <td height="10"></td>
+
+      </tr>
+
+
+
+   
+
+    </table>
+
+
+
+
+
+    </center>
+
+    </div>
+
+
+
+
+
+        
+
+
+
+
+
+    </form>
+
+</body>
+
+</html>
+

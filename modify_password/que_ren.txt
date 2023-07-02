@@ -1,3 +1,33 @@
-94|updatePanel|UpdatePanel5|
-              <span id="LabelTS" style="color:Red;font-weight:bold;"></span>
-              |140|hiddenField|__VIEWSTATE|/wEPDwULLTE4ODY5ODYwOTcPZBYCAgMPZBYEAgcPDxYCHgRUZXh0BRI1MDAyMzcyMDEwMTEzMDE0MTlkZAIVD2QWAmYPZBYCAgEPDxYCHwBlZGRkzfZBWAdF3Ufn3hvZ6WBc8r80CdQ=|8|hiddenField|__VIEWSTATEGENERATOR|A55DB807|64|hiddenField|__EVENTVALIDATION|/wEWBAKytNTgAgLi3/rWDgKD9KaXCAKM54rGBtHjXC7VTTCru45DNjxy+jVN3i4N|7|asyncPostBackControlIDs||Button1|0|postBackControlIDs|||69|updatePanelIDs||tUpdatePanel1,tUpdatePanel2,tUpdatePanel3,tUpdatePanel4,tUpdatePanel5|0|childUpdatePanelIDs|||12|panelsToRefreshIDs||UpdatePanel5|2|asyncPostBackTimeout||90|15|formAction||JW_UserPWD.aspx|8|pageTitle||学生修改用户密码|182|scriptStartupBlock|ScriptContentNoTags|alert('口令(密码)修改成功！\n ----------------------------\n 新密码为【a201025Q】\n 找回密码答案【17783631632】\n ----------------------------\n 确定以后系统自动将重新登录');window.parent.location.href='../index.html';|
+<script>location='JW_UserPWD.aspx'</script>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<head><link href="../App_Themes/%E4%B8%BB%E9%A2%9801/StyleSheet.css" type="text/css" rel="stylesheet" /><title>
+	学生报名抢号
+</title><link href="../App_Themes/%E4%B8%BB%E9%A2%9801/StyleSheet.css" type="text/css" rel="stylesheet" /></head>
+<body style ="line-height :200%;">
+    <form method="post" action="./JW_ZSBM.aspx" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTA5ODA0MzQ5MmRkNnf9M6jqGuch7/Ra7OJic+paW2f+jCQL6RmZR1KNehk=" />
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="121EAD04" />
+</div>
+    <div>
+    <center >
+         <br />
+         
+        
+
+        <br />
+        <br />
+
+    </center>
+    </div>
+    </form>
+</body>
+</html>

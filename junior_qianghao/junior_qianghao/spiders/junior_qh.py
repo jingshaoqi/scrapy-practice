@@ -51,7 +51,8 @@ class JuniorQhSpider(scrapy.Spider):
             yield scrapy.Request(url=url, headers=self.headers, callback=self.parse, dont_filter=True)
 
     def parse(self, response):
-        with open('JW_iframe.aspx.html', 'w') as f:
+        # windows10 下open打开的编码格式为cp936,而服务器返回的是utf-8
+        with open('JW_iframe.aspx.html', encoding=response.encoding, mode='w') as f:
             f.write(response.text)
         #print(response.text)
         # find mainframe
@@ -84,7 +85,7 @@ class JuniorQhSpider(scrapy.Spider):
         yield scrapy.Request(url=main_frm_url_full, callback=self.main_parse, headers=self.headers, dont_filter=True)
 
     def main_parse(self, response):
-        with open('JW_UserDL.aspx.html', 'w') as f:
+        with open('JW_UserDL.aspx.html',  encoding=response.encoding, mode='w') as f:
             f.write(response.text)
         # 现在来获取验证码的图片
         yzm_url = response.xpath('//table/tr/td/input[@id="ImageButtonYZM"]/@src')
@@ -127,7 +128,7 @@ class JuniorQhSpider(scrapy.Spider):
     # 解析验证码后按登录按钮
     def yzm_parse(self, response):
         # 保存验证码图片
-        with open('yan_zheng_ma.jpg', 'wb') as f:
+        with open('yan_zheng_ma.jpg',  encoding=response.encoding, mode='wb') as f:
             f.write(response.body)
         # 利用 ddddocr识别验证码
         ocr = ddddocr.DdddOcr()
@@ -159,7 +160,7 @@ class JuniorQhSpider(scrapy.Spider):
                              callback=self.login_parse, headers=self.headers, dont_filter=True)
     #登录结果分析，登录结果中添加了 cookie XSQHUserName
     def login_parse(self, response):
-        with open('login_res.html', 'w') as f:
+        with open('login_res.html',  encoding=response.encoding, mode='w') as f:
             f.write(response.text)
         # 获取cookie XSQHUserName的值
         if response.headers.get('Set-Cookie') is None:
@@ -244,7 +245,7 @@ class JuniorQhSpider(scrapy.Spider):
         yield scrapy.Request(url=zsbm_url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
 
     def ZSBM_parse(self, response):
-        with open('JW_ZSBM.aspx.html', 'w') as f:
+        with open('JW_ZSBM.aspx.html',  encoding=response.encoding, mode='w') as f:
             f.write(response.text)
         # https://wsemal.com/CZBM/JW/JW_UserDL.aspx
         self.headers['Referer'] = response.url
@@ -279,7 +280,7 @@ class JuniorQhSpider(scrapy.Spider):
         yield scrapy.Request(url=zsbm1_url, callback=self.ZSBM1_parse, headers=self.headers, dont_filter=True)
 
     def ZSBM1_parse(self, response):
-        with open('JW_ZSBM1.aspx.html', 'w') as f:
+        with open('JW_ZSBM1.aspx.html',  encoding=response.encoding, mode='w') as f:
             f.write(response.text)
         #a判断状态是否在进行中
         zt = response.xpath('//span[@id="Label_ZT"]/text()')
@@ -395,7 +396,7 @@ class JuniorQhSpider(scrapy.Spider):
 
 
     def post_zsbm1_parse(self, response):
-        with open('post_zsbm1_parse.aspx.html', 'w') as f:
+        with open('post_zsbm1_parse.aspx.html',  encoding=response.encoding, mode='w') as f:
             f.write(response.text)
         #再提交一次
         form_data = {}
@@ -424,7 +425,7 @@ class JuniorQhSpider(scrapy.Spider):
                              headers=self.headers, dont_filter=True)
 
     def post2_zsbm1_parse(self, response):
-        with open('post2_zsbm1.aspx.html', 'w') as f:
+        with open('post2_zsbm1.aspx.html',  encoding=response.encoding, mode='w') as f:
             f.write(response.text)
         #if response.text.find('网络拥堵') >= 0:
         print(response.text)
@@ -433,13 +434,13 @@ class JuniorQhSpider(scrapy.Spider):
                                  dont_filter=True)
 
     def button_ok_parse(self, response):
-        with open('button_ok.aspx.html', 'w') as f:
+        with open('button_ok.aspx.html',  encoding=response.encoding, mode='w') as f:
             f.write(response.text)
         print(response.text)
 
     #公告的时候是返回的这个
     def XSBMXZ1_parse(self, response):
-        with open('JW_XSBMXZ1.aspx.html', 'w') as f:
+        with open('JW_XSBMXZ1.aspx.html',  encoding=response.encoding, mode='w') as f:
             f.write(response.text)
         # https://wsemal.com/CZBM/JW/JW_XSBMXZ1.aspx
         self.headers['Referer'] = response.url
@@ -449,7 +450,7 @@ class JuniorQhSpider(scrapy.Spider):
         return #当前已经结束
         yield scrapy.Request(url=next_url, callback=self.ZSBM_FS_YES_parse, headers=self.headers, dont_filter=True)
     def ZSBM_FS_YES_parse(self, response):
-        with open('JW_ZSBM_FS_YES.aspx.html', 'w') as f:
+        with open('JW_ZSBM_FS_YES.aspx.html',  encoding=response.encoding, mode='w') as f:
             f.write(response.text)
-        with open('JW_ZSBM_FS_YES.body.html', 'w') as f:
+        with open('JW_ZSBM_FS_YES.body.html',  encoding=response.encoding, mode='w') as f:
             f.write(response.body)
