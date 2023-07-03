@@ -17,21 +17,6 @@ class JuniorQhSpider(scrapy.Spider):
     start_urls = ["https://wsemal.com/CZBM/JW/JW_iframe.aspx?FS=CC"]
     user_dll_url = ''
     school_code = ''
-    headers = {'Referer': 'https://wsemal.com/CZBM/',
-               'Host':'wsemal.com',
-               'Cookie': '',
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-                "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Connection": "keep-alive",
-                "Upgrade-Insecure-Requests": "1",
-                "Sec-Fetch-Dest": "document",
-                "Sec-Fetch-Mode": "navigate",
-                "Sec-Fetch-Site": "none",
-                "Sec-Fetch-User": "?1",
-               "TE": "trailers",
-                }
     form_data = {'__EVENTTARGET': '',
                  '__EVENTARGUMENT': '',
                  '__VIEWSTATE': '',
@@ -42,15 +27,8 @@ class JuniorQhSpider(scrapy.Spider):
     zsbm_headers={}
     yzm_url_full='' #保存验证码的url
     def start_requests(self):
-
-        if self.headers.get('Cookie') is not None:
-            self.headers.pop('Cookie')
-        if self.headers.get('Referer') is not None:
-            self.headers.pop('Referer')
-        if self.headers.get('TE') is not None:
-            self.headers.pop('TE')
         for url in self.start_urls:
-            yield scrapy.Request(url=url, headers=self.headers, callback=self.parse, dont_filter=True)
+            yield scrapy.Request(url=url, callback=self.parse, dont_filter=True)
 
     def parse(self, response):
         logging.info('response.url:{}'.format(response.url))
@@ -63,24 +41,9 @@ class JuniorQhSpider(scrapy.Spider):
         # https://wsemal.com/CZBM/JW/JW_UserDL.aspx
         main_frm_url_full = urljoin(response.url, main_frm_url)
         logging.info(main_frm_url_full)
-
-        #获取cookie
-        ckie = response.headers['Set-Cookie']
-        fdf = str(ckie).split(';')
-        # 只需要第一个
-        for i in fdf:
-            if i.find('SessionId') >= 0:
-                self.headers['Cookie'] = i #ASP.NET_SessionId=3rg5mw45ldudcbmsvfnyayj0
-                break
-        self.headers['Referer'] = response.url # https://wsemal.com/CZBM/JW/JW_iframe.aspx?FS=CC
-        self.headers['Sec-Fetch-Dest'] = 'iframe'
-        self.headers['Sec-Fetch-Mode'] = 'navigate'
-        self.headers['Sec-Fetch-Site'] = 'same-origin'
-        self.headers['TE'] = 'trailers'
-        if self.headers.get('Sec-Fetch-User') is not None:
-            self.headers.pop('Sec-Fetch-User')
+        headers = {'Referer': response.url}
         self.user_dll_url = main_frm_url_full #https://wsemal.com/CZBM/JW/JW_UserDL.aspx
-        yield scrapy.Request(url=main_frm_url_full, callback=self.main_parse, headers=self.headers, dont_filter=True)
+        yield scrapy.Request(url=main_frm_url_full, callback=self.main_parse, headers=headers, dont_filter=True)
 
     def main_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
@@ -93,16 +56,12 @@ class JuniorQhSpider(scrapy.Spider):
         yzm_url_t = yzm_url.extract()[0]
         self.yzm_url_full = urljoin(response.url, yzm_url_t)
         # https://wsemal.com/CZBM/JW/JW_UserDL.aspx
-        self.headers['Referer'] = self.user_dll_url
-        self.headers['Accept'] = 'image/avif,image/webp,*/*'
-        self.headers['Sec-Fetch-Dest'] = 'image'
-        self.headers['Sec-Fetch-Mode'] = 'no-cors'
-        self.headers['Sec-Fetch-Site'] = 'same-origin'
-        self.headers['TE'] = 'trailers'
-        if self.headers.get('Sec-Fetch-User') is not None:
-            self.headers.pop('Sec-Fetch-User')
-        if self.headers.get('Upgrade-Insecure-Requests') is not None:
-            self.headers.pop('Upgrade-Insecure-Requests')
+        headers = {'Referer': self.user_dll_url,
+                   'Accept': 'image/avif,image/webp,*/*',
+                   'Sec-Fetch-Dest': 'image',
+                   'Sec-Fetch-Mode': 'no-cors',
+                   'Sec-Fetch-Site': 'same-origin'}
+
         # 提取formdata信息
         event_target = response.xpath('//input[@id="__EVENTTARGET"]/@value')
         event_target_str = event_target.extract()[0] if len(event_target) > 0 else ''
@@ -119,7 +78,7 @@ class JuniorQhSpider(scrapy.Spider):
         self.form_data['__VIEWSTATE'] = view_state_str
         self.form_data['__EVENTVALIDATION'] = event_validation_str
         self.form_data['__VIEWSTATEGENERATOR'] = view_state_generator_str
-        yield scrapy.Request(url=self.yzm_url_full, callback=self.yzm_parse, headers=self.headers, dont_filter=True)
+        yield scrapy.Request(url=self.yzm_url_full, callback=self.yzm_parse, headers=headers, dont_filter=True)
 
     # 解析验证码后按登录按钮
     def yzm_parse(self, response):
@@ -130,14 +89,16 @@ class JuniorQhSpider(scrapy.Spider):
         ocr = ddddocr.DdddOcr()
         res = ocr.classification(response.body)
         print('验证码为:{}'.format(res))
-        self.headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8'
-        self.headers['Origin'] = 'https://wsemal.com'
-        self.headers['Upgrade-Insecure-Requests'] = '1'
-        self.headers['Sec-Fetch-Dest'] = 'iframe'
-        self.headers['Sec-Fetch-Mode'] = 'navigate'
-        self.headers['Sec-Fetch-Site'] = 'same-origin'
-        self.headers['TE'] = 'trailers'
-        self.headers['Sec-Fetch-User'] = '?1'
+        headers = {'Referer': self.user_dll_url,
+                   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                   'Origin': 'https://wsemal.com',
+                   'Upgrade-Insecure-Requests': '1',
+                   'Sec-Fetch-Dest': 'iframe',
+                   'Sec-Fetch-Mode': 'navigate',
+                   'Sec-Fetch-Site': 'same-origin',
+                   'TE': 'trailers',
+                   'Sec-Fetch-User': '?1',
+                   'Content-Type': 'application/x-www-form-urlencoded'}
 
         #现在使用用户名，密码，验证码登录
         self.form_data['L_username'] = '500237201011301419'
@@ -145,16 +106,12 @@ class JuniorQhSpider(scrapy.Spider):
         self.form_data['L_YZM'] = res
         self.form_data['Button1'] = '登录'
         bodystr = urlencode(self.form_data)
-        self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-        #self.headers['Content-Length'] = '{}'.format(len(bodystr))
-        if self.headers.get('TE') is not None:
-            self.headers.pop('TE')
         logging.info('username:{} password:{} verify code:{}'.format(self.form_data['L_username'],
                                                                      self.form_data['L_password'], res))
         #准备好了数据 按 登录 按钮
         logging.info('请求登录网页self.user_dll_url：{}'.format(self.user_dll_url))
         yield scrapy.Request(url=self.user_dll_url, method='POST', body=bodystr,
-                             callback=self.login_parse, headers=self.headers, dont_filter=True)
+                             callback=self.login_parse, headers=headers, dont_filter=True)
     #登录结果分析，登录结果中添加了 cookie XSQHUserName
     def login_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
@@ -163,36 +120,19 @@ class JuniorQhSpider(scrapy.Spider):
         if response.headers.get('Set-Cookie') is None:
             #再次请求一个验证码
             logging.info('login fail, try to get another verify code')
-            self.headers['Referer'] = self.user_dll_url
-            self.headers['Accept'] = 'image/avif,image/webp,*/*'
-            self.headers['Sec-Fetch-Dest'] = 'image'
-            self.headers['Sec-Fetch-Mode'] = 'no-cors'
-            self.headers['Sec-Fetch-Site'] = 'same-origin'
-            self.headers['TE'] = 'trailers'
-            # 请求头中删除不需要的
-            if self.headers.get('Content-Type') is not None:
-                self.headers.pop('Content-Type')
-            if self.headers.get('Content-Length') is not None:
-                self.headers.pop('Content-Length')
-            if self.headers.get('Sec-Fetch-User') is not None:
-                self.headers.pop('Sec-Fetch-User')
-            if self.headers.get('Origin') is not None:
-                self.headers.pop('Origin')
-            if self.headers.get('Upgrade-Insecure-Requests') is not None:
-                self.headers.pop('Upgrade-Insecure-Requests')
-            yield scrapy.Request(url=self.yzm_url_full, callback=self.yzm_parse, headers=self.headers, dont_filter=True)
+            headers = {'Referer': self.user_dll_url,
+                       'Accept': 'image/avif,image/webp,*/*',
+                       'Sec-Fetch-Dest': 'image',
+                       'Sec-Fetch-Mode': 'no-cors',
+                       'Sec-Fetch-Site': 'same-origin',
+                       'TE': 'trailers'}
+            yield scrapy.Request(url=self.yzm_url_full, callback=self.yzm_parse, headers=headers, dont_filter=True)
             return
         logging.info('login success')
         ckie = response.headers['Set-Cookie']
         if str(ckie).find('XSQHUserName') < 0:
             logging.info('login fail too. not found cookie:XSQHUserName')
             return
-        fdf = str(ckie).split(';')
-        # 只需要有用的值
-        for i in fdf:
-            if i.find('XSQHUserName') >= 0:
-                self.headers['Cookie'] += ';' + i  # ASP.NET_SessionId=3rg5mw45ldudcbmsvfnyayj0
-                break
         # https://wsemal.com/CZBM/JW/JW_ZSBM.aspx
         #找到请求的下一个网页
         zsbm = response.xpath('//script[contains(text(), "mainFrame") and contains(text(), "href")]/text()')
@@ -206,18 +146,8 @@ class JuniorQhSpider(scrapy.Spider):
         zsbm_ur = zsbm_res[0] # ../JW/JW_ZSBM.aspx
         zsbm_url = urljoin(response.url, zsbm_ur) # 'https://wsemal.com/CZBM/JW/JW_ZSBM.aspx'
         print('请求下一个网页zsbm_url：{}'.format(zsbm_url))
-        if self.headers.get('Origin') is not None:
-            self.headers.pop('Origin')
-        # 请求头中删除不需要的
-        if self.headers.get('Content-Type') is not None:
-            self.headers.pop('Content-Type')
-        if self.headers.get('Content-Length') is not None:
-            self.headers.pop('Content-Length')
-        if self.headers.get('Sec-Fetch-User') is not None:
-            self.headers.pop('Sec-Fetch-User')
         # 从这个请求开始得到抢号的界面，没有开始的时候是其他界面
         self.zsbm_url = zsbm_url
-        self.zsbm_headers = self.headers
         # 添加一个等待时间控制
         desttime = '2023-7-2 8:30:00 000000'
         a2time = datetime.strptime(desttime, '%Y-%m-%d %H:%M:%S %f')
@@ -234,13 +164,12 @@ class JuniorQhSpider(scrapy.Spider):
                     wt = 0
                 time.sleep(wt_delta)
                 wt += wt_delta
-        yield scrapy.Request(url=zsbm_url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
+        yield scrapy.Request(url=zsbm_url, callback=self.ZSBM_parse, dont_filter=True)
 
     def ZSBM_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
         # https://wsemal.com/CZBM/JW/JW_UserDL.aspx
-        self.headers['Referer'] = response.url
         #再进入 https://wsemal.com/CZBM/JW/JW_XSBMXZ1.aspx
         # 它的参数需要解析出来才行
         spt = response.xpath('//script/text()')
@@ -262,7 +191,7 @@ class JuniorQhSpider(scrapy.Spider):
                     return
             #没有抢到号继续请求
             time.sleep(0.1)
-            yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
+            yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, dont_filter=True)
             return
         spt_t = spt.extract()[0]
         #返回的是报名须知
@@ -271,20 +200,20 @@ class JuniorQhSpider(scrapy.Spider):
             if str_all is None or len(str_all) <= 0:
                 return
             XSBMXZ1_url = urljoin(response.url, str_all[0])
-            yield scrapy.Request(url=XSBMXZ1_url, callback=self.XSBMXZ1_parse, headers=self.headers, dont_filter=True)
+            yield scrapy.Request(url=XSBMXZ1_url, callback=self.XSBMXZ1_parse, dont_filter=True)
             return
         # 有可能为 'alert(\'未开放报名权限！\');'
         if spt_t.find('JW_ZSBM1.aspx') < 0:
             #说明还没有到开始抢号的时间，重新进入
             time.sleep(0.1)
-            yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
+            yield scrapy.Request(url=response.url, callback=self.ZSBM_parse,  dont_filter=True)
             return
         str_all = re.findall(r"href=\'(.+?)\';", spt_t)
         if str_all is None or len(str_all) <= 0:
             return
         zsbm1_url = urljoin(response.url, str_all[0])
         logging.info('请求下一个网页zsbm1_url：{}'.format(zsbm1_url))
-        yield scrapy.Request(url=zsbm1_url, callback=self.ZSBM1_parse, headers=self.headers, dont_filter=True)
+        yield scrapy.Request(url=zsbm1_url, callback=self.ZSBM1_parse,  dont_filter=True)
 
     def ZSBM1_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
@@ -293,7 +222,7 @@ class JuniorQhSpider(scrapy.Spider):
         zt = response.xpath('//span[@id="Label_ZT"]/text()')
         if zt is None or len(zt) <= 0 or zt.get().find("进行中") < 0:
             time.sleep(0.1)
-            yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers, dont_filter=True)
+            yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, dont_filter=True)
             return
         #解析响应中有用的数据
 
@@ -338,8 +267,7 @@ class JuniorQhSpider(scrapy.Spider):
         schools = response.xpath('//tr/td/select/option')
         if schools is None or len(schools) <= 0:
             logging.info('not have schools')
-            yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers,
-                                 dont_filter=True)
+            yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, dont_filter=True)
             return
         for i in schools:
             school_name = i.xpath('./text()').extract()[0]
@@ -359,18 +287,15 @@ class JuniorQhSpider(scrapy.Spider):
         action_url_full = urljoin(response.url, action_url_t)
 
         # https://wsemal.com/CZBM/JW/JW_ZSBM.aspx
-        self.headers['Referer'] = response.url
-        if self.headers.get('Sec-Fetch-User') is not None:
-            self.headers.pop('Sec-Fetch-User')
-        if self.headers.get('Upgrade-Insecure-Requests') is not None:
-            self.headers.pop('Upgrade-Insecure-Requests')
-        self.headers['Accept'] = '*/*'
-        self.headers['Origin'] = 'https://wsemal.com'
-        self.headers['Cache-Control'] = 'no-cache'
-        self.headers['X-MicrosoftAjax'] = 'Delta=true'
-        self.headers['Sec-Fetch-Dest'] = 'empty'
-        self.headers['Sec-Fetch-Mode'] = 'cors'
-        self.headers['Sec-Fetch-Site'] = 'same-origin'
+        headers = {'Referer': response.url,
+                   'Accept': '*/*',
+                   'Origin': 'https://wsemal.com',
+                   'Cache-Control': 'no-cache',
+                   'X-MicrosoftAjax': 'Delta=true',
+                   'Sec-Fetch-Dest': 'empty',
+                   'Sec-Fetch-Mode': 'cors',
+                   'Sec-Fetch-Site': 'same-origin',
+                   'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
         # 修改请求的数据 在实际的浏览器中测试分两次进行，一次是展开下拉列表，第二次是按提交按钮，
         form_data = {}
         form_data['ScriptManager1'] = 'UpdatePanel3|DropDownListQHXX'
@@ -393,13 +318,10 @@ class JuniorQhSpider(scrapy.Spider):
         form_data['__EVENTVALIDATION'] = event_validation_str
         form_data['__VIEWSTATEGENERATOR'] = view_state_generator_str
         bodystr = urlencode(form_data, encoding='utf-8')
-        self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
-        #self.headers['Content-Length'] = '{}'.format(len(bodystr))
-
         logging.info('submit information action_url_full：{}'.format(action_url_full))
         logging.info('length:{} bodystr:{}'.format(len(bodystr), bodystr))
         yield scrapy.Request(url=action_url_full, method='POST', body=bodystr, callback=self.post_zsbm1_parse,
-                             headers=self.headers, dont_filter=True)
+                             headers=headers, dont_filter=True)
 
 
     def post_zsbm1_parse(self, response):
@@ -422,13 +344,19 @@ class JuniorQhSpider(scrapy.Spider):
         form_data['__VIEWSTATEGENERATOR'] = view_generator[0] if len(view_generator) > 0 else ''
 
         bodystr = urlencode(form_data, encoding='utf-8')
-        self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
-        #self.headers['Content-Length'] = '{}'.format(len(bodystr))
-
+        headers = {'Referer': response.url,
+                   'Accept': '*/*',
+                   'Origin': 'https://wsemal.com',
+                   'Cache-Control': 'no-cache',
+                   'X-MicrosoftAjax': 'Delta=true',
+                   'Sec-Fetch-Dest': 'empty',
+                   'Sec-Fetch-Mode': 'cors',
+                   'Sec-Fetch-Site': 'same-origin',
+                   'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
         logging.info('请求下一个网页response.url：{}'.format(response.url))
         logging.info('length:{} bodystr:{}'.format(len(bodystr), bodystr))
         yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.post2_zsbm1_parse,
-                             headers=self.headers, dont_filter=True)
+                             headers=headers, dont_filter=True)
 
     def post2_zsbm1_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
@@ -437,8 +365,15 @@ class JuniorQhSpider(scrapy.Spider):
         if response.text.find('已成功报名') >= 0:
             return
         logging.info('继续抢号 zsbm_url：{}'.format(self.zsbm_url))
-        yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=self.zsbm_headers,
-                             dont_filter=True)
+        headers = {'Referer': self.user_dll_url,
+                   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                   'Origin': 'https://wsemal.com',
+                   'Upgrade-Insecure-Requests': '1',
+                   'Sec-Fetch-Dest': 'iframe',
+                   'Sec-Fetch-Mode': 'navigate',
+                   'Sec-Fetch-Site': 'same-origin',
+                   'TE': 'trailers'}
+        yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse,headers=headers, dont_filter=True)
 
     def button_ok_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
@@ -449,8 +384,6 @@ class JuniorQhSpider(scrapy.Spider):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
         # https://wsemal.com/CZBM/JW/JW_XSBMXZ1.aspx
-        self.headers['Referer'] = response.url
         # https://wsemal.com/CZBM/JW/JW_ZSBM.aspx?FS=YES
         next_url = urljoin(response.url, '../JW/JW_ZSBM.aspx?FS=YES')
-        self.headers['Sec-Fetch-User'] = '?1'
-        yield scrapy.Request(url=next_url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
+        yield scrapy.Request(url=next_url, callback=self.ZSBM_parse,  dont_filter=True)
