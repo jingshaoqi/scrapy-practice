@@ -140,8 +140,8 @@ class JuniorQhSpider(scrapy.Spider):
         self.headers['Sec-Fetch-User'] = '?1'
 
         #现在使用用户名，密码，验证码登录
-        self.form_data['L_username'] = '500237201012240021'
-        self.form_data['L_password'] = 'hm240021'
+        self.form_data['L_username'] = '500237201011301419'
+        self.form_data['L_password'] = 'a201025Q'
         self.form_data['L_YZM'] = res
         self.form_data['Button1'] = '登录'
         bodystr = urlencode(self.form_data)
@@ -161,9 +161,8 @@ class JuniorQhSpider(scrapy.Spider):
         logging.info(response.text)
         # 获取cookie XSQHUserName的值
         if response.headers.get('Set-Cookie') is None:
-            logging.info('login fail')
             #再次请求一个验证码
-            logging.info('try to get another verify code')
+            logging.info('login fail, try to get another verify code')
             self.headers['Referer'] = self.user_dll_url
             self.headers['Accept'] = 'image/avif,image/webp,*/*'
             self.headers['Sec-Fetch-Dest'] = 'image'
