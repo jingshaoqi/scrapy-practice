@@ -13,7 +13,7 @@ logging.basicConfig(filename='logging.log', level=logging.DEBUG, format='%(ascti
 
 class JuniorQhSpider(scrapy.Spider):
     name = "junior_qh"
-    allowed_domains = ["www.baidu.com"]
+    allowed_domains = ["wsemal.com"]
     start_urls = ["https://wsemal.com/CZBM/JW/JW_iframe.aspx?FS=CC"]
     user_dll_url = ''
     school_code = ''
@@ -49,23 +49,20 @@ class JuniorQhSpider(scrapy.Spider):
             self.headers.pop('Referer')
         if self.headers.get('TE') is not None:
             self.headers.pop('TE')
-        if len(self.headers) != 11:
-            print('login_parse possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
         for url in self.start_urls:
             yield scrapy.Request(url=url, headers=self.headers, callback=self.parse, dont_filter=True)
 
     def parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
-        #print(response.text)
         # find mainframe
         main_frm = response.xpath('//tr/td/div/iframe[@id="mainFrame"]/@src')
-        if main_frm is None:
+        if main_frm is None or len(main_frm) <= 0:
             return
         main_frm_url = main_frm.extract()[0]
         # https://wsemal.com/CZBM/JW/JW_UserDL.aspx
         main_frm_url_full = urljoin(response.url, main_frm_url)
-        print(main_frm_url_full)
+        logging.info(main_frm_url_full)
 
         #获取cookie
         ckie = response.headers['Set-Cookie']
@@ -90,7 +87,7 @@ class JuniorQhSpider(scrapy.Spider):
         logging.info(response.text)
         # 现在来获取验证码的图片
         yzm_url = response.xpath('//table/tr/td/input[@id="ImageButtonYZM"]/@src')
-        if yzm_url is None:
+        if yzm_url is None or len(yzm_url) <= 0:
             return
         # https://wsemal.com/CZBM/public/checkcode.aspx
         yzm_url_t = yzm_url.extract()[0]
@@ -152,9 +149,10 @@ class JuniorQhSpider(scrapy.Spider):
         #self.headers['Content-Length'] = '{}'.format(len(bodystr))
         if self.headers.get('TE') is not None:
             self.headers.pop('TE')
-        print('username:{} password:{}'.format(self.form_data['L_username'], self.form_data['L_password']))
+        logging.info('username:{} password:{} verify code:{}'.format(self.form_data['L_username'],
+                                                                     self.form_data['L_password'], res))
         #准备好了数据 按 登录 按钮
-        logging.info('请求下一个网页self.user_dll_url：{}'.format(self.user_dll_url))
+        logging.info('请求登录网页self.user_dll_url：{}'.format(self.user_dll_url))
         yield scrapy.Request(url=self.user_dll_url, method='POST', body=bodystr,
                              callback=self.login_parse, headers=self.headers, dont_filter=True)
     #登录结果分析，登录结果中添加了 cookie XSQHUserName
@@ -165,7 +163,7 @@ class JuniorQhSpider(scrapy.Spider):
         if response.headers.get('Set-Cookie') is None:
             logging.info('login fail')
             #再次请求一个验证码
-            print('try to get another yanzhengma')
+            logging.info('try to get another verify code')
             self.headers['Referer'] = self.user_dll_url
             self.headers['Accept'] = 'image/avif,image/webp,*/*'
             self.headers['Sec-Fetch-Dest'] = 'image'
@@ -188,7 +186,7 @@ class JuniorQhSpider(scrapy.Spider):
         logging.info('login success')
         ckie = response.headers['Set-Cookie']
         if str(ckie).find('XSQHUserName') < 0:
-            logging.info('login fail too.')
+            logging.info('login fail too. not found cookie:XSQHUserName')
             return
         fdf = str(ckie).split(';')
         # 只需要有用的值
@@ -199,7 +197,7 @@ class JuniorQhSpider(scrapy.Spider):
         # https://wsemal.com/CZBM/JW/JW_ZSBM.aspx
         #找到请求的下一个网页
         zsbm = response.xpath('//script[contains(text(), "mainFrame") and contains(text(), "href")]/text()')
-        if zsbm is None:
+        if zsbm is None or len(zsbm) <= 0:
             logging.info('not found zxbm page')
             return
         zsbm_t = zsbm.get()
@@ -218,8 +216,6 @@ class JuniorQhSpider(scrapy.Spider):
             self.headers.pop('Content-Length')
         if self.headers.get('Sec-Fetch-User') is not None:
             self.headers.pop('Sec-Fetch-User')
-        if len(self.headers) != 13:
-            logging.info('login_parse 2 possible headers is not correct, length of headers is:{}'.format(len(self.headers)))
         # 从这个请求开始得到抢号的界面，没有开始的时候是其他界面
         self.zsbm_url = zsbm_url
         self.zsbm_headers = self.headers
@@ -251,6 +247,7 @@ class JuniorQhSpider(scrapy.Spider):
         spt = response.xpath('//script/text()')
         if spt is None or len(spt) <= 0:
             # 说明还没有到开始抢号的时间，重新进入
+            #判断是否是已经抢到号了
             time.sleep(0.1)
             yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
             return
@@ -261,7 +258,7 @@ class JuniorQhSpider(scrapy.Spider):
             yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
             return
         str_all = re.findall(r"href=\'(.+?)\';", spt_t)
-        if str_all is None:
+        if str_all is None or len(str_all) <= 0:
             return
         #这个是模拟抢号之前的代码
         #xsbmxz1_url = urljoin(response.url, str_all[0])
@@ -338,7 +335,7 @@ class JuniorQhSpider(scrapy.Spider):
 
         #再要获取下一个请求的url
         action_url = response.xpath('//body/form[@id="form1" and @method="post"]/@action')
-        if action_url is None:
+        if action_url is None or len(action_url) <= 0:
             return
         action_url_t = action_url.extract()[0]
         # https://wsemal.com/CZBM/JW/JW_ZSBM1.aspx?TT=2023%2f6%2f17+8%3a30%3a00&PC=%u7b2c%u4e00%u6279%u6b21(A%u8f6e)
@@ -361,8 +358,6 @@ class JuniorQhSpider(scrapy.Spider):
         form_data = {}
         form_data['ScriptManager1'] = 'UpdatePanel3|DropDownListQHXX'
         form_data['__EVENTTARGET'] = 'DropDownListQHXX'
-        #self.form_data['ScriptManager1'] = 'UpdatePanel3|ButtonOK'
-        #self.form_data['__EVENTTARGET'] = ''
         form_data['__LASTFOCUS'] = ''
         form_data['__ASYNCPOST'] = 'true'
         #self.form_data['ButtonOK'] = '提交申请'
@@ -384,7 +379,7 @@ class JuniorQhSpider(scrapy.Spider):
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
         #self.headers['Content-Length'] = '{}'.format(len(bodystr))
 
-        logging.info('请求下一个网页action_url_full：{}'.format(action_url_full))
+        logging.info('submit information action_url_full：{}'.format(action_url_full))
         logging.info('length:{} bodystr:{}'.format(len(bodystr), bodystr))
         yield scrapy.Request(url=action_url_full, method='POST', body=bodystr, callback=self.post_zsbm1_parse,
                              headers=self.headers, dont_filter=True)
