@@ -140,8 +140,8 @@ class JuniorQhSpider(scrapy.Spider):
         self.headers['Sec-Fetch-User'] = '?1'
 
         #现在使用用户名，密码，验证码登录
-        self.form_data['L_username'] = '500237201011301419'
-        self.form_data['L_password'] = 'a201025Q'
+        self.form_data['L_username'] = '500237201012240021'
+        self.form_data['L_password'] = 'hm240021'
         self.form_data['L_YZM'] = res
         self.form_data['Button1'] = '登录'
         bodystr = urlencode(self.form_data)
@@ -246,12 +246,35 @@ class JuniorQhSpider(scrapy.Spider):
         # 它的参数需要解析出来才行
         spt = response.xpath('//script/text()')
         if spt is None or len(spt) <= 0:
-            # 说明还没有到开始抢号的时间，重新进入
-            #判断是否是已经抢到号了
+            #判断是否是已经抢到号，抢到号了就不需要再请求数据了
+            zsjl = response.xpath('//center/table/tr')
+            if zsjl is None or len(zsjl) < 0:
+                return
+            for j in zsjl:
+                tds = j.xpath('./td')
+                if tds is None or len(tds) <= 0:
+                    return
+                if len(tds) != 2:
+                    continue
+                a = tds[0].xpath('./text()').get()
+                record = tds[1].xpath('./text()').get()
+                if a.find('正式记录') >= 0 and record.find('IP') >= 0:
+                    logging.info('已经抢到号了，记录为:{}'.format(record))
+                    return
+            #没有抢到号继续请求
             time.sleep(0.1)
             yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
             return
         spt_t = spt.extract()[0]
+        #返回的是报名须知
+        if spt_t.find('JW_XSBMXZ1.aspx') >= 0:
+            str_all = re.findall(r"location=\'(.+?)\'", spt_t)
+            if str_all is None or len(str_all) <= 0:
+                return
+            XSBMXZ1_url = urljoin(response.url, str_all[0])
+            yield scrapy.Request(url=XSBMXZ1_url, callback=self.XSBMXZ1_parse, headers=self.headers, dont_filter=True)
+            return
+        # 有可能为 'alert(\'未开放报名权限！\');'
         if spt_t.find('JW_ZSBM1.aspx') < 0:
             #说明还没有到开始抢号的时间，重新进入
             time.sleep(0.1)
@@ -260,11 +283,6 @@ class JuniorQhSpider(scrapy.Spider):
         str_all = re.findall(r"href=\'(.+?)\';", spt_t)
         if str_all is None or len(str_all) <= 0:
             return
-        #这个是模拟抢号之前的代码
-        #xsbmxz1_url = urljoin(response.url, str_all[0])
-        #print('请求下一个网页：{}'.format(xsbmxz1_url))
-        #yield scrapy.Request(url=xsbmxz1_url, callback=self.XSBMXZ1_parse, headers=self.headers, dont_filter=True)
-
         zsbm1_url = urljoin(response.url, str_all[0])
         logging.info('请求下一个网页zsbm1_url：{}'.format(zsbm1_url))
         yield scrapy.Request(url=zsbm1_url, callback=self.ZSBM1_parse, headers=self.headers, dont_filter=True)
@@ -426,7 +444,6 @@ class JuniorQhSpider(scrapy.Spider):
     def button_ok_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
-        print(response.text)
 
     #公告的时候是返回的这个
     def XSBMXZ1_parse(self, response):
@@ -437,10 +454,4 @@ class JuniorQhSpider(scrapy.Spider):
         # https://wsemal.com/CZBM/JW/JW_ZSBM.aspx?FS=YES
         next_url = urljoin(response.url, '../JW/JW_ZSBM.aspx?FS=YES')
         self.headers['Sec-Fetch-User'] = '?1'
-        return #当前已经结束
-        yield scrapy.Request(url=next_url, callback=self.ZSBM_FS_YES_parse, headers=self.headers, dont_filter=True)
-    def ZSBM_FS_YES_parse(self, response):
-        logging.info('response.url:{}'.format(response.url))
-        logging.info(response.text)
-        with open('JW_ZSBM_FS_YES.body.html',  encoding=response.encoding, mode='w') as f:
-            f.write(response.body)
+        yield scrapy.Request(url=next_url, callback=self.ZSBM_parse, headers=self.headers, dont_filter=True)
