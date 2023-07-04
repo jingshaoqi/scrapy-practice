@@ -1,0 +1,176 @@
+GET https://wsemal.com/CZBM/JW/JW_iframe.aspx?FS=CC HTTP/1.1
+Host: wsemal.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: none
+Sec-Fetch-User: ?1
+
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Content-Type: text/html; charset=utf-8
+Vary: Accept-Encoding
+Server: Microsoft-IIS/10.0
+Set-Cookie: ASP.NET_SessionId=0uxarijexk3jhdcj0xknwwbh; path=/; HttpOnly
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Set-Cookie: ARRAffinity=f119449f46dcef9bd5860a934b5295fe0a7cdf19ef369ded63982f197791bcee;Path=/;Domain=wsemal.com
+X-Powered-By: ARR/3.0
+X-Powered-By: ASP.NET
+Date: Tue, 04 Jul 2023 04:15:30 GMT
+Content-Length: 5391
+
+
+
+GET https://wsemal.com/CZBM/JW/JW_UserDL.aspx HTTP/1.1
+Host: wsemal.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate, br
+Referer: https://wsemal.com/CZBM/JW/JW_iframe.aspx?FS=CC
+Connection: keep-alive
+Cookie: ASP.NET_SessionId=0uxarijexk3jhdcj0xknwwbh; ARRAffinity=f119449f46dcef9bd5860a934b5295fe0a7cdf19ef369ded63982f197791bcee
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: iframe
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Content-Type: text/html; charset=utf-8
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Server: Microsoft-IIS/10.0
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+X-Powered-By: ARR/3.0
+X-Powered-By: ASP.NET
+Date: Tue, 04 Jul 2023 04:15:30 GMT
+Content-Length: 5809
+
+GET https://wsemal.com/CZBM/public/checkcode.aspx HTTP/1.1
+Host: wsemal.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0
+Accept: image/avif,image/webp,*/*
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate, br
+Referer: https://wsemal.com/CZBM/JW/JW_UserDL.aspx
+Connection: keep-alive
+Cookie: ASP.NET_SessionId=0uxarijexk3jhdcj0xknwwbh; ARRAffinity=f119449f46dcef9bd5860a934b5295fe0a7cdf19ef369ded63982f197791bcee
+Sec-Fetch-Dest: image
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Site: same-origin
+
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Content-Type: image/Gif; charset=utf-8
+Server: Microsoft-IIS/10.0
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+X-Powered-By: ARR/3.0
+X-Powered-By: ASP.NET
+Date: Tue, 04 Jul 2023 04:15:30 GMT
+Content-Length: 2050
+
+
+POST https://wsemal.com/CZBM/JW/JW_UserDL.aspx HTTP/1.1
+Host: wsemal.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate, br
+Referer: https://wsemal.com/CZBM/JW/JW_UserDL.aspx
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 7345
+Origin: https://wsemal.com
+Connection: keep-alive
+Cookie: ASP.NET_SessionId=0uxarijexk3jhdcj0xknwwbh; ARRAffinity=f119449f46dcef9bd5860a934b5295fe0a7cdf19ef369ded63982f197791bcee
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: iframe
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Content-Type: text/html; charset=utf-8
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Server: Microsoft-IIS/10.0
+Set-Cookie: XSQHUserName=B%2f6ZDasDh2frxUFLxf0IgKQxru831H0K; expires=Tue, 11-Jul-2023 04:16:03 GMT; path=/
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+X-Powered-By: ARR/3.0
+X-Powered-By: ASP.NET
+Date: Tue, 04 Jul 2023 04:15:50 GMT
+Content-Length: 5928
+
+
+GET https://wsemal.com/CZBM/JW/JW_ZSBM.aspx HTTP/1.1
+Host: wsemal.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate, br
+Referer: https://wsemal.com/CZBM/JW/JW_UserDL.aspx
+Connection: keep-alive
+Cookie: ASP.NET_SessionId=0uxarijexk3jhdcj0xknwwbh; ARRAffinity=f119449f46dcef9bd5860a934b5295fe0a7cdf19ef369ded63982f197791bcee; XSQHUserName=B%2f6ZDasDh2frxUFLxf0IgKQxru831H0K
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: iframe
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Content-Type: text/html; charset=utf-8
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Server: Microsoft-IIS/10.0
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+X-Powered-By: ARR/3.0
+X-Powered-By: ASP.NET
+Date: Tue, 04 Jul 2023 04:15:50 GMT
+Content-Length: 796
+
+
+GET https://wsemal.com/CZBM/JW/JW_XSBMXZ1.aspx HTTP/1.1
+Host: wsemal.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate, br
+Referer: https://wsemal.com/CZBM/JW/JW_ZSBM.aspx
+Connection: keep-alive
+Cookie: ASP.NET_SessionId=0uxarijexk3jhdcj0xknwwbh; ARRAffinity=f119449f46dcef9bd5860a934b5295fe0a7cdf19ef369ded63982f197791bcee; XSQHUserName=B%2f6ZDasDh2frxUFLxf0IgKQxru831H0K
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: iframe
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Content-Type: text/html; charset=utf-8
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Server: Microsoft-IIS/10.0
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+X-Powered-By: ARR/3.0
+X-Powered-By: ASP.NET
+Date: Tue, 04 Jul 2023 04:15:50 GMT
+Content-Length: 16028
+
+
