@@ -27,8 +27,10 @@ class JuniorQhSpider(scrapy.Spider):
     zsbm_headers={}
     yzm_url_full='' #保存验证码的url
     def start_requests(self):
+        headers = {'Sec-Fetch-User': '?1',
+                   'Upgrade-Insecure-Requests': '1'}
         for url in self.start_urls:
-            yield scrapy.Request(url=url, callback=self.parse, dont_filter=True)
+            yield scrapy.Request(url=url, callback=self.parse, headers=headers, dont_filter=True)
 
     def parse(self, response):
         logging.info('response.url:{}'.format(response.url))
@@ -41,7 +43,10 @@ class JuniorQhSpider(scrapy.Spider):
         # https://wsemal.com/CZBM/JW/JW_UserDL.aspx
         main_frm_url_full = urljoin(response.url, main_frm_url)
         logging.info(main_frm_url_full)
-        headers = {'Referer': response.url}
+        headers = {'Referer': response.url,
+                   'Sec-Fetch-Dest': 'iframe',
+                   'Sec-Fetch-Site': 'same-origin',
+                   'Upgrade-Insecure-Requests': '1'}
         self.user_dll_url = main_frm_url_full #https://wsemal.com/CZBM/JW/JW_UserDL.aspx
         yield scrapy.Request(url=main_frm_url_full, callback=self.main_parse, headers=headers, dont_filter=True)
 
@@ -96,7 +101,6 @@ class JuniorQhSpider(scrapy.Spider):
                    'Sec-Fetch-Dest': 'iframe',
                    'Sec-Fetch-Mode': 'navigate',
                    'Sec-Fetch-Site': 'same-origin',
-                   'TE': 'trailers',
                    'Sec-Fetch-User': '?1',
                    'Content-Type': 'application/x-www-form-urlencoded'}
 
@@ -124,8 +128,7 @@ class JuniorQhSpider(scrapy.Spider):
                        'Accept': 'image/avif,image/webp,*/*',
                        'Sec-Fetch-Dest': 'image',
                        'Sec-Fetch-Mode': 'no-cors',
-                       'Sec-Fetch-Site': 'same-origin',
-                       'TE': 'trailers'}
+                       'Sec-Fetch-Site': 'same-origin'}
             yield scrapy.Request(url=self.yzm_url_full, callback=self.yzm_parse, headers=headers, dont_filter=True)
             return
         logging.info('login success')
@@ -145,7 +148,7 @@ class JuniorQhSpider(scrapy.Spider):
             return
         zsbm_ur = zsbm_res[0] # ../JW/JW_ZSBM.aspx
         zsbm_url = urljoin(response.url, zsbm_ur) # 'https://wsemal.com/CZBM/JW/JW_ZSBM.aspx'
-        print('请求下一个网页zsbm_url：{}'.format(zsbm_url))
+        logging.info('请求下一个网页zsbm_url：{}'.format(zsbm_url))
         # 从这个请求开始得到抢号的界面，没有开始的时候是其他界面
         self.zsbm_url = zsbm_url
         # 添加一个等待时间控制
@@ -164,11 +167,23 @@ class JuniorQhSpider(scrapy.Spider):
                     wt = 0
                 time.sleep(wt_delta)
                 wt += wt_delta
-        yield scrapy.Request(url=zsbm_url, callback=self.ZSBM_parse, dont_filter=True)
+        headers = {'Origin': 'https://wsemal.com',
+                   'Sec-Fetch-Dest': 'iframe',
+                   'Sec-Fetch-Mode': 'navigate',
+                   'Sec-Fetch-Site': 'same-origin',
+                   'Upgrade-Insecure-Requests': '1'
+                   }
+        yield scrapy.Request(url=zsbm_url, callback=self.ZSBM_parse, headers=headers, dont_filter=True)
 
     def ZSBM_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
+        headers = {'Origin': 'https://wsemal.com',
+                   'Sec-Fetch-Dest': 'iframe',
+                   'Sec-Fetch-Mode': 'navigate',
+                   'Sec-Fetch-Site': 'same-origin',
+                   'Upgrade-Insecure-Requests': '1'
+                   }
         # https://wsemal.com/CZBM/JW/JW_UserDL.aspx
         #再进入 https://wsemal.com/CZBM/JW/JW_XSBMXZ1.aspx
         # 它的参数需要解析出来才行
@@ -191,7 +206,7 @@ class JuniorQhSpider(scrapy.Spider):
                     return
             #没有抢到号继续请求
             time.sleep(0.1)
-            yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, dont_filter=True)
+            yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=headers, dont_filter=True)
             return
         spt_t = spt.extract()[0]
         #返回的是报名须知
@@ -200,29 +215,34 @@ class JuniorQhSpider(scrapy.Spider):
             if str_all is None or len(str_all) <= 0:
                 return
             XSBMXZ1_url = urljoin(response.url, str_all[0])
-            yield scrapy.Request(url=XSBMXZ1_url, callback=self.XSBMXZ1_parse, dont_filter=True)
+            yield scrapy.Request(url=XSBMXZ1_url, callback=self.XSBMXZ1_parse, headers=headers, dont_filter=True)
             return
         # 有可能为 'alert(\'未开放报名权限！\');'
         if spt_t.find('JW_ZSBM1.aspx') < 0:
             #说明还没有到开始抢号的时间，重新进入
             time.sleep(0.1)
-            yield scrapy.Request(url=response.url, callback=self.ZSBM_parse,  dont_filter=True)
+            yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=headers,  dont_filter=True)
             return
         str_all = re.findall(r"href=\'(.+?)\';", spt_t)
         if str_all is None or len(str_all) <= 0:
             return
         zsbm1_url = urljoin(response.url, str_all[0])
         logging.info('请求下一个网页zsbm1_url：{}'.format(zsbm1_url))
-        yield scrapy.Request(url=zsbm1_url, callback=self.ZSBM1_parse,  dont_filter=True)
+        yield scrapy.Request(url=zsbm1_url, callback=self.ZSBM1_parse, headers=headers, dont_filter=True)
 
     def ZSBM1_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
+        headers = {'Origin': 'https://wsemal.com',
+                   'Sec-Fetch-Dest': 'iframe',
+                   'Sec-Fetch-Mode': 'navigate',
+                   'Sec-Fetch-Site': 'same-origin'
+                   }
         #a判断状态是否在进行中
         zt = response.xpath('//span[@id="Label_ZT"]/text()')
         if zt is None or len(zt) <= 0 or zt.get().find("进行中") < 0:
             time.sleep(0.1)
-            yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, dont_filter=True)
+            yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=headers, dont_filter=True)
             return
         #解析响应中有用的数据
 
@@ -295,7 +315,8 @@ class JuniorQhSpider(scrapy.Spider):
                    'Sec-Fetch-Dest': 'empty',
                    'Sec-Fetch-Mode': 'cors',
                    'Sec-Fetch-Site': 'same-origin',
-                   'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
+                   'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+                   'TE': 'trailers'}
         # 修改请求的数据 在实际的浏览器中测试分两次进行，一次是展开下拉列表，第二次是按提交按钮，
         form_data = {}
         form_data['ScriptManager1'] = 'UpdatePanel3|DropDownListQHXX'
@@ -352,10 +373,12 @@ class JuniorQhSpider(scrapy.Spider):
                    'Sec-Fetch-Dest': 'empty',
                    'Sec-Fetch-Mode': 'cors',
                    'Sec-Fetch-Site': 'same-origin',
-                   'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
+                   'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+                   'TE': 'trailers'}
         logging.info('请求下一个网页response.url：{}'.format(response.url))
         logging.info('length:{} bodystr:{}'.format(len(bodystr), bodystr))
-        yield scrapy.Request(url=response.url, method='POST', body=bodystr, callback=self.post2_zsbm1_parse,
+        next_url = response.url
+        yield scrapy.Request(url=next_url, method='POST', body=bodystr, callback=self.post2_zsbm1_parse,
                              headers=headers, dont_filter=True)
 
     def post2_zsbm1_parse(self, response):
@@ -386,4 +409,11 @@ class JuniorQhSpider(scrapy.Spider):
         # https://wsemal.com/CZBM/JW/JW_XSBMXZ1.aspx
         # https://wsemal.com/CZBM/JW/JW_ZSBM.aspx?FS=YES
         next_url = urljoin(response.url, '../JW/JW_ZSBM.aspx?FS=YES')
-        yield scrapy.Request(url=next_url, callback=self.ZSBM_parse,  dont_filter=True)
+        headers = {'Origin': 'https://wsemal.com',
+                   'Sec-Fetch-Dest': 'iframe',
+                   'Sec-Fetch-Mode': 'navigate',
+                   'Sec-Fetch-Site': 'same-origin',
+                   'Upgrade-Insecure-Requests': '1',
+                   'Sec-Fetch-User': '?1'
+                   }
+        yield scrapy.Request(url=next_url, callback=self.ZSBM_parse, headers=headers, dont_filter=True)

@@ -8,3 +8,11 @@ http://192.168.2.106:8023/JW_ZSBM.aspx.html
 http://192.168.2.106:8023/login_res.html
 http://192.168.2.106:8023/yan_zheng_ma.jpg
 http://192.168.2.106:8023/
+
+
+http://192.168.2.104:8023/JW_ZSBM_FS_YES.aspx.html
+http://192.168.2.104:8023/JW_ZSBM1.aspx.html
+http://192.168.2.104:8023/post_zsbm1_parse.aspx.html
+http://192.168.2.104:8023/post2_zsbm1.aspx.html
+
+https://wsemal.com/CZBM/JW/JW_ZSBM.aspx
