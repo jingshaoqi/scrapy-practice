@@ -18,10 +18,10 @@ class JuniorQhSpider(scrapy.Spider):
     user_dll_url = ''
     school_code = ''
     grab_time_n = datetime.now()
-    grab_time_str = '2023-7-15 22:05:00 000000'
+    grab_time_str = '2023-7-8 14:30:00 000000'
     L_username = '500237201010221601'
     L_password = 'Mayao911162'
-    first_school = '巫山二中'
+    first_school = '巫山初中'
     second_school = '巫山二中'
     form_data = {'__EVENTTARGET': '',
                  '__EVENTARGUMENT': '',
