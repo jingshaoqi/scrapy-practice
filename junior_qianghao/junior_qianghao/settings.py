@@ -68,7 +68,7 @@ DEFAULT_REQUEST_HEADERS = {
 #}
 
 RETRY_ENABLED = True
-#RETRY_TIMES = 15
+RETRY_TIMES = 15
 # 下面这行可要可不要
 #RETRY_HTTP_CODES = [500, 502, 503, 504, 408]
 # Enable or disable extensions

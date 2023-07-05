@@ -1,5 +1,5 @@
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import re
 from urllib.parse import urlencode
@@ -17,6 +17,12 @@ class JuniorQhSpider(scrapy.Spider):
     start_urls = ["https://wsemal.com/CZBM/JW/JW_iframe.aspx?FS=CC"]
     user_dll_url = ''
     school_code = ''
+    grab_time_n = datetime.now()
+    grab_time_str = '2023-7-15 22:05:00 000000'
+    L_username = '500237201010221601'
+    L_password = 'Mayao911162'
+    first_school = '巫山二中'
+    second_school = '巫山二中'
     form_data = {'__EVENTTARGET': '',
                  '__EVENTARGUMENT': '',
                  '__VIEWSTATE': '',
@@ -27,6 +33,7 @@ class JuniorQhSpider(scrapy.Spider):
     zsbm_headers={}
     yzm_url_full='' #保存验证码的url
     def start_requests(self):
+        self.grab_time_n = datetime.strptime(self.grab_time_str, '%Y-%m-%d %H:%M:%S %f')
         headers = {'Sec-Fetch-User': '?1',
                    'Upgrade-Insecure-Requests': '1'}
         for url in self.start_urls:
@@ -105,8 +112,8 @@ class JuniorQhSpider(scrapy.Spider):
                    'Content-Type': 'application/x-www-form-urlencoded'}
 
         #现在使用用户名，密码，验证码登录
-        self.form_data['L_username'] = '500237201011301419'
-        self.form_data['L_password'] = 'a201025Q'
+        self.form_data['L_username'] = self.L_username
+        self.form_data['L_password'] = self.L_password
         self.form_data['L_YZM'] = res
         self.form_data['Button1'] = '登录'
         bodystr = urlencode(self.form_data)
@@ -151,22 +158,6 @@ class JuniorQhSpider(scrapy.Spider):
         logging.info('请求下一个网页zsbm_url：{}'.format(zsbm_url))
         # 从这个请求开始得到抢号的界面，没有开始的时候是其他界面
         self.zsbm_url = zsbm_url
-        # 添加一个等待时间控制
-        desttime = '2023-7-2 8:30:00 000000'
-        a2time = datetime.strptime(desttime, '%Y-%m-%d %H:%M:%S %f')
-        wt = 0
-        wt_delta = 0.01
-        while 1:
-            localtm = datetime.now()
-            if localtm >= a2time:
-                break
-            else:
-                if wt >= 1:
-                    dt = a2time - localtm
-                    print('left time:{}'.format(dt))
-                    wt = 0
-                time.sleep(wt_delta)
-                wt += wt_delta
         headers = {'Origin': 'https://wsemal.com',
                    'Sec-Fetch-Dest': 'iframe',
                    'Sec-Fetch-Mode': 'navigate',
@@ -220,7 +211,19 @@ class JuniorQhSpider(scrapy.Spider):
         # 有可能为 'alert(\'未开放报名权限！\');'
         if spt_t.find('JW_ZSBM1.aspx') < 0:
             #说明还没有到开始抢号的时间，重新进入
-            time.sleep(0.1)
+            localtm = datetime.now()
+            if localtm < self.grab_time_n:
+                df = self.grab_time_n - localtm
+                n = df.total_seconds()
+                if n > 300:
+                    self.sleep_time(250)
+                    tm = datetime.now() - localtm
+                    print('cost time:{}'.format(tm.total_seconds()))
+                else:
+                    self.sleep_time(n)
+            else:
+                time.sleep(0.1)
+            headers['Referer'] = self.user_dll_url
             yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=headers,  dont_filter=True)
             return
         str_all = re.findall(r"href=\'(.+?)\';", spt_t)
@@ -246,7 +249,7 @@ class JuniorQhSpider(scrapy.Spider):
             return
         #解析响应中有用的数据
 
-        select_school_name = '巫山二中'
+        select_school_name = self.first_school
         #判断选择的学校是否已经满了
         ful_sch = response.xpath('//div[@id="UpdatePanel2"]/table/tr')
         choose_suc = 0
@@ -263,8 +266,11 @@ class JuniorQhSpider(scrapy.Spider):
                 choose_suc = 1
             break
         if choose_suc == 0:
+            if len(self.second_school) <= 0 or self.second_school == self.first_school:
+                logging.info('cant find suitable school:{}'.format(select_school_name))
+                return
             #再次选择
-            select_school_name = '巫山二中'
+            select_school_name = self.second_school
             for y in ful_sch:
                 tds = y.xpath('./td/text()')
                 if len(tds) < 6:
@@ -417,3 +423,19 @@ class JuniorQhSpider(scrapy.Spider):
                    'Sec-Fetch-User': '?1'
                    }
         yield scrapy.Request(url=next_url, callback=self.ZSBM_parse, headers=headers, dont_filter=True)
+
+    def sleep_time(self, total_seconds):
+        localtm = datetime.now()
+        wt = 0
+        wt_delta = 0.01
+        while 1:
+            curtm = datetime.now()
+            if curtm > localtm + timedelta(seconds=total_seconds):
+                break
+            else:
+                if wt >= 1:
+                    dt = self.grab_time_n - curtm
+                    print('left time:{}'.format(dt))
+                    wt = 0
+                time.sleep(wt_delta)
+                wt += wt_delta
