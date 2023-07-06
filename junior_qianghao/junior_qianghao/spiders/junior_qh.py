@@ -23,6 +23,7 @@ class JuniorQhSpider(scrapy.Spider):
     L_password = 'Mayao911162'
     first_school = '巫山初中'
     second_school = '巫山二中'
+    student_name = '马琳琳'
     form_data = {'__EVENTTARGET': '',
                  '__EVENTARGUMENT': '',
                  '__VIEWSTATE': '',
@@ -33,6 +34,9 @@ class JuniorQhSpider(scrapy.Spider):
     zsbm_headers={}
     yzm_url_full='' #保存验证码的url
     def start_requests(self):
+        logging.info('account:{} password:{} name:{} [{},{}]'.format(self.L_username, self.L_password,
+                                                                     self.student_name,
+                                                                     self.first_school, self.second_school))
         self.grab_time_n = datetime.strptime(self.grab_time_str, '%Y-%m-%d %H:%M:%S %f')
         headers = {'Sec-Fetch-User': '?1',
                    'Upgrade-Insecure-Requests': '1'}
