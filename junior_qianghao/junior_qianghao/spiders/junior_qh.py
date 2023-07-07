@@ -46,6 +46,10 @@ class JuniorQhSpider(scrapy.Spider):
     def parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
+        if response.text.find('重新登录') >= 0:
+            logging.info('重新登录网页')
+            self.re_login()
+            return
         # find mainframe
         main_frm = response.xpath('//tr/td/div/iframe[@id="mainFrame"]/@src')
         if main_frm is None or len(main_frm) <= 0:
@@ -64,6 +68,10 @@ class JuniorQhSpider(scrapy.Spider):
     def main_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
+        if response.text.find('重新登录') >= 0:
+            logging.info('重新登录网页')
+            self.re_login()
+            return
         # 现在来获取验证码的图片
         yzm_url = response.xpath('//table/tr/td/input[@id="ImageButtonYZM"]/@src')
         if yzm_url is None or len(yzm_url) <= 0:
@@ -131,6 +139,10 @@ class JuniorQhSpider(scrapy.Spider):
     def login_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
+        if response.text.find('重新登录') >= 0:
+            logging.info('重新登录网页')
+            self.re_login()
+            return
         # 获取cookie XSQHUserName的值
         if response.headers.get('Set-Cookie') is None:
             #再次请求一个验证码
@@ -173,6 +185,10 @@ class JuniorQhSpider(scrapy.Spider):
     def ZSBM_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
+        if response.text.find('重新登录') >= 0:
+            logging.info('重新登录网页')
+            self.re_login()
+            return
         headers = {'Origin': 'https://wsemal.com',
                    'Sec-Fetch-Dest': 'iframe',
                    'Sec-Fetch-Mode': 'navigate',
@@ -243,6 +259,10 @@ class JuniorQhSpider(scrapy.Spider):
     def ZSBM1_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
+        if response.text.find('重新登录') >= 0:
+            logging.info('重新登录网页')
+            self.re_login()
+            return
         headers = {'Origin': 'https://wsemal.com',
                    'Sec-Fetch-Dest': 'iframe',
                    'Sec-Fetch-Mode': 'navigate',
@@ -360,6 +380,10 @@ class JuniorQhSpider(scrapy.Spider):
     def post_zsbm1_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
+        if response.text.find('重新登录') >= 0:
+            logging.info('重新登录网页')
+            self.re_login()
+            return
         #再提交一次
         form_data = {}
         form_data['ScriptManager1'] = 'UpdatePanel3|ButtonOK'
@@ -396,6 +420,10 @@ class JuniorQhSpider(scrapy.Spider):
     def post2_zsbm1_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
+        if response.text.find('重新登录') >= 0:
+            logging.info('重新登录网页')
+            self.re_login()
+            return
         #如果成功抢到就停止运行
         if response.text.find('已成功报名') >= 0:
             return
@@ -413,11 +441,19 @@ class JuniorQhSpider(scrapy.Spider):
     def button_ok_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
+        if response.text.find('重新登录') >= 0:
+            logging.info('重新登录网页')
+            self.re_login()
+            return
 
     #公告的时候是返回的这个
     def XSBMXZ1_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
+        if response.text.find('重新登录') >= 0:
+            logging.info('重新登录网页')
+            self.re_login()
+            return
         # https://wsemal.com/CZBM/JW/JW_XSBMXZ1.aspx
         # https://wsemal.com/CZBM/JW/JW_ZSBM.aspx?FS=YES
         next_url = urljoin(response.url, '../JW/JW_ZSBM.aspx?FS=YES')
@@ -445,3 +481,9 @@ class JuniorQhSpider(scrapy.Spider):
                     wt = 0
                 time.sleep(wt_delta)
                 wt += wt_delta
+
+    def re_login(self):
+        headers = {'Sec-Fetch-User': '?1',
+                   'Upgrade-Insecure-Requests': '1'}
+        for url in self.start_urls:
+            yield scrapy.Request(url=url, callback=self.parse, headers=headers, dont_filter=True)
