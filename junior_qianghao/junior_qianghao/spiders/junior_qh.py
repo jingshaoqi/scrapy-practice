@@ -19,11 +19,11 @@ class JuniorQhSpider(scrapy.Spider):
     school_code = ''
     grab_time_n = datetime.now()
     grab_time_str = '2023-7-8 14:30:00 000000'
-    L_username = '500237201010221601'
-    L_password = 'Mayao911162'
-    first_school = '巫山初中'
-    second_school = '巫山二中'
-    student_name = '马琳琳'
+    L_username = '500237201012240021'
+    L_password = 'hm240021'
+    first_school = '巫峡初中'
+    second_school = '巫山初中'
+    student_name = '何萌'
     form_data = {'__EVENTTARGET': '',
                  '__EVENTARGUMENT': '',
                  '__VIEWSTATE': '',
@@ -215,18 +215,7 @@ class JuniorQhSpider(scrapy.Spider):
         # 有可能为 'alert(\'未开放报名权限！\');'
         if spt_t.find('JW_ZSBM1.aspx') < 0:
             #说明还没有到开始抢号的时间，重新进入
-            localtm = datetime.now()
-            if localtm < self.grab_time_n:
-                df = self.grab_time_n - localtm
-                n = df.total_seconds()
-                if n > 300:
-                    self.sleep_time(250)
-                    tm = datetime.now() - localtm
-                    print('cost time:{}'.format(tm.total_seconds()))
-                else:
-                    self.sleep_time(n)
-            else:
-                time.sleep(0.1)
+            self.sleep_suitable_time()
             headers['Referer'] = self.user_dll_url
             yield scrapy.Request(url=response.url, callback=self.ZSBM_parse, headers=headers,  dont_filter=True)
             return
@@ -236,6 +225,20 @@ class JuniorQhSpider(scrapy.Spider):
         zsbm1_url = urljoin(response.url, str_all[0])
         logging.info('请求下一个网页zsbm1_url：{}'.format(zsbm1_url))
         yield scrapy.Request(url=zsbm1_url, callback=self.ZSBM1_parse, headers=headers, dont_filter=True)
+
+    def sleep_suitable_time(self):
+        localtm = datetime.now()
+        if localtm < self.grab_time_n:
+            df = self.grab_time_n - localtm
+            n = df.total_seconds()
+            if n > 300:
+                self.sleep_time(250)
+                tm = datetime.now() - localtm
+                print('cost time:{}'.format(tm.total_seconds()))
+            else:
+                self.sleep_time(n)
+        else:
+            time.sleep(0.1)
 
     def ZSBM1_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
@@ -248,11 +251,9 @@ class JuniorQhSpider(scrapy.Spider):
         #a判断状态是否在进行中
         zt = response.xpath('//span[@id="Label_ZT"]/text()')
         if zt is None or len(zt) <= 0 or zt.get().find("进行中") < 0:
-            time.sleep(0.1)
+            self.sleep_suitable_time()
             yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=headers, dont_filter=True)
             return
-        #解析响应中有用的数据
-
         select_school_name = self.first_school
         #判断选择的学校是否已经满了
         ful_sch = response.xpath('//div[@id="UpdatePanel2"]/table/tr')
