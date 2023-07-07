@@ -252,6 +252,7 @@ class JuniorQhSpider(scrapy.Spider):
         zt = response.xpath('//span[@id="Label_ZT"]/text()')
         if zt is None or len(zt) <= 0 or zt.get().find("进行中") < 0:
             self.sleep_suitable_time()
+            headers['Referer'] = self.user_dll_url
             yield scrapy.Request(url=self.zsbm_url, callback=self.ZSBM_parse, headers=headers, dont_filter=True)
             return
         select_school_name = self.first_school
