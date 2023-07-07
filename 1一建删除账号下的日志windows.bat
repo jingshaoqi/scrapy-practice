@@ -29,3 +29,5 @@ cd ..
 cd junior_qianghao-tanyinhao
 del /F /Q logging.log
 cd ..
+
+pause
