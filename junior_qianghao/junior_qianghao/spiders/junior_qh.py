@@ -18,7 +18,7 @@ class JuniorQhSpider(scrapy.Spider):
     user_dll_url = ''
     school_code = ''
     grab_time_n = datetime.now()
-    grab_time_str = '2023-7-8 14:30:00 000000'
+    grab_time_str = '2023-7-8 9:00:00 000000'
     L_username = '500237201012240021'
     L_password = 'hm240021'
     first_school = '巫峡初中'
