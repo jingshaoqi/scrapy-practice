@@ -483,7 +483,8 @@ class JuniorQhSpider(scrapy.Spider):
                 wt += wt_delta
 
     def re_login(self):
-        headers = {'Sec-Fetch-User': '?1',
+        headers = {'Referer': '',
+                   'Sec-Fetch-User': '?1',
                    'Upgrade-Insecure-Requests': '1'}
         for url in self.start_urls:
             yield scrapy.Request(url=url, callback=self.parse, headers=headers, dont_filter=True)
