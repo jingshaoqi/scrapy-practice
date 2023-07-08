@@ -516,16 +516,16 @@ class JuniorQhSpider(scrapy.Spider):
 
     def sleep_time(self, total_seconds):
         localtm = datetime.now()
-        wt = 0
+        wt = 0.0
         wt_delta = 0.01
         while 1:
             curtm = datetime.now()
             if curtm > localtm + timedelta(seconds=total_seconds):
                 break
             else:
-                if wt >= 1:
+                if wt >= 1.0:
                     dt = self.grab_time_n - curtm
                     print('left time:{}'.format(dt))
-                    wt = 0
+                    wt = 0.0
                 time.sleep(wt_delta)
                 wt += wt_delta
