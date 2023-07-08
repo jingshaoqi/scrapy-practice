@@ -33,6 +33,18 @@ class JuniorQhSpider(scrapy.Spider):
     zsbm_url = ''
     zsbm_headers={}
     yzm_url_full='' #保存验证码的url
+
+    def __init__(self, start_time=None,L_username=None, L_password=None, first_school=None,
+                 second_school=None,student_name=None,
+                 *args, **kwargs):
+        super(JuniorQhSpider, self).__init__(*args, **kwargs)
+        self.grab_time_str = start_time
+        self.L_username = L_username
+        self.L_password = L_password
+        self.first_school = first_school
+        self.second_school = second_school
+        self.student_name = student_name
+
     def start_requests(self):
         logging.info('account:{} password:{} name:{} [{},{}]'.format(self.L_username, self.L_password,
                                                                      self.student_name,

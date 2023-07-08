@@ -1,110 +1,85 @@
 cd 'junior_qianghao-zhengmenghan'
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-scrapy crawl junior_qh
-pause
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
+scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500223201101127081" -a "L_password=Zmh666666" -a "first_school=巫山初中" -a "second_school=巫山初中" -a "student_name=郑梦涵"
