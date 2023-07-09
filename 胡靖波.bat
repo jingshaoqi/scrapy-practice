@@ -1,4 +1,4 @@
-cd junior_qianghao-hujingbo
+cd junior_qianghao
 scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500237201102121413" -a "L_password=H121413" -a "first_school=巫山二中" -a "second_school=巫山二中" -a "student_name=胡靖波"
 scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500237201102121413" -a "L_password=H121413" -a "first_school=巫山二中" -a "second_school=巫山二中" -a "student_name=胡靖波"
 scrapy crawl junior_qh -a "start_time=2023-7-8 14:30:00 000000" -a "L_username=500237201102121413" -a "L_password=H121413" -a "first_school=巫山二中" -a "second_school=巫山二中" -a "student_name=胡靖波"
