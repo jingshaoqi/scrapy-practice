@@ -76,11 +76,7 @@ class JuniorQhSpider(scrapy.Spider):
         logging.info(response.text)
         if response.text.find('重新登录') >= 0:
             logging.info('重新登录网页')
-            headers = {'Referer': '',
-                       'Sec-Fetch-User': '?1',
-                       'Upgrade-Insecure-Requests': '1'}
-            for url in self.start_urls:
-                yield scrapy.Request(url=url, callback=self.parse, headers=headers, dont_filter=True)
+            yield from self.re_login()
             return
         # find mainframe
         main_frm = response.xpath('//tr/td/div/iframe[@id="mainFrame"]/@src')
@@ -97,16 +93,19 @@ class JuniorQhSpider(scrapy.Spider):
         self.user_dll_url = main_frm_url_full #https://wsemal.com/CZBM/JW/JW_UserDL.aspx
         yield scrapy.Request(url=main_frm_url_full, callback=self.main_parse, headers=headers, dont_filter=True)
 
+    def re_login(self):
+        headers = {'Referer': '',
+                   'Sec-Fetch-User': '?1',
+                   'Upgrade-Insecure-Requests': '1'}
+        for url in self.start_urls:
+            yield scrapy.Request(url=url, callback=self.parse, headers=headers, dont_filter=True)
+
     def main_parse(self, response):
         logging.info('response.url:{}'.format(response.url))
         logging.info(response.text)
         if response.text.find('重新登录') >= 0:
             logging.info('重新登录网页')
-            headers = {'Referer': '',
-                       'Sec-Fetch-User': '?1',
-                       'Upgrade-Insecure-Requests': '1'}
-            for url in self.start_urls:
-                yield scrapy.Request(url=url, callback=self.parse, headers=headers, dont_filter=True)
+            yield from self.re_login()
             return
         # 现在来获取验证码的图片
         yzm_url = response.xpath('//table/tr/td/input[@id="ImageButtonYZM"]/@src')
@@ -174,11 +173,7 @@ class JuniorQhSpider(scrapy.Spider):
         logging.info(response.text)
         if response.text.find('重新登录') >= 0 or response.text.find('登录次数超过限定') >= 0:
             logging.info('重新登录网页')
-            headers = {'Referer': '',
-                       'Sec-Fetch-User': '?1',
-                       'Upgrade-Insecure-Requests': '1'}
-            for url in self.start_urls:
-                yield scrapy.Request(url=url, callback=self.parse, headers=headers, dont_filter=True)
+            yield from self.re_login()
             return
         # 获取cookie XSQHUserName的值
         if response.headers.get('Set-Cookie') is None:
@@ -224,11 +219,7 @@ class JuniorQhSpider(scrapy.Spider):
         logging.info(response.text)
         if response.text.find('重新登录') >= 0:
             logging.info('重新登录网页')
-            headers = {'Referer': '',
-                       'Sec-Fetch-User': '?1',
-                       'Upgrade-Insecure-Requests': '1'}
-            for url in self.start_urls:
-                yield scrapy.Request(url=url, callback=self.parse, headers=headers, dont_filter=True)
+            yield from self.re_login()
             return
         headers = {'Origin': 'https://wsemal.com',
                    'Sec-Fetch-Dest': 'iframe',
@@ -302,11 +293,7 @@ class JuniorQhSpider(scrapy.Spider):
         logging.info(response.text)
         if response.text.find('重新登录') >= 0:
             logging.info('重新登录网页')
-            headers = {'Referer': '',
-                       'Sec-Fetch-User': '?1',
-                       'Upgrade-Insecure-Requests': '1'}
-            for url in self.start_urls:
-                yield scrapy.Request(url=url, callback=self.parse, headers=headers, dont_filter=True)
+            yield from self.re_login()
             return
         headers = {'Origin': 'https://wsemal.com',
                    'Sec-Fetch-Dest': 'iframe',
@@ -427,11 +414,7 @@ class JuniorQhSpider(scrapy.Spider):
         logging.info(response.text)
         if response.text.find('重新登录') >= 0:
             logging.info('重新登录网页')
-            headers = {'Referer': '',
-                       'Sec-Fetch-User': '?1',
-                       'Upgrade-Insecure-Requests': '1'}
-            for url in self.start_urls:
-                yield scrapy.Request(url=url, callback=self.parse, headers=headers, dont_filter=True)
+            yield from self.re_login()
             return
         #服务器有时候会返回 errorpath需要处理一下
         # |dataItem||<script type="text/javascript">window.location="about:blank"</script>|60|pageRedirect||/CZBM/public/error.html?aspxerrorpath=/CZBM/JW/JW_ZSBM1.aspx|
@@ -473,11 +456,7 @@ class JuniorQhSpider(scrapy.Spider):
         logging.info(response.text)
         if response.text.find('重新登录') >= 0:
             logging.info('重新登录网页')
-            headers = {'Referer': '',
-                       'Sec-Fetch-User': '?1',
-                       'Upgrade-Insecure-Requests': '1'}
-            for url in self.start_urls:
-                yield scrapy.Request(url=url, callback=self.parse, headers=headers, dont_filter=True)
+            yield from self.re_login()
             return
         #如果成功抢到就停止运行
         if response.text.find('已成功报名') >= 0:
@@ -498,11 +477,7 @@ class JuniorQhSpider(scrapy.Spider):
         logging.info(response.text)
         if response.text.find('重新登录') >= 0:
             logging.info('重新登录网页')
-            headers = {'Referer': '',
-                       'Sec-Fetch-User': '?1',
-                       'Upgrade-Insecure-Requests': '1'}
-            for url in self.start_urls:
-                yield scrapy.Request(url=url, callback=self.parse, headers=headers, dont_filter=True)
+            yield from self.re_login()
             return
 
     #公告的时候是返回的这个
@@ -511,11 +486,7 @@ class JuniorQhSpider(scrapy.Spider):
         logging.info(response.text)
         if response.text.find('重新登录') >= 0:
             logging.info('重新登录网页')
-            headers = {'Referer': '',
-                       'Sec-Fetch-User': '?1',
-                       'Upgrade-Insecure-Requests': '1'}
-            for url in self.start_urls:
-                yield scrapy.Request(url=url, callback=self.parse, headers=headers, dont_filter=True)
+            yield from self.re_login()
             return
         # https://wsemal.com/CZBM/JW/JW_XSBMXZ1.aspx
         # https://wsemal.com/CZBM/JW/JW_ZSBM.aspx?FS=YES
