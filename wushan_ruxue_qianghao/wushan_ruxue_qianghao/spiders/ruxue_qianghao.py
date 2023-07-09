@@ -8,29 +8,58 @@ from datetime import datetime
 import logging
 import logging.config
 
-logging.basicConfig(filename='wushan_ruxue.log', level=logging.DEBUG, format='%(asctime)s %(funcName)s:%(lineno)d %(message)s',  encoding='utf-8', filemode='a')
-
+#logging.basicConfig(filename='logging.log', level=logging.DEBUG, format='%(asctime)s %(funcName)s:%(lineno)d %(message)s', encoding='utf-8', filemode='a')
 
 class RuxueQianghaoSpider(scrapy.Spider):
     name = 'ruxue_qianghao'
     allowed_domains = ['wsemal.com']
-    start_urls = ['https://wsemal.com/XQZS/JW/JW_iframe.aspx']
+    #start_urls = ['https://wsemal.com/XQZS/JW/JW_iframe.aspx']
+    start_urls = ['https://wwww.baidu.com']
     form_data = {'__EVENTTARGET': '',
                  '__EVENTARGUMENT': '',
                  '__VIEWSTATE': '',
                  '__VIEWSTATEGENERATOR': '',
                  '__EVENTVALIDATION': ''
                  }
-    TextBox_XM = '王文'
-    TextBox_SFZH = '500237198910319861'
-    TextBox_FJDZ = '重庆市巫山县高唐街道巫峡路132号2幢3单元1-2'
-    TextBox_JZDZ = '重庆市巫山县高唐街道巫峡路132号2幢3单元1-2'
-    TextBox_JFRXM = '王心'
-    TextBox_JFRSFZH = '50023719891031987X'
-    TextBox_TelePhone = '18967789689'
+    TextBox_XM = ''
+    TextBox_SFZH = ''
+    TextBox_FJDZ = '-2'
+    TextBox_JZDZ = '-2'
+    TextBox_JFRXM = ''
+    TextBox_JFRSFZH = ''
+    TextBox_TelePhone = ''
     jw_main_url = ''
     jw_main_url_referer = ''
     s_time = datetime.now()
+
+    def __init__(self, student_file=None, *args, **kwargs):
+        super(RuxueQianghaoSpider, self).__init__(*args, **kwargs)
+        stu_info = None
+        with open(student_file, mode='r', encoding='utf-8') as fs:
+            stu_info = json.load(fs)
+        self.TextBox_XM = stu_info['TextBox_XM']
+        self.TextBox_SFZH = stu_info['TextBox_SFZH']
+        self.TextBox_FJDZ = stu_info['TextBox_FJDZ']
+        self.TextBox_JFRXM = stu_info['TextBox_JFRXM']
+        self.TextBox_JFRSFZH = stu_info['TextBox_JFRSFZH']
+        self.TextBox_TelePhone = stu_info['TextBox_TelePhone']
+        self.TextBox_XM = stu_info['TextBox_XM']
+        log_path = '{}_{}.log'.format(self.TextBox_SFZH, self.TextBox_XM)
+        self.init_logging(log_path)
+
+    def init_logging(self, log_path):
+        logger = logging.getLogger()
+        # 创建日志格式，每个Handler格式可以不同
+        fh_formatter = logging.Formatter('%(asctime)s %(funcName)s:%(lineno)d %(message)s')
+        # 输出到文件的Handler
+        fh = logging.FileHandler(log_path)
+        fh.setLevel(logging.DEBUG)
+        fh.mode = 'a'
+        fh.encoding = 'utf-8'
+        # handler中使用日志格式
+        fh.setFormatter(fh_formatter)
+        # 向log文件添加Handler
+        logger.addHandler(fh)
 
     def start_requests(self):
         headers ={'Upgrade-Insecure-Requests': '1',
@@ -110,19 +139,21 @@ class RuxueQianghaoSpider(scrapy.Spider):
             # 提取formdata信息
         # 查看状态
         zt = response.xpath('//tr/td/span[@id="Label_ZT"]/text()')
-        if zt is not None:
-            zt_s = zt.get()
-            if zt_s.find('进行中') < 0:
-                #点击返回
-                logging.info('状态是:{}'.format(zt_s))
-                time.sleep(0.1)
-                headers = {'Referer': self.jw_main_url_referer,
-                           'Sec-Fetch-Dest': 'iframe',
-                           'Sec-Fetch-Mode': 'navigate',
-                           'Sec-Fetch-Site': 'same-origin',
-                           'Upgrade-Insecure-Requests': '1', }
-                yield scrapy.Request(url=self.jw_main_url, headers=headers, callback=self.JWmain, dont_filter=True)
-                return
+        if zt is  None or len(zt) <= 0:
+            logging.info('check code or response')
+            return
+        zt_s = zt.get()
+        if zt_s.find('进行中') < 0:
+            #点击返回
+            logging.info('状态是:{}'.format(zt_s))
+            time.sleep(0.05)
+            headers = {'Referer': self.jw_main_url_referer,
+                       'Sec-Fetch-Dest': 'iframe',
+                       'Sec-Fetch-Mode': 'navigate',
+                       'Sec-Fetch-Site': 'same-origin',
+                       'Upgrade-Insecure-Requests': '1', }
+            yield scrapy.Request(url=self.jw_main_url, headers=headers, callback=self.JWmain, dont_filter=True)
+
         self.form_data['ScriptManager1'] = 'UpdatePanelAA|LinkButtonSFZH'
         self.form_data['__EVENTTARGET'] = 'LinkButtonSFZH'
         self.form_data['__LASTFOCUS'] = ''
