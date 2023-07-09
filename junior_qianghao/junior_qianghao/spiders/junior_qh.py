@@ -9,7 +9,7 @@ import ddddocr
 import logging
 import logging.config
 
-logging.basicConfig(filename='logging.log', level=logging.DEBUG, format='%(asctime)s %(funcName)s:%(lineno)d %(message)s',  encoding='utf-8', filemode='a')
+#logging.basicConfig(filename='logging.log', level=logging.DEBUG, format='%(asctime)s %(funcName)s:%(lineno)d %(message)s',  encoding='utf-8', filemode='a')
 
 class JuniorQhSpider(scrapy.Spider):
     name = "junior_qh"
@@ -44,6 +44,22 @@ class JuniorQhSpider(scrapy.Spider):
         self.first_school = first_school
         self.second_school = second_school
         self.student_name = student_name
+        log_path = '{}_{}.log'.format(self.L_username, self.student_name)
+        self.init_logging(log_path)
+
+    def init_logging(self, log_path):
+        logger = logging.getLogger()
+        # 创建日志格式，每个Handler格式可以不同
+        fh_formatter = logging.Formatter('%(asctime)s %(funcName)s:%(lineno)d %(message)s')
+        # 输出到文件的Handler
+        fh = logging.FileHandler(log_path)
+        fh.setLevel(logging.DEBUG)
+        fh.mode = 'a'
+        fh.encoding = 'utf-8'
+        # handler中使用日志格式
+        fh.setFormatter(fh_formatter)
+        # 向log文件添加Handler
+        logger.addHandler(fh)
 
     def start_requests(self):
         logging.info('account:{} password:{} name:{} [{},{}]'.format(self.L_username, self.L_password,
@@ -126,9 +142,6 @@ class JuniorQhSpider(scrapy.Spider):
 
     # 解析验证码后按登录按钮
     def yzm_parse(self, response):
-        # 保存验证码图片
-        with open('yan_zheng_ma.jpg',  mode='wb') as f:
-            f.write(response.body)
         # 利用 ddddocr识别验证码
         ocr = ddddocr.DdddOcr()
         res = ocr.classification(response.body)
@@ -420,6 +433,8 @@ class JuniorQhSpider(scrapy.Spider):
             for url in self.start_urls:
                 yield scrapy.Request(url=url, callback=self.parse, headers=headers, dont_filter=True)
             return
+        #服务器有时候会返回 errorpath需要处理一下
+        # |dataItem||<script type="text/javascript">window.location="about:blank"</script>|60|pageRedirect||/CZBM/public/error.html?aspxerrorpath=/CZBM/JW/JW_ZSBM1.aspx|
         #再提交一次
         form_data = {}
         form_data['ScriptManager1'] = 'UpdatePanel3|ButtonOK'
