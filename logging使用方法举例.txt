@@ -1,0 +1,34 @@
+https://www.ziyouwu.com/archives/79529.html
+https://zhuanlan.zhihu.com/p/551588156
+import logging
+
+# 设置log保存路径
+log_path = f'example.log'
+# 创建logger
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+# 清空handler
+for p in logger.handlers:
+    logger.removeHandler(p)
+## 向log文件添加Handler
+# 创建日志格式，每个Handler格式可以不同
+fh_formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+# 输出到文件的Handler
+fh = logging.FileHandler(log_path)
+fh.setLevel(logging.DEBUG)
+# handler中使用日志格式
+fh.setFormatter(fh_formatter)
+# 向log文件添加Handler
+logger.addHandler(fh)
+
+# 再来一个Handler
+ch_formatter = logging.Formatter('%(message)s')
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+ch.setFormatter(ch_formatter)
+logger.addHandler(ch)
+
+# 写一些输出试试
+logging.debug('This message should go to the log file')
+logging.info('So should this')
+logging.warning('And this, too')
