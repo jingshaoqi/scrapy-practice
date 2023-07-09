@@ -10,11 +10,18 @@ import logging.config
 
 #logging.basicConfig(filename='logging.log', level=logging.DEBUG, format='%(asctime)s %(funcName)s:%(lineno)d %(message)s', encoding='utf-8', filemode='a')
 
+class sch_info:
+    start_time = None
+    full_url = ''
+    def __init__(self, start_time = None, full_url=None):
+        self.start_time = start_time
+        self.full_url = full_url
+
 class RuxueQianghaoSpider(scrapy.Spider):
     name = 'ruxue_qianghao'
     allowed_domains = ['wsemal.com']
     #start_urls = ['https://wsemal.com/XQZS/JW/JW_iframe.aspx']
-    start_urls = ['https://wwww.baidu.com']
+    start_urls = ['http://localhost:8023/garden/JW_iframe.aspx.html']
     form_data = {'__EVENTTARGET': '',
                  '__EVENTARGUMENT': '',
                  '__VIEWSTATE': '',
@@ -28,9 +35,11 @@ class RuxueQianghaoSpider(scrapy.Spider):
     TextBox_JFRXM = ''
     TextBox_JFRSFZH = ''
     TextBox_TelePhone = ''
-    jw_main_url = ''
-    jw_main_url_referer = ''
+    choose_schools = []
+    cur_school = ''
+    qh_rukou_url_full = ''
     s_time = datetime.now()
+    dict_sch = {}
 
     def __init__(self, student_file=None, *args, **kwargs):
         super(RuxueQianghaoSpider, self).__init__(*args, **kwargs)
@@ -40,10 +49,11 @@ class RuxueQianghaoSpider(scrapy.Spider):
         self.TextBox_XM = stu_info['TextBox_XM']
         self.TextBox_SFZH = stu_info['TextBox_SFZH']
         self.TextBox_FJDZ = stu_info['TextBox_FJDZ']
+        self.TextBox_JZDZ = stu_info['TextBox_JZDZ']
         self.TextBox_JFRXM = stu_info['TextBox_JFRXM']
         self.TextBox_JFRSFZH = stu_info['TextBox_JFRSFZH']
         self.TextBox_TelePhone = stu_info['TextBox_TelePhone']
-        self.TextBox_XM = stu_info['TextBox_XM']
+        self.choose_schools = stu_info['choose_schools']
         log_path = '{}_{}.log'.format(self.TextBox_SFZH, self.TextBox_XM)
         self.init_logging(log_path)
 
@@ -62,6 +72,7 @@ class RuxueQianghaoSpider(scrapy.Spider):
         logger.addHandler(fh)
 
     def start_requests(self):
+        logging.info('start requests')
         headers ={'Upgrade-Insecure-Requests': '1',
                   'Sec-Fetch-User': '?1'}
         for url in self.start_urls:
@@ -69,7 +80,6 @@ class RuxueQianghaoSpider(scrapy.Spider):
 
     def parse(self, response):
         logging.info(response.text)
-        #items = response.xpath('//iframe[contains(@src, "main")]/@src')
         items = response.xpath('//iframe[@id="mainFrame"]/@src')
         if items is None or len(items) <= 0:
             return
@@ -82,11 +92,8 @@ class RuxueQianghaoSpider(scrapy.Spider):
                    'Sec-Fetch-Site': 'same-origin',
                    'Upgrade-Insecure-Requests': '1',}
         # 这里保存发现还没开始的时候的请求url和头
-        self.jw_main_url = main_url
-        self.jw_main_url_referer = response.url
         # go to jw main.aspx web
         yield scrapy.Request(url=main_url, headers=headers, callback=self.JWmain, dont_filter=True)
-
 
     def JWmain(self, response):
         logging.info(response.text)
@@ -96,63 +103,66 @@ class RuxueQianghaoSpider(scrapy.Spider):
             itd = j.xpath('./td')
             if len(itd) < 7:
                 continue
-            school = itd[2].xpath('./text()')
-            school_t = school.get()
             # 巫峡幼儿园 机关幼儿园 平湖幼儿园 西坪幼儿园 白杨幼儿园 圣泉幼儿园 南峰小学附属幼儿园
-            if school_t.find('南峰小学') < 0:
+            school_name = itd[2].xpath('./text()').get() #学校名称
+            if school_name not in self.choose_schools:
                 continue
-            school_url = itd[6].xpath('./a/@href')
-            school_url_t = school_url.get()
-            # https://wsemal.com/XQZS/JW/JW_ZSBM1.aspx?XX=XQ001&ID=13&TT=2023/6/18^%^209:00:00
-            qh_rukou_url_full = urljoin(response.url, school_url_t)
-            # 输出请求的URL
-            logging.info('school_url_full:{}'.format(qh_rukou_url_full))
+            start_time = itd[4].xpath('./text()').get()  # 学校开始抢号
+            school_url = itd[6].xpath('./a/@href').get() #url
+            full_url = urljoin(response.url, school_url) # https://wsemal.com/XQZS/JW/JW_ZSBM1.aspx?XX=XQ001&ID=13&TT=2023/6/18^%^209:00:00
+            sch_info1 = sch_info(start_time, full_url)
+            self.dict_sch[school_name] = sch_info1
+        yield from self.deal_process()
 
-            # wait
-            desttime = '2023-6-28 9:00:00 000000'
-            a2time = datetime.strptime(desttime, '%Y-%m-%d %H:%M:%S %f')
-            wt = 0
-            wt_delta = 0.01
-            while 1:
-                localtm = datetime.now()
-                if localtm >= a2time:
-                    break
-                else:
-                    if wt >= 1:
-                        dt = a2time - localtm
-                        print('left time:{}'.format(dt))
-                        wt = 0
-                    time.sleep(wt_delta)
-                    wt += wt_delta
-            self.s_time = datetime.now()
-            headers = {'TE': 'trailers',
-                       'Sec-Fetch-Dest': 'iframe',
-                       'Sec-Fetch-Mode': 'navigate',
-                       'Sec-Fetch-Site': 'same-origin',
-                       'Upgrade-Insecure-Requests': '1', }
-            yield scrapy.Request(url=qh_rukou_url_full, headers=headers,
-                                 callback=self.qh_ru_kou_check, dont_filter=True) #添加身份证号验证
-            break
+    def deal_process(self):
+        if len(self.choose_schools) <= 0:
+            return
+        self.cur_school = self.choose_schools[0]
+        self.choose_schools.pop(0)
+        sch_info1 = self.dict_sch[self.cur_school]
+        dst_time = datetime.strptime(sch_info1.start_time, '%Y/%m/%d %H:%M:%S')#'2023/6/28 9:00:00 000000'
+        # wait
+        wt = 0
+        wt_delta = 0.01
+        while 1:
+            localtm = datetime.now()
+            if localtm >= dst_time:
+                break
+            else:
+                if wt >= 1:
+                    dt = dst_time - localtm
+                    print('left time:{}'.format(dt))
+                    wt = 0
+                time.sleep(wt_delta)
+                wt += wt_delta
 
+        self.qh_rukou_url_full = sch_info1.full_url
+        headers = {'TE': 'trailers',
+                   'Sec-Fetch-Dest': 'iframe',
+                   'Sec-Fetch-Mode': 'navigate',
+                   'Sec-Fetch-Site': 'same-origin',
+                   'Upgrade-Insecure-Requests': '1', }
+        yield scrapy.Request(url=self.qh_rukou_url_full, headers=headers,
+                             callback=self.qh_ru_kou_check, dont_filter=True)
     def qh_ru_kou_check(self, response):
         logging.info(response.text)
             # 提取formdata信息
-        # 查看状态
         zt = response.xpath('//tr/td/span[@id="Label_ZT"]/text()')
-        if zt is  None or len(zt) <= 0:
+        if zt is None or len(zt) <= 0:
             logging.info('check code or response')
             return
         zt_s = zt.get()
         if zt_s.find('进行中') < 0:
-            #点击返回
-            logging.info('状态是:{}'.format(zt_s))
-            time.sleep(0.05)
-            headers = {'Referer': self.jw_main_url_referer,
-                       'Sec-Fetch-Dest': 'iframe',
+            if zt_s.find('结束') >= 0 or zt_s.find('满') >= 0: #此学校已经结束就进入下一个页面
+                yield from self.deal_process()
+                return
+            time.sleep(0.05) #即将开始就等待
+            headers = {'Sec-Fetch-Dest': 'iframe',
                        'Sec-Fetch-Mode': 'navigate',
                        'Sec-Fetch-Site': 'same-origin',
                        'Upgrade-Insecure-Requests': '1', }
-            yield scrapy.Request(url=self.jw_main_url, headers=headers, callback=self.JWmain, dont_filter=True)
+            next_url = response.url
+            yield scrapy.Request(url=next_url, headers=headers, callback=self.qh_ru_kou_check, dont_filter=True)
 
         self.form_data['ScriptManager1'] = 'UpdatePanelAA|LinkButtonSFZH'
         self.form_data['__EVENTTARGET'] = 'LinkButtonSFZH'
@@ -239,13 +249,12 @@ class RuxueQianghaoSpider(scrapy.Spider):
         ind = response.text.find('抢注成功')
         if ind < 0:
             logging.info('抢注失败，再次请求')
-            headers = {'Referer': self.jw_main_url_referer,
-                       'TE': 'trailers',
+            headers = {'TE': 'trailers',
                        'Sec-Fetch-Dest': 'iframe',
                        'Sec-Fetch-Mode': 'navigate',
                        'Sec-Fetch-Site': 'same-origin',
                        'Upgrade-Insecure-Requests': '1', }
-            yield scrapy.Request(url=self.jw_main_url, headers=headers, callback=self.JWmain,
+            yield scrapy.Request(url=self.qh_rukou_url_full, headers=headers, callback=self.qh_ru_kou_check,
                                  dont_filter=True)
         else:
             logging.info('抢注成功')
