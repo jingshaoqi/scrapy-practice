@@ -122,17 +122,17 @@ class RuxueQianghaoSpider(scrapy.Spider):
         sch_info1 = self.dict_sch[self.cur_school]
         dst_time = datetime.strptime(sch_info1.start_time, '%Y/%m/%d %H:%M:%S')#'2023/6/28 9:00:00 000000'
         # wait
-        wt = 0
+        wt = 0.0
         wt_delta = 0.01
         while 1:
             localtm = datetime.now()
             if localtm >= dst_time:
                 break
             else:
-                if wt >= 1:
+                if wt >= 1.0:
                     dt = dst_time - localtm
                     print('left time:{}'.format(dt))
-                    wt = 0
+                    wt = 0.0
                 time.sleep(wt_delta)
                 wt += wt_delta
 
@@ -142,11 +142,20 @@ class RuxueQianghaoSpider(scrapy.Spider):
                    'Sec-Fetch-Mode': 'navigate',
                    'Sec-Fetch-Site': 'same-origin',
                    'Upgrade-Insecure-Requests': '1', }
-        yield scrapy.Request(url=self.qh_rukou_url_full, headers=headers,
+        next_url = self.qh_rukou_url_full
+        yield scrapy.Request(url=next_url, headers=headers,
                              callback=self.qh_ru_kou_check, dont_filter=True)
     def qh_ru_kou_check(self, response):
         logging.info(response.text)
-            # 提取formdata信息
+        #这里可能会返回网络拥堵或者其他什么的，待测试再定
+        if response.text.find('网络拥堵') >= 0 or response.text.find('errorpath') >= 0:
+            headers = {'Sec-Fetch-Dest': 'iframe',
+                       'Sec-Fetch-Mode': 'navigate',
+                       'Sec-Fetch-Site': 'same-origin',
+                       'Upgrade-Insecure-Requests': '1', }
+            next_url = response.url
+            yield scrapy.Request(url=next_url, headers=headers, callback=self.qh_ru_kou_check, dont_filter=True)
+            return
         zt = response.xpath('//tr/td/span[@id="Label_ZT"]/text()')
         if zt is None or len(zt) <= 0:
             logging.info('check code or response')
@@ -163,6 +172,7 @@ class RuxueQianghaoSpider(scrapy.Spider):
                        'Upgrade-Insecure-Requests': '1', }
             next_url = response.url
             yield scrapy.Request(url=next_url, headers=headers, callback=self.qh_ru_kou_check, dont_filter=True)
+            return
 
         self.form_data['ScriptManager1'] = 'UpdatePanelAA|LinkButtonSFZH'
         self.form_data['__EVENTTARGET'] = 'LinkButtonSFZH'
@@ -198,7 +208,8 @@ class RuxueQianghaoSpider(scrapy.Spider):
                    'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',}
         bodystr = urlencode(self.form_data, encoding='utf-8')
         logging.info('length:{} bodystr:{}'.format(len(bodystr), bodystr))
-        yield scrapy.Request(url=response.url, method="POST", body=bodystr, headers=headers,
+        next_url = response.url
+        yield scrapy.Request(url=next_url, method="POST", body=bodystr, headers=headers,
                              callback=self.SFZh_check_parse, dont_filter=True)
 
     def SFZh_check_parse(self, response):
@@ -248,13 +259,23 @@ class RuxueQianghaoSpider(scrapy.Spider):
         print(response.text)
         ind = response.text.find('抢注成功')
         if ind < 0:
+            #返回此学校已满的情形
+            total_s = response.xpath('//tr/td/span[@id="Label_ZSRS"]/text()')
+            yb_s = response.xpath('//tr/td/span[@id="Label_YBRS"]/text()')
+            if total_s is not None and len(total_s) > 0 and yb_s is not None and len(yb_s) > 0:
+                total_n = int(total_s.get())
+                yb_n = int(yb_s.get())
+                if yb_n >= total_n: #表示已经满了就要选择下一个学校
+                    yield from self.deal_process()
+                    return
             logging.info('抢注失败，再次请求')
             headers = {'TE': 'trailers',
                        'Sec-Fetch-Dest': 'iframe',
                        'Sec-Fetch-Mode': 'navigate',
                        'Sec-Fetch-Site': 'same-origin',
                        'Upgrade-Insecure-Requests': '1', }
-            yield scrapy.Request(url=self.qh_rukou_url_full, headers=headers, callback=self.qh_ru_kou_check,
+            next_url = self.qh_rukou_url_full
+            yield scrapy.Request(url=next_url, headers=headers, callback=self.qh_ru_kou_check,
                                  dont_filter=True)
         else:
             logging.info('抢注成功')
